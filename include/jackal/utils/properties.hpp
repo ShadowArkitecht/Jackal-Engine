@@ -28,10 +28,15 @@
 //====================
 // C++ includes
 //====================
-#include <string> 			// Storing and retrieving property values by string.
-#include <vector>			// Storing the property parameters and retrieving them.
-#include <sstream>			// Creating the parameters passed into variadic methods as temporary csv files.
-#include <unordered_map>	// Key-Value map for properties and their subsequent names.
+#include <string>                           // Storing and retrieving property values by string.
+#include <vector>                           // Storing the property parameters and retrieving them.
+#include <sstream>                          // Creating the parameters passed into variadic methods as temporary csv files.
+#include <unordered_map>                    // Key-Value map for properties and their subsequent names.
+
+//====================
+// Jackal includes
+//====================
+#include <jackal/utils/non_copyable.hpp>    // Preventing the Properties class from being assigned or copied. 
 
 namespace jackal 
 {
@@ -40,18 +45,18 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		std::string value;									  ///< Default string value associated with the key.
+		std::string value;                                    ///< Default string value associated with the key.
 		std::vector<std::pair<std::size_t, int>> parameters;  ///< The parameters and their ordering within the property.
 	};
 
-	class Properties final 
+	class Properties final : NonCopyable
 	{
 	private:
 		//====================
 		// Member variables
 		//====================
-		static std::unordered_map<std::string, Property_t> m_properties;	///< All of the properties within the locale file.
-		bool m_loaded;														///< Whether the properties file has already been loaded.
+		static std::unordered_map<std::string, Property_t> m_properties; ///< All of the properties within the locale file.
+		bool m_loaded;                                                   ///< Whether the properties file has already been loaded.
 
 	private:
 		//====================
@@ -66,7 +71,7 @@ namespace jackal
 		/// the correct arguments and map them to the desired locations. This
 		/// method is used to unravel the variadic arguments of the get method.
 		///
-		/// @param ss 	The stream to stream the csv arguments into.
+		/// @param ss   The stream to stream the csv arguments into.
 		/// @tparam arg The current unravelled argument.
 		///
 		////////////////////////////////////////////////////////////
@@ -82,9 +87,9 @@ namespace jackal
 		/// the correct arguments and map them to the desired locations. This
 		/// method is used to unravel the variadic arguments of the get method.
 		///
-		/// @param ss 	 The stream to stream the csv arguments into.
-		/// @tparam arg  The current unravelled argument.
-		/// @tparam args The arguments left to unravel.
+		/// @param ss     The stream to stream the csv arguments into.
+		/// @tparam arg   The current unravelled argument.
+		/// @tparam args  The arguments left to unravel.
 		///
 		////////////////////////////////////////////////////////////
 		template <typename Arg, typename... Args>
@@ -120,9 +125,9 @@ namespace jackal
 		/// and the method will return an empty string. This method should only 
 		/// be used when retrieving a value that contains no parameters. 
 		///
-		/// @param name 	The name of the key of the property.
+		/// @param name     The name of the key of the property.
 		///
-		/// @returns		The value of the key if found, a blank string if not found.
+		/// @returns        The value of the key if found, a blank string if not found.
 		///
 		////////////////////////////////////////////////////////////
 		std::string get(const std::string& name) const;
@@ -139,10 +144,10 @@ namespace jackal
 		/// values. The method is variadic and will accept an arbitrary number
 		/// of arguments.
 		///
-		/// @param name 	The name of the key associated with the property.
-		/// @tparam args 	The variable number of arguments to set within the property.
+		/// @param name     The name of the key associated with the property.
+		/// @tparam args    The variable number of arguments to set within the property.
 		///
-		/// @returns		The value of the key if found, a blank string if not.
+		/// @returns        The value of the key if found, a blank string if not.
 		///
 		////////////////////////////////////////////////////////////
 		template <typename... Args>
@@ -160,9 +165,9 @@ namespace jackal
 		/// editor. If any incorrectly formatted lines are detected within the
 		/// locale file, a warning is externally logged. 
 		///
-		/// @param filename		The filename of the locale to load.
+		/// @param filename     The filename of the locale to load.
 		///
-		/// @returns			True if the file opened and parsed successfully. 
+		/// @returns            True if the file opened and parsed successfully. 
 		///
 		////////////////////////////////////////////////////////////
 		bool open(const std::string& filename);
@@ -230,6 +235,8 @@ namespace jackal
 } // namespace jackal
 
 ////////////////////////////////////////////////////////////
+/// @author Benjamin Carter
+///
 /// @class jackal::Property_t
 /// @ingroup utils
 ///
@@ -247,6 +254,8 @@ namespace jackal
 ////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
+/// @author Benjamin Carter
+///
 /// @class jackal::Properties
 /// @ingroup utils
 ///
@@ -274,8 +283,12 @@ namespace jackal
 /// // Here the Properties class is provided with a virtual path to
 /// // the property file. However this can also be handled internally
 /// // by utilising the ConfigFile value of "Settings.locale".
-///
 /// properties.open("~locale/en_UK.properties");
+///
+/// // Retrieving a value with no arguments from the file.
+/// std::string value1 = properties.get("menus.resource");
+/// // Retrieving a value with arguments.
+/// std::string value2 = properties.get("object.selection.name", "Test Object");
 /// @endcode
 ///
 ////////////////////////////////////////////////////////////

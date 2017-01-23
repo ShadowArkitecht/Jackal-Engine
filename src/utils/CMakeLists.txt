@@ -26,13 +26,18 @@
 # Directories
 #====================
 set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include/jackal/utils") # Headers and inline files.
-set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/utils")			  # Source files.
+set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/utils")            # Source files.
 
 #====================
 # Variables
 #====================
-set(HEADER_FILES "${INCLUDE_DIR}/properties.hpp")
-set(SOURCE_FILES "${SOURCE_DIR}/properties.cpp")
+set(HEADER_FILES "${INCLUDE_DIR}/file_system.hpp" 
+                 "${INCLUDE_DIR}/non_copyable.hpp"
+                 "${INCLUDE_DIR}/properties.hpp"
+                 "${INCLUDE_DIR}/singleton.hpp")
+
+set(SOURCE_FILES "${SOURCE_DIR}/file_system.cpp" 
+	             "${SOURCE_DIR}/properties.cpp")
 
 #====================
 # Library

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['parameters',['parameters',['../structjackal_1_1_property__t.html#a2ab38937acc66ff69f7fc0c77b0ae84d',1,'jackal::Property_t']]],
-  ['properties',['Properties',['../classjackal_1_1_properties.html#a45e0e26bf12da5fc703fe08dfa0358b1',1,'jackal::Properties']]],
-  ['properties',['Properties',['../classjackal_1_1_properties.html',1,'jackal']]],
-  ['property_5ft',['Property_t',['../structjackal_1_1_property__t.html',1,'jackal']]]
+  ['get',['get',['../classjackal_1_1_properties.html#a354b7fd7d6c3cac53e50d88f4915caad',1,'jackal::Properties::get(const std::string &amp;name) const'],['../classjackal_1_1_properties.html#afadc1a3a4f04ae16b1b80db1dec260ff',1,'jackal::Properties::get(const std::string &amp;name, Args &amp;&amp;... args) const']]],
+  ['getinstance',['getInstance',['../classjackal_1_1_singleton.html#a8a2b8b0cb81655101bc5f070c8e1350d',1,'jackal::Singleton']]]
 ];

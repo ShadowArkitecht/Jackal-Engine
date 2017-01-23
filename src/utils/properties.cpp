@@ -25,14 +25,15 @@
 //====================
 // C++ includes
 //====================
-#include <fstream>						// Loading external property files.
-#include <algorithm>					// Removing and manipulating strings with lambdas.
-#include <cctype>						// C style lambdas.
+#include <fstream>                             // Loading external property files.
+#include <algorithm>                           // Removing and manipulating strings with lambdas.
+#include <cctype>                              // C style lambdas.
 
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/properties.hpp>	// Properties class declaration.
+#include <jackal/utils/properties.hpp>         // Properties class declaration.
+#include <jackal/core/virtual_file_system.hpp> // Loading the properties file with the vfs system.
 
 namespace jackal 
 {
@@ -52,7 +53,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Properties::Properties()
-		: m_loaded(false)
+		: NonCopyable(), m_loaded(false)
 	{
 	}
 
@@ -81,9 +82,25 @@ namespace jackal
 	{
 		if (!m_loaded)
 		{
-			std::ifstream file;
-			file.open(filename, std::ios::in | std::ios::binary);
+			if (filename.substr(filename.find_last_of('.') + 1) == "properties")
+			{
+				// Incorrect extension. Error message.
+				return false;
+			}
 
+			std::string path;
+			auto& vfs = VirtualFileSystem::getInstance();
+			
+			if (!vfs.resolve(filename, path))
+			{
+				// Editor external error message. (Logging).
+				return false;
+			}
+
+			std::ifstream file;
+			file.open(path, std::ios::in | std::ios::binary);
+
+			// Shouldn't really fail, but you never know?
 			if (file.fail())
 			{
 				// Editor external error message. (Logging).
@@ -93,6 +110,7 @@ namespace jackal
 			std::string line;
 			while (std::getline(file, line))
 			{
+				// Removing any redundant/irritating characters.
 				line.erase(std::remove_if(std::begin(line), std::end(line), [](char c) {
 					return c == '\r' || c == '\n' || c == '\t';
 				}));

@@ -31,13 +31,17 @@
 // Jackal includes
 //====================
 #include <jackal/utils/properties.hpp>
+#include <jackal/core/virtual_file_system.hpp>
 
 using namespace jackal;
 
 int main(int argc, char** argv)
 {
+	auto& vfs = VirtualFileSystem::getInstance();
+	vfs.mount("locale", "data/locale");
+
 	Properties properties;
-	properties.open("data/locale/en_UK.properties");
+	properties.open("~locale/en_UK.properties");
 	
 	std::cout << properties.get("menu.resource") << std::endl;
 	std::cout << properties.get("object.selection.name", "Test object") << std::endl;

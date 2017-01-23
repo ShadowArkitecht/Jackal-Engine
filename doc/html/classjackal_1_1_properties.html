@@ -24,7 +24,6 @@
    <div id="projectname">Jackal Engine
    &#160;<span id="projectnumber">0.0.1</span>
    </div>
-   <div id="projectbrief">Jackal Engine is a 3D engine built primarily to aid in the development of voxel style applications.</div>
   </td>
  </tr>
  </tbody>
@@ -73,6 +72,15 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="properties_8hpp_source.html">properties.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for jackal::Properties:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classjackal_1_1_properties.png" usemap="#jackal::Properties_map" alt=""/>
+  <map id="jackal::Properties_map" name="jackal::Properties_map">
+<area href="classjackal_1_1_non_copyable.html" alt="jackal::NonCopyable" shape="rect" coords="0,0,128,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -95,9 +103,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a57dabc317a240a40d7f97dd346da701f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classjackal_1_1_properties.html">jackal::Properties</a> class is a Java influenced class for loading and storing the values of an external locale properties file. The locale file is used for strings and messages within the application localised to the countries language. Similar to Java, the <a class="el" href="classjackal_1_1_properties.html">jackal::Properties</a> class supports properties with parameters, but with a defined limit of 10 parameters per property.</p>
-<p>The <a class="el" href="classjackal_1_1_properties.html">Properties</a> class can make use of the VirtualFileSystem pattern provided by the jackal::VirtualFileSystem singleton. The <a class="el" href="classjackal_1_1_properties.html">Properties</a> class is only used internally by the engine and is not exposed to the lua scripting interface.</p>
-<p>C++ code example: </p><div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a properties file on the stack and load the properties.</span></div><div class="line"><span class="comment">// The properties are stored in a static unordered map so the</span></div><div class="line"><span class="comment">// file only has to be loaded once. </span></div><div class="line"><a class="code" href="classjackal_1_1_properties.html">Properties</a> properties;</div><div class="line"></div><div class="line"><span class="comment">// Here the Properties class is provided with a virtual path to</span></div><div class="line"><span class="comment">// the property file. However this can also be handled internally</span></div><div class="line"><span class="comment">// by utilising the ConfigFile value of &quot;Settings.locale&quot;.</span></div><div class="line"></div><div class="line">properties.<a class="code" href="classjackal_1_1_properties.html#a57dabc317a240a40d7f97dd346da701f">open</a>(<span class="stringliteral">&quot;~locale/en_UK.properties&quot;</span>);</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
+<p>The <a class="el" href="classjackal_1_1_properties.html">jackal::Properties</a> class is a Java influenced class for loading and storing the values of an external locale properties file. The locale file is used for strings and messages within the application localised to the countries language. Similar to Java, the <a class="el" href="classjackal_1_1_properties.html">jackal::Properties</a> class supports properties with parameters, but with a defined limit of 10 parameters per property.</p>
+<p>The <a class="el" href="classjackal_1_1_properties.html">Properties</a> class can make use of the <a class="el" href="classjackal_1_1_virtual_file_system.html">VirtualFileSystem</a> pattern provided by the <a class="el" href="classjackal_1_1_virtual_file_system.html">jackal::VirtualFileSystem</a> singleton. The <a class="el" href="classjackal_1_1_properties.html">Properties</a> class is only used internally by the engine and is not exposed to the lua scripting interface.</p>
+<p>C++ code example: </p><div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a properties file on the stack and load the properties.</span></div><div class="line"><span class="comment">// The properties are stored in a static unordered map so the</span></div><div class="line"><span class="comment">// file only has to be loaded once. </span></div><div class="line"><a class="code" href="classjackal_1_1_properties.html">Properties</a> properties;</div><div class="line"></div><div class="line"><span class="comment">// Here the Properties class is provided with a virtual path to</span></div><div class="line"><span class="comment">// the property file. However this can also be handled internally</span></div><div class="line"><span class="comment">// by utilising the ConfigFile value of &quot;Settings.locale&quot;.</span></div><div class="line">properties.<a class="code" href="classjackal_1_1_properties.html#a57dabc317a240a40d7f97dd346da701f">open</a>(<span class="stringliteral">&quot;~locale/en_UK.properties&quot;</span>);</div><div class="line"></div><div class="line"><span class="comment">// Retrieving a value with no arguments from the file.</span></div><div class="line">std::string value1 = properties.<a class="code" href="classjackal_1_1_properties.html#a354b7fd7d6c3cac53e50d88f4915caad">get</a>(<span class="stringliteral">&quot;menus.resource&quot;</span>);</div><div class="line"><span class="comment">// Retrieving a value with arguments.</span></div><div class="line">std::string value2 = properties.<a class="code" href="classjackal_1_1_properties.html#a354b7fd7d6c3cac53e50d88f4915caad">get</a>(<span class="stringliteral">&quot;object.selection.name&quot;</span>, <span class="stringliteral">&quot;Test Object&quot;</span>);</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a45e0e26bf12da5fc703fe08dfa0358b1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45e0e26bf12da5fc703fe08dfa0358b1">&sect;&nbsp;</a></span>Properties()</h2>
 

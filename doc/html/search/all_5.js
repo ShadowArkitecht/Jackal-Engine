@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7eproperties',['~Properties',['../classjackal_1_1_properties.html#a9b3ce67c41ba0fc233aea290cdd69219',1,'jackal::Properties']]]
+  ['noncopyable',['NonCopyable',['../classjackal_1_1_non_copyable.html',1,'jackal']]],
+  ['noncopyable',['NonCopyable',['../classjackal_1_1_non_copyable.html#a4ac5fbfcb997aaf4c28b21b9896435ae',1,'jackal::NonCopyable']]]
 ];
