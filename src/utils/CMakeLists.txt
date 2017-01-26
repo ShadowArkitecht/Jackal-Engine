@@ -31,12 +31,17 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/utils")            # Source files.
 #====================
 # Variables
 #====================
-set(HEADER_FILES "${INCLUDE_DIR}/file_system.hpp" 
+set(HEADER_FILES "${INCLUDE_DIR}/file_policy.hpp"
+                 "${INCLUDE_DIR}/file_system.hpp" 
+                 "${INCLUDE_DIR}/ipolicy.hpp" 
+                 "${INCLUDE_DIR}/log.hpp" 
+                 "${INCLUDE_DIR}/log.inl" 
                  "${INCLUDE_DIR}/non_copyable.hpp"
                  "${INCLUDE_DIR}/properties.hpp"
                  "${INCLUDE_DIR}/singleton.hpp")
 
-set(SOURCE_FILES "${SOURCE_DIR}/file_system.cpp" 
+set(SOURCE_FILES "${SOURCE_DIR}/file_policy.cpp" 
+                 "${SOURCE_DIR}/file_system.cpp" 
 	             "${SOURCE_DIR}/properties.cpp")
 
 #====================

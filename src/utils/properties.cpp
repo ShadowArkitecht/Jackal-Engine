@@ -53,7 +53,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Properties::Properties()
-		: NonCopyable(), m_loaded(false)
+		: NonCopyable(), m_loaded(false), m_log("logs/engine_log.txt")
 	{
 	}
 
@@ -70,7 +70,7 @@ namespace jackal
 			return itr->second.value;
 		}
 
-		// Log as warning to external log.
+		m_log.warning(m_log.function(__func__, name), "Property cannot be found in properties file.");
 		return std::string();
 	}
 
@@ -82,9 +82,10 @@ namespace jackal
 	{
 		if (!m_loaded)
 		{
-			if (filename.substr(filename.find_last_of('.') + 1) == "properties")
+			std::string ext = filename.substr(filename.find_last_of('.') + 1, filename.length());
+			if (ext != "properties")
 			{
-				// Incorrect extension. Error message.
+				m_log.warning(m_log.function(__func__, filename), "Failed to load. Incorrect extension: ", ext);
 				return false;
 			}
 
@@ -93,7 +94,7 @@ namespace jackal
 			
 			if (!vfs.resolve(filename, path))
 			{
-				// Editor external error message. (Logging).
+				m_log.error(m_log.function(__func__, filename), "Failed to find specified file.");
 				return false;
 			}
 
@@ -103,7 +104,7 @@ namespace jackal
 			// Shouldn't really fail, but you never know?
 			if (file.fail())
 			{
-				// Editor external error message. (Logging).
+				m_log.error(m_log.function(__func__, filename), "Failed to open");
 				return false;
 			}
 
@@ -133,7 +134,7 @@ namespace jackal
 				std::size_t equalPos = line.find(EQUALS_SYMBOL);
 				if (equalPos == std::string::npos)
 				{
-					// Properties files warning, incorrectly formatted line. 
+					m_log.warning(m_log.function(__func__, filename), "Incorrectly formatted line: ", line);
 					continue;
 				}
 
@@ -167,6 +168,12 @@ namespace jackal
 		}
 
 		return true;
+	}
+
+	////////////////////////////////////////////////////////////
+	bool Properties::exists(const std::string& name) const 
+	{	
+		return m_properties.find(name) != std::end(m_properties);
 	}
 
 } // namespace jackal

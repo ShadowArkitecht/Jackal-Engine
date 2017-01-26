@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['mount',['mount',['../classjackal_1_1_virtual_file_system.html#afcf4eb40aa8d948500211aa63491cf4b',1,'jackal::VirtualFileSystem']]]
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html',1,'jackal']]],
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html#a62a63010af0c81679b158ba66ae7fef9',1,'jackal::IPolicy']]]
 ];

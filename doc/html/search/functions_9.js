@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['singleton',['Singleton',['../classjackal_1_1_singleton.html#a35a5c88a49799c2b70ffd4d6f050317f',1,'jackal::Singleton']]]
+  ['properties',['Properties',['../classjackal_1_1_properties.html#a45e0e26bf12da5fc703fe08dfa0358b1',1,'jackal::Properties']]]
 ];

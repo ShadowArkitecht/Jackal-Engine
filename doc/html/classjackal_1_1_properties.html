@@ -101,6 +101,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a57dabc317a240a40d7f97dd346da701f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_properties.html#a57dabc317a240a40d7f97dd346da701f">open</a> (const std::string &amp;filename)</td></tr>
 <tr class="memdesc:a57dabc317a240a40d7f97dd346da701f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified locale file.  <a href="#a57dabc317a240a40d7f97dd346da701f">More...</a><br /></td></tr>
 <tr class="separator:a57dabc317a240a40d7f97dd346da701f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20e9e3c522e60e8532301abd5fcde9aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_properties.html#a20e9e3c522e60e8532301abd5fcde9aa">exists</a> (const std::string &amp;name) const</td></tr>
+<tr class="memdesc:a20e9e3c522e60e8532301abd5fcde9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a property exists in the locale file.  <a href="#a20e9e3c522e60e8532301abd5fcde9aa">More...</a><br /></td></tr>
+<tr class="separator:a20e9e3c522e60e8532301abd5fcde9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
@@ -136,6 +139,34 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a20e9e3c522e60e8532301abd5fcde9aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20e9e3c522e60e8532301abd5fcde9aa">&sect;&nbsp;</a></span>exists()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool jackal::Properties::exists </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if a property exists in the locale file. </p>
+<p>This method can be used to check if a property exists within the specified locale file, this can be useful if a specific element relies on a property to prevent undefined behavior.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the property to check for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the property exists within the locale file. </dd></dl>
+
+</div>
+</div>
 <a id="a354b7fd7d6c3cac53e50d88f4915caad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a354b7fd7d6c3cac53e50d88f4915caad">&sect;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
 
@@ -239,8 +270,8 @@ template&lt;typename... Args&gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/Benjamin/Documents/Jackal-Engine/include/jackal/utils/<a class="el" href="properties_8hpp_source.html">properties.hpp</a></li>
-<li>C:/Users/Benjamin/Documents/Jackal-Engine/src/utils/properties.cpp</li>
+<li>Jackal-Engine/include/jackal/utils/<a class="el" href="properties_8hpp_source.html">properties.hpp</a></li>
+<li>Jackal-Engine/src/utils/properties.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

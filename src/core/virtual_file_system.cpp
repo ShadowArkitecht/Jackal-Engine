@@ -76,7 +76,7 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	bool VirtualFileSystem::resolve(const std::string& path, std::string& result) const
+	bool VirtualFileSystem::resolve(const std::string& path, std::string& result)
 	{
 		FileSystem system;
 		// The directory passed in is not utilising a virtual path, do a standard directory look-up.
@@ -101,7 +101,7 @@ namespace jackal
 		}		
 
 		std::string remainder = path.substr(dir.size() + 1, path.length());
-		for (auto p :m_paths[dir])
+		for (auto p : m_paths[dir])
 		{
 			p.append(remainder);
 			if (system.exists(p))

@@ -37,6 +37,7 @@
 // Jackal includes
 //====================
 #include <jackal/utils/non_copyable.hpp>    // Preventing the Properties class from being assigned or copied. 
+#include <jackal/utils/log.hpp>             // Logging warnings and errors.
 
 namespace jackal 
 {
@@ -56,7 +57,8 @@ namespace jackal
 		// Member variables
 		//====================
 		static std::unordered_map<std::string, Property_t> m_properties; ///< All of the properties within the locale file.
-		bool m_loaded;                                                   ///< Whether the properties file has already been loaded.
+		bool             m_loaded;                                       ///< Whether the properties file has already been loaded.
+		mutable DebugLog m_log;                                          ///< Logging any problems to an external log.
 
 	private:
 		//====================
@@ -171,6 +173,20 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		bool open(const std::string& filename);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Checks if a property exists in the locale file.
+		///
+		/// This method can be used to check if a property exists within the
+		/// specified locale file, this can be useful if a specific element
+		/// relies on a property to prevent undefined behavior.
+		///
+		/// @param name     The name of the property to check for.
+		///
+		/// @returns        True if the property exists within the locale file.
+		///
+		////////////////////////////////////////////////////////////
+		bool exists(const std::string& name) const;
 	};
 
 	//====================
@@ -228,7 +244,7 @@ namespace jackal
 			return p.value;
 		}
 
-		// Log a warning.
+		m_log.warning(m_log.function(__func__, name), "Property cannot be found in properties file.");
 		return std::string();
 	}
 

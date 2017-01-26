@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['noncopyable',['NonCopyable',['../classjackal_1_1_non_copyable.html',1,'jackal']]]
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html',1,'jackal']]]
 ];

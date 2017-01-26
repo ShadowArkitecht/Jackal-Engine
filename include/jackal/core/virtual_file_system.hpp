@@ -133,7 +133,7 @@ namespace jackal
 		/// @returns        True if the file was found within the VirtualFileSystem or externally.
 		///
 		////////////////////////////////////////////////////////////
-		bool resolve(const std::string& path, std::string& result) const;
+		bool resolve(const std::string& path, std::string& result);
 	};
 
 } // namespace jackal 
