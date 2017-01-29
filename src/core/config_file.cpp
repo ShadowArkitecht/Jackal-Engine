@@ -25,7 +25,6 @@
 //====================
 // C++ includes
 //====================
-#include <fstream>                               // Loading the file from disk.
 #include <algorithm>                             // Removing specific characters from string.
 #include <cctype>                                // Using c-style functors.
 
@@ -35,7 +34,9 @@
 #include <jackal/core/config_file.hpp>           // ConfigFile class declaration.
 #include <jackal/utils/log.hpp>                  // Logging warnings and errors.
 #include <jackal/utils/file_system.hpp>          // Checking the file has the correct extension.
-#include <jackal/core/virtual_file_system.hpp>   // Utilising the virtual file system.
+#include <jackal/utils/constants.hpp>            // Using the defined constants for extensions.
+#include <jackal/utils/file_reader.hpp>          // Reading in information from disk.
+
 
 namespace jackal 
 {
@@ -274,39 +275,26 @@ namespace jackal
 	bool ConfigFile::open(const std::string& filename)
 	{
 		FileSystem system;
-		if (!system.hasExtension(filename, "jcfg"))
+		if (!system.hasExtension(filename, Constants::Extensions::CONFIGURATION))
 		{
 			log.error(log.function(__func__, filename), "Failed. Incorrect extension.");
 			return false;
 		}
 
-		std::string path;
-		if (!VirtualFileSystem::getInstance().resolve(filename, path))
+		FileReader reader;
+		if (!reader.read(filename))
 		{
-			log.error(log.function(__func__, filename), "Failed. File does not exist.");
-			return false;
-		}
-
-		std::ifstream file;
-		file.open(path, std::ios::in | std::ios::binary);
-
-		if (file.fail())
-		{
-			log.error(log.function(__func__, filename), "Failed. File failed to open.");
-			file.close();
-
 			return false;
 		}
 
 		std::string section;
-		std::string line;
-
-		while (std::getline(file, line))
+		for (std::string line : reader.getLines())
 		{
 			// Removing any redundant/irritating characters.
 			line.erase(std::remove_if(std::begin(line), std::end(line), [](char c) {
 				return c == '\r' || c == '\n' || c == '\t' || std::isspace(c);
 			}));
+			// For some reason the last two characters are copied, remove them.
 			line = line.substr(0, line.length() - 2);
 
 			if (line.empty())
@@ -371,8 +359,6 @@ namespace jackal
 		}
 
 		log.debug(log.function(__func__, filename), "Parsed successfully.");
-		file.close();
-
 		return true;
 	}
 

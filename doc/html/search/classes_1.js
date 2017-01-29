@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['filepolicy',['FilePolicy',['../classjackal_1_1_file_policy.html',1,'jackal']]],
-  ['filesystem',['FileSystem',['../classjackal_1_1_file_system.html',1,'jackal']]]
+  ['extensions',['Extensions',['../structjackal_1_1_constants_1_1_extensions.html',1,'jackal::Constants']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type',['type',['../structjackal_1_1_config_variant__t.html#ac31e092d159bb78171198ef5ee29b262',1,'jackal::ConfigVariant_t']]]
+  ['fragment_5fshader',['FRAGMENT_SHADER',['../structjackal_1_1_constants_1_1_extensions.html#a2977c1a6e65607e0189bfaf181e720ef',1,'jackal::Constants::Extensions']]]
 ];

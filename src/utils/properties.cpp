@@ -25,7 +25,6 @@
 //====================
 // C++ includes
 //====================
-#include <fstream>                             // Loading external property files.
 #include <algorithm>                           // Removing and manipulating strings with lambdas.
 #include <cctype>                              // C style lambdas.
 
@@ -34,7 +33,8 @@
 //====================
 #include <jackal/utils/properties.hpp>         // Properties class declaration.
 #include <jackal/utils/file_system.hpp>        // Used to check the file has the correct extension.
-#include <jackal/core/virtual_file_system.hpp> // Loading the properties file with the vfs system.
+#include <jackal/utils/file_reader.hpp>        // Read in files from disk.
+#include <jackal/utils/constants.hpp>          // Constants used for file extensions.
 #include <jackal/core/config_file.hpp>         // Loading the current properties type from the config file.
 
 namespace jackal 
@@ -91,28 +91,14 @@ namespace jackal
 				return false;
 			}
 
-			std::string path;
-			auto& vfs = VirtualFileSystem::getInstance();
-			
-			if (!vfs.resolve(filename, path))
+			FileReader reader;
+			if (!reader.read(filename))
 			{
-				m_log.error(m_log.function(__func__, filename), "Failed to find specified file.");
 				return false;
 			}
 
-			std::ifstream file;
-			file.open(path, std::ios::in | std::ios::binary);
-
-			// Shouldn't really fail, but you never know?
-			if (file.fail())
-			{
-				m_log.error(m_log.function(__func__, filename), "Failed to open");
-				return false;
-			}
-
-			std::string line;
 			int lineNumber = 1;
-			while (std::getline(file, line))
+			for (std::string line : reader.getLines())
 			{
 				// Removing any redundant/irritating characters.
 				line.erase(std::remove_if(std::begin(line), std::end(line), [](char c) {
@@ -180,6 +166,7 @@ namespace jackal
 				lineNumber++;
 			}
 
+			m_log.debug(m_log.function(__func__, filename), "Parsed successfully.");
 			m_loaded = true;
 		}
 

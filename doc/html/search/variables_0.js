@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['parameters',['parameters',['../structjackal_1_1_property__t.html#a2ab38937acc66ff69f7fc0c77b0ae84d',1,'jackal::Property_t']]]
+  ['configuration',['CONFIGURATION',['../structjackal_1_1_constants_1_1_extensions.html#a510ee5d39a0436f8387251a61723672b',1,'jackal::Constants::Extensions']]],
+  ['csv',['CSV',['../structjackal_1_1_constants_1_1_extensions.html#a5ba191be744ad3a144fcd2f273ebb141',1,'jackal::Constants::Extensions']]]
 ];
