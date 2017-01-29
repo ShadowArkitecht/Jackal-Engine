@@ -22,6 +22,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <vector>
+
 //====================
 // Jackal includes
 //====================
@@ -52,6 +54,34 @@ namespace jackal
 		return stat(filename.c_str(), &info) == 0;
 #endif
 		return false;
+	}
+
+	////////////////////////////////////////////////////////////
+	bool FileSystem::hasExtension(const std::string& file, const std::string& extension) const
+	{
+		std::size_t index = file.find_last_of('.');
+		return index != std::string::npos ? file.substr(index + 1, file.length()) == extension : false;
+	}
+
+	////////////////////////////////////////////////////////////
+	bool FileSystem::hasExtensions(const std::string& file, const std::string& extension, unsigned int count) const
+	{
+		std::vector<std::size_t> indices;
+		for (std::size_t i = file.length(); i > 0; i--)
+		{
+			if (file[i] == '.')
+			{
+				indices.push_back(i);
+			}
+		}
+
+		if (indices.size() < count)
+		{
+			return false;
+		}
+
+		std::size_t pos = indices.at(count - 1);
+		return file.substr(pos + 1, file.length()) == extension;
 	}
 
 } // namespace jackal 

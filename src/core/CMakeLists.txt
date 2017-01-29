@@ -31,8 +31,11 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/core")            # Source files.
 #====================
 # Variables
 #====================
-set(HEADER_FILES "${INCLUDE_DIR}/virtual_file_system.hpp")
-set(SOURCE_FILES "${SOURCE_DIR}/virtual_file_system.cpp")
+set(HEADER_FILES "${INCLUDE_DIR}/config_file.hpp"
+	             "${INCLUDE_DIR}/virtual_file_system.hpp")
+
+set(SOURCE_FILES "${SOURCE_DIR}/config_file.cpp" 
+	             "${SOURCE_DIR}/virtual_file_system.cpp")
 
 #====================
 # Library

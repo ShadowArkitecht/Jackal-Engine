@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['filepolicy',['FilePolicy',['../classjackal_1_1_file_policy.html',1,'jackal']]],
-  ['filesystem',['FileSystem',['../classjackal_1_1_file_system.html',1,'jackal']]]
+  ['configfile',['ConfigFile',['../classjackal_1_1_config_file.html',1,'jackal']]],
+  ['configvariant_5ft',['ConfigVariant_t',['../structjackal_1_1_config_variant__t.html',1,'jackal']]]
 ];

@@ -64,6 +64,40 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		bool exists(const std::string& filename) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Checks if the file has the specified extension.
+		///
+		/// A number of files and classes that manipulate files rely on the
+		/// file in question has the correct extension, as this makes sure
+		/// the correct files are being manipulated and will not result
+		/// in incorrect or undefined behavior.
+		///
+		/// @param file          The file to check for the extension.
+		/// @param extension     The extension to check the file for.
+		///
+		/// @returns             True if the extension of the file is correct.
+		///
+		////////////////////////////////////////////////////////////
+		bool hasExtension(const std::string& file, const std::string& extension) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Checks if the file has multiple extensions.
+		///
+		/// A selected number of files used within the engine can contain
+		/// multiple extensions (such as shaders), this method makes sure
+		/// that those files contain the correct extensions. It will make
+		/// sure the files being read or manipulated are correct and will
+		/// not result in incorrect or undefined behavior.
+		///
+		/// @param file        The file to check for the extension.
+		/// @param extension   The extensions to check the file for.
+		/// @param count       The number of extensions to check for.
+		///
+		/// @returns           True if the extensions of the file are correct.
+		///
+		////////////////////////////////////////////////////////////
+		bool hasExtensions(const std::string& file, const std::string& extension, unsigned int count) const;
 	}; 
 
 } // namespace jackal 

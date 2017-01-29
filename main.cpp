@@ -23,15 +23,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
-// C++ includes
-//====================
-#include <iostream>
-
-//====================
 // Jackal includes
 //====================
-#include <jackal/utils/properties.hpp>
-#include <jackal/core/virtual_file_system.hpp>
+#include <jackal/core/virtual_file_system.hpp> // Register the common virtual paths.
+#include <jackal/core/config_file.hpp>         // Load the main configuration file. 
+#include <jackal/utils/properties.hpp>         // Load the locale for the current application.
 
 using namespace jackal;
 
@@ -39,13 +35,14 @@ int main(int argc, char** argv)
 {
 	auto& vfs = VirtualFileSystem::getInstance();
 	vfs.mount("locale", "data/locale");
+	vfs.mount("config", "data/config");
+
+	ConfigFile config;
+	config.open("~config/main.jcfg");
 
 	Properties properties;
-	properties.open("~locale/en_UK.properties");
+	properties.open("~locale/", config);
 	
-	std::cout << properties.get("menu.resource") << std::endl;
-	std::cout << properties.get("object.selection.name", "Test object") << std::endl;
-
 	getchar();
 	return 0;
 }

@@ -101,6 +101,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a57dabc317a240a40d7f97dd346da701f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_properties.html#a57dabc317a240a40d7f97dd346da701f">open</a> (const std::string &amp;filename)</td></tr>
 <tr class="memdesc:a57dabc317a240a40d7f97dd346da701f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified locale file.  <a href="#a57dabc317a240a40d7f97dd346da701f">More...</a><br /></td></tr>
 <tr class="separator:a57dabc317a240a40d7f97dd346da701f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61670dd8aacc376b312dc51b49608fe8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_properties.html#a61670dd8aacc376b312dc51b49608fe8">open</a> (const std::string &amp;path, const <a class="el" href="classjackal_1_1_config_file.html">ConfigFile</a> &amp;config)</td></tr>
+<tr class="memdesc:a61670dd8aacc376b312dc51b49608fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the specified locale file.  <a href="#a61670dd8aacc376b312dc51b49608fe8">More...</a><br /></td></tr>
+<tr class="separator:a61670dd8aacc376b312dc51b49608fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20e9e3c522e60e8532301abd5fcde9aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_properties.html#a20e9e3c522e60e8532301abd5fcde9aa">exists</a> (const std::string &amp;name) const</td></tr>
 <tr class="memdesc:a20e9e3c522e60e8532301abd5fcde9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a property exists in the locale file.  <a href="#a20e9e3c522e60e8532301abd5fcde9aa">More...</a><br /></td></tr>
 <tr class="separator:a20e9e3c522e60e8532301abd5fcde9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,7 +245,7 @@ template&lt;typename... Args&gt; </div>
 </div>
 </div>
 <a id="a57dabc317a240a40d7f97dd346da701f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57dabc317a240a40d7f97dd346da701f">&sect;&nbsp;</a></span>open()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a57dabc317a240a40d7f97dd346da701f">&sect;&nbsp;</a></span>open() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -262,6 +265,45 @@ template&lt;typename... Args&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>The filename of the locale to load.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the file opened and parsed successfully. </dd></dl>
+
+</div>
+</div>
+<a id="a61670dd8aacc376b312dc51b49608fe8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61670dd8aacc376b312dc51b49608fe8">&sect;&nbsp;</a></span>open() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool jackal::Properties::open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classjackal_1_1_config_file.html">ConfigFile</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens the specified locale file. </p>
+<p>The different locale files are stored within the data/locale directory. The chosen locale for the application can be set within the jackal configuration file or changed within the editor. If any incorrectly formatted lines are detected within the locale file, a warning is externally logged.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>The virtual or local path of the properties files. </td></tr>
+    <tr><td class="paramname">config</td><td>The config file to load the type from.</td></tr>
   </table>
   </dd>
 </dl>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['warning',['warning',['../classjackal_1_1_log.html#a61cbf9df2795f0934226c47cefce6665',1,'jackal::Log']]],
-  ['write',['write',['../classjackal_1_1_file_policy.html#a4bdef709fe4d1bc8a0586030c415fa30',1,'jackal::FilePolicy::write()'],['../classjackal_1_1_i_policy.html#a815156d266574b7f99b91bbf23d707a2',1,'jackal::IPolicy::write()']]]
+  ['singleton',['Singleton',['../classjackal_1_1_singleton.html',1,'jackal']]],
+  ['singleton',['Singleton',['../classjackal_1_1_singleton.html#a35a5c88a49799c2b70ffd4d6f050317f',1,'jackal::Singleton']]],
+  ['singleton_3c_20virtualfilesystem_20_3e',['Singleton&lt; VirtualFileSystem &gt;',['../classjackal_1_1_singleton.html',1,'jackal']]]
 ];

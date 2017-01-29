@@ -40,7 +40,12 @@
 #include <jackal/utils/log.hpp>             // Logging warnings and errors.
 
 namespace jackal 
-{
+{	
+	//====================
+	// Forward declarations
+	//====================
+	class ConfigFile;
+
 	struct Property_t final
 	{
 		//====================
@@ -57,8 +62,8 @@ namespace jackal
 		// Member variables
 		//====================
 		static std::unordered_map<std::string, Property_t> m_properties; ///< All of the properties within the locale file.
-		bool             m_loaded;                                       ///< Whether the properties file has already been loaded.
-		mutable DebugLog m_log;                                          ///< Logging any problems to an external log.
+		bool                                               m_loaded;     ///< Whether the properties file has already been loaded.
+		mutable DebugLog                                   m_log;        ///< Logging any problems to an external log.
 
 	private:
 		//====================
@@ -173,6 +178,23 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		bool open(const std::string& filename);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Opens the specified locale file.
+		///
+		/// The different locale files are stored within the data/locale
+		/// directory. The chosen locale for the application can be set
+		/// within the jackal configuration file or changed within the 
+		/// editor. If any incorrectly formatted lines are detected within the
+		/// locale file, a warning is externally logged. 
+		///
+		/// @param path         The virtual or local path of the properties files.
+		/// @param config       The config file to load the type from.
+		///
+		/// @returns            True if the file opened and parsed successfully. 
+		///
+		////////////////////////////////////////////////////////////
+		bool open(const std::string& path, const ConfigFile& config);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Checks if a property exists in the locale file.

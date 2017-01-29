@@ -86,6 +86,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adce75b8d9b99e7bb05a50af8de44cad6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_system.html#adce75b8d9b99e7bb05a50af8de44cad6">exists</a> (const std::string &amp;filename) const</td></tr>
 <tr class="memdesc:adce75b8d9b99e7bb05a50af8de44cad6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the existence of a file on disk.  <a href="#adce75b8d9b99e7bb05a50af8de44cad6">More...</a><br /></td></tr>
 <tr class="separator:adce75b8d9b99e7bb05a50af8de44cad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab99892f4789fe6d1e2cd998d8599607a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_system.html#ab99892f4789fe6d1e2cd998d8599607a">hasExtension</a> (const std::string &amp;file, const std::string &amp;extension) const</td></tr>
+<tr class="memdesc:ab99892f4789fe6d1e2cd998d8599607a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the file has the specified extension.  <a href="#ab99892f4789fe6d1e2cd998d8599607a">More...</a><br /></td></tr>
+<tr class="separator:ab99892f4789fe6d1e2cd998d8599607a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86a5ef8acd30d4d6efb0290ef89f8807"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_system.html#a86a5ef8acd30d4d6efb0290ef89f8807">hasExtensions</a> (const std::string &amp;file, const std::string &amp;extension, unsigned int count) const</td></tr>
+<tr class="memdesc:a86a5ef8acd30d4d6efb0290ef89f8807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the file has multiple extensions.  <a href="#a86a5ef8acd30d4d6efb0290ef89f8807">More...</a><br /></td></tr>
+<tr class="separator:a86a5ef8acd30d4d6efb0290ef89f8807"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
@@ -117,6 +123,91 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the file has been found. </dd></dl>
+
+</div>
+</div>
+<a id="ab99892f4789fe6d1e2cd998d8599607a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab99892f4789fe6d1e2cd998d8599607a">&sect;&nbsp;</a></span>hasExtension()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool jackal::FileSystem::hasExtension </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>extension</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the file has the specified extension. </p>
+<p>A number of files and classes that manipulate files rely on the file in question has the correct extension, as this makes sure the correct files are being manipulated and will not result in incorrect or undefined behavior.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The file to check for the extension. </td></tr>
+    <tr><td class="paramname">extension</td><td>The extension to check the file for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the extension of the file is correct. </dd></dl>
+
+</div>
+</div>
+<a id="a86a5ef8acd30d4d6efb0290ef89f8807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86a5ef8acd30d4d6efb0290ef89f8807">&sect;&nbsp;</a></span>hasExtensions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool jackal::FileSystem::hasExtensions </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>extension</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if the file has multiple extensions. </p>
+<p>A selected number of files used within the engine can contain multiple extensions (such as shaders), this method makes sure that those files contain the correct extensions. It will make sure the files being read or manipulated are correct and will not result in incorrect or undefined behavior.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>The file to check for the extension. </td></tr>
+    <tr><td class="paramname">extension</td><td>The extensions to check the file for. </td></tr>
+    <tr><td class="paramname">count</td><td>The number of extensions to check for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the extensions of the file are correct. </dd></dl>
 
 </div>
 </div>

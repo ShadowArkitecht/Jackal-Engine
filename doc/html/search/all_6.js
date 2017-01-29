@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['log',['Log',['../classjackal_1_1_log.html',1,'jackal']]],
-  ['log',['Log',['../classjackal_1_1_log.html#aa81df2c93d732b4760de99e2f8a66faa',1,'jackal::Log']]]
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html',1,'jackal']]],
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html#a62a63010af0c81679b158ba66ae7fef9',1,'jackal::IPolicy']]]
 ];

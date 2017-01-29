@@ -33,7 +33,9 @@
 // Jackal includes
 //====================
 #include <jackal/utils/properties.hpp>         // Properties class declaration.
+#include <jackal/utils/file_system.hpp>        // Used to check the file has the correct extension.
 #include <jackal/core/virtual_file_system.hpp> // Loading the properties file with the vfs system.
+#include <jackal/core/config_file.hpp>         // Loading the current properties type from the config file.
 
 namespace jackal 
 {
@@ -82,10 +84,10 @@ namespace jackal
 	{
 		if (!m_loaded)
 		{
-			std::string ext = filename.substr(filename.find_last_of('.') + 1, filename.length());
-			if (ext != "properties")
+			FileSystem system;
+			if (!system.hasExtension(filename, "properties"))
 			{
-				m_log.warning(m_log.function(__func__, filename), "Failed to load. Incorrect extension: ", ext);
+				m_log.warning(m_log.function(__func__, filename), "Failed to load. Incorrect extension.");
 				return false;
 			}
 
@@ -109,6 +111,7 @@ namespace jackal
 			}
 
 			std::string line;
+			int lineNumber = 1;
 			while (std::getline(file, line))
 			{
 				// Removing any redundant/irritating characters.
@@ -119,6 +122,7 @@ namespace jackal
 				// Empty line, no point checking it.
 				if (line.empty())
 				{
+					lineNumber++;
 					continue;
 				}
 				
@@ -128,13 +132,24 @@ namespace jackal
 				// It's a comment in the properties file, ignore it. 
 				if (formattedStr.at(0) == COMMENT_SYMBOL)
 				{	
+					lineNumber++;
 					continue; 
 				}
 
 				std::size_t equalPos = line.find(EQUALS_SYMBOL);
 				if (equalPos == std::string::npos)
 				{
-					m_log.warning(m_log.function(__func__, filename), "Incorrectly formatted line: ", line);
+					m_log.warning(m_log.function(__func__, filename), "Incorrectly formatted property on line ", lineNumber);
+					lineNumber++;
+					continue;
+				}
+
+				// Prevent duplicate keys from being added/changed.
+				std::string key = formattedStr.substr(0, formattedStr.find(EQUALS_SYMBOL));
+				if (this->exists(key))
+				{
+					m_log.warning(m_log.function(__func__, filename), "Duplicate property found on line ", lineNumber, ":", key);
+					lineNumber++;
 					continue;
 				}
 
@@ -161,13 +176,21 @@ namespace jackal
 					std::sort(std::begin(property.parameters), std::end(property.parameters));
 				}
 
-				m_properties.insert(std::make_pair(formattedStr.substr(0, formattedStr.find(EQUALS_SYMBOL)), property));
+				m_properties.insert(std::make_pair(key, property));
+				lineNumber++;
 			}
 
 			m_loaded = true;
 		}
 
 		return true;
+	}
+
+	////////////////////////////////////////////////////////////
+	bool Properties::open(const std::string& path, const ConfigFile& config)
+	{
+		std::string file = path + config.get<std::string>("locale_file");
+		return this->open(file);
 	}
 
 	////////////////////////////////////////////////////////////

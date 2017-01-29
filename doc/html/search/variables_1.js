@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value',['value',['../structjackal_1_1_property__t.html#adb0b23fccaf0d3da04afdd51f9634c42',1,'jackal::Property_t']]]
+  ['type',['type',['../structjackal_1_1_config_variant__t.html#ac31e092d159bb78171198ef5ee29b262',1,'jackal::ConfigVariant_t']]]
 ];
