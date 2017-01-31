@@ -273,7 +273,7 @@ namespace jackal
 /// const DebugLog log("logs/engine_log.txt");
 ///
 /// void foo(int bar) {
-///		log.message(log.function(__func__, bar), "function called.");
+///		log.message(log.function(__FUNCTION__, bar), "function called.");
 /// }
 ///
 /// log.warning("This is a warning message.");

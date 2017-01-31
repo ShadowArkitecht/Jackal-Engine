@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['log',['Log',['../classjackal_1_1_log.html',1,'jackal']]],
-  ['log',['Log',['../classjackal_1_1_log.html#aa81df2c93d732b4760de99e2f8a66faa',1,'jackal::Log']]],
-  ['log_3c_20filepolicy_20_3e',['Log&lt; FilePolicy &gt;',['../classjackal_1_1_log.html',1,'jackal']]]
+  ['jackal_2dengine',['Jackal-Engine',['../md_repos__jackal-_engine__r_e_a_d_m_e.html',1,'']]]
 ];

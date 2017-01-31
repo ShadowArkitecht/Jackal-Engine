@@ -266,7 +266,7 @@ namespace jackal
 			return p.value;
 		}
 
-		m_log.warning(m_log.function(__func__, name), "Property cannot be found in properties file.");
+		m_log.warning(m_log.function(__FUNCTION__, name), "Property cannot be found in properties file.");
 		return std::string();
 	}
 

@@ -68,7 +68,7 @@ namespace jackal
 		std::string path;
 		if (!VirtualFileSystem::getInstance().resolve(filename, path))
 		{
-			log.error(log.function(__func__, filename), "Failed. File does not exist.");
+			log.error(log.function(__FUNCTION__, filename), "Failed. File does not exist.");
 			return false;
 		}
 		
@@ -77,7 +77,7 @@ namespace jackal
 
 		if (file.fail())
 		{
-			log.error(log.function(__func__, filename), "Failed. File failed to open.");
+			log.error(log.function(__FUNCTION__, filename), "Failed. File failed to open.");
 			file.close();
 
 			return false;

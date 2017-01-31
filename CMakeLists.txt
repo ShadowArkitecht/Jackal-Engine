@@ -30,10 +30,41 @@ cmake_minimum_required(VERSION 3.1.0)
 project(Jackal-Editor)
 set(CMAKE_CXX_STANDARD 14)	# C++14 standard. 
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 #====================
 # Include directories
 #====================
 include_directories("${CMAKE_SOURCE_DIR}/include")
+
+#====================
+# Libraries
+#====================
+find_package(SDL2 REQUIRED)
+if (SDL2_FOUND)
+	message(STATUS "SDL2 found. Linking to Jackal Engine.")
+	include_directories(${SDL2_INCLUDE_DIR})
+	link_libraries(${SDL2_LIBRARY})
+else()
+	message(FATAL_ERROR "CMake build failed. SDL2 could not be found.")
+endif()
+
+find_package(OpenGL REQUIRED)
+if (OPENGL_FOUND)
+	message(STATUS "OpenGL found. Linking to Jackal Engine.")
+	link_libraries(${OPENGL_gl_LIBRARY})
+else()
+	message(FATAL_ERROR "CMake build failed. OpenGL could not be found.")
+endif()
+
+find_package(JGLEW REQUIRED)
+if (JGLEW_FOUND)
+	message(STATUS "GLEW found. Linking to Jackal Engine.")
+	include_directories(${JGLEW_INCLUDE_DIR})
+	link_libraries(${JGLEW_LIBRARY})
+else()
+	message(FATAL_ERROR "CMake build failed. GLEW count not be found.")
+endif()
 
 #====================
 # Source directories

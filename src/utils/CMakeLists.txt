@@ -32,6 +32,7 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/utils")            # Source files.
 # Variables
 #====================
 set(HEADER_FILES "${INCLUDE_DIR}/constants.hpp"
+                 "${INCLUDE_DIR}/context_settings.hpp"
                  "${INCLUDE_DIR}/csv_file_reader.hpp"
 	         "${INCLUDE_DIR}/file_policy.hpp"
                  "${INCLUDE_DIR}/file_reader.hpp"
@@ -44,6 +45,7 @@ set(HEADER_FILES "${INCLUDE_DIR}/constants.hpp"
                  "${INCLUDE_DIR}/singleton.hpp")
 
 set(SOURCE_FILES "${SOURCE_DIR}/constants.cpp" 
+                 "${SOURCE_DIR}/context_settings.cpp" 
                  "${SOURCE_DIR}/csv_file_reader.cpp"  
                  "${SOURCE_DIR}/file_policy.cpp" 
 	         "${SOURCE_DIR}/file_reader.cpp" 

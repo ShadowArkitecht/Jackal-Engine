@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['jackal_2dengine',['Jackal-Engine',['../md_repos__jackal-_engine__r_e_a_d_m_e.html',1,'']]]
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html',1,'jackal']]],
+  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html#a62a63010af0c81679b158ba66ae7fef9',1,'jackal::IPolicy']]],
+  ['isrunning',['isRunning',['../classjackal_1_1_window.html#a33db9f27a5b99d3ce9b2d1ee57f47857',1,'jackal::Window']]]
 ];

@@ -26,3 +26,20 @@
 # Global settings
 #====================
 locale_file : string = "en_UK.properties" # This should be changed to the language of choice for the engine.
+
+#====================
+# Window settings
+#====================
+[Window]
+title: string   = "Jackal Engine" # Name of the window (title-bar).
+position: vec2i = (200, 200)      # Its starting position on the desktop.
+size: vec2i     = (640, 480)      # The width and height of the window.
+
+#====================
+# Context settings
+#====================
+[ContextSettings]
+depth_bits: uint = 24   # Defines the number of depth bits to use within the window.
+stencil_bits: uint = 8  # Defines the number of stencil bits to use within the window.
+major_version: uint = 3 # Major version of OpenGL to use.
+minor_version: uint = 3 # Minor version of OpenGL to use.

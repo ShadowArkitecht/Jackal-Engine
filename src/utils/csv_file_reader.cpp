@@ -78,7 +78,7 @@ namespace jackal
 		FileSystem system;
 		if (!system.hasExtension(filename, Constants::Extensions::CSV))
 		{
-			log.warning(log.function(__func__, filename), "Failed. Incorrect extension.");
+			log.warning(log.function(__FUNCTION__, filename), "Failed. Incorrect extension.");
 			return false;
 		}
 
@@ -105,7 +105,7 @@ namespace jackal
 
 				if (count != columns)
 				{
-					log.warning(log.function(__func__, filename), "Failed to parse line", i, "incorrect number of elements.");
+					log.warning(log.function(__FUNCTION__, filename), "Failed to parse line", i, "incorrect number of elements.");
 					continue;
 				}
 			}

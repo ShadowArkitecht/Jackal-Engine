@@ -35,6 +35,7 @@
 // C++ includes
 //====================
 #include <jackal/utils/non_copyable.hpp> // ConfigFile should be copied or assigned to different objects.
+#include <jackal/math/vector2.hpp>       // Returning elements as a Vector2.
 
 namespace jackal 
 {
@@ -48,7 +49,10 @@ namespace jackal
 		FLOAT,
 		DOUBLE,
 		BOOLEAN,
-		STRING
+		STRING,
+		VECTOR2I,
+		VECTOR2F,
+		VECTOR2D
 	};
 
 	struct ConfigVariant_t
@@ -247,6 +251,21 @@ namespace jackal
 	template <>
 	std::string ConfigFile::get<std::string>(const std::string& variable) const;
 
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Vector2i value from the ConfigFile.
+	///
+	/// This is the template specialization for retrieving Vector2i
+	/// values from the config file. If the variable is not found 
+	/// or is the incorrect datatype. An zero-ed Vector2 is returned.
+	///
+	/// @param variable The name of the variable.
+	///
+	/// @returns The value attached to the variable.
+	///
+	////////////////////////////////////////////////////////////
+	template <>
+	Vector2i ConfigFile::get<Vector2i>(const std::string& variable) const;
+	
 } // namespace jackal
 
 #endif//__JACKAL_CONFIG_FILE_HPP__

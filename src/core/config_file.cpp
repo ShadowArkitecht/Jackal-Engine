@@ -71,12 +71,12 @@ namespace jackal
 			}
 			else
 			{
-				log.warning(log.function(__func__, variable), "Incorrect datatype.");
+				log.warning(log.function(__FUNCTION__, variable), "Incorrect datatype.");
 				return 0;
 			}
 		}
 
-		log.warning(log.function(__func__, variable), "Unable to find variable.");
+		log.warning(log.function(__FUNCTION__, variable), "Unable to find variable.");
 		return 0;
 	}
 
@@ -94,12 +94,12 @@ namespace jackal
 			}
 			else
 			{
-				log.warning(log.function(__func__, variable), "Incorrect datatype.");
+				log.warning(log.function(__FUNCTION__, variable), "Incorrect datatype.");
 				return 0;
 			}
 		}
 
-		log.warning(log.function(__func__, variable), "Unable to find variable.");
+		log.warning(log.function(__FUNCTION__, variable), "Unable to find variable.");
 		return 0;
 	}
 
@@ -117,12 +117,12 @@ namespace jackal
 			}
 			else
 			{
-				log.warning(log.function(__func__, variable), "Incorrect datatype.");
+				log.warning(log.function(__FUNCTION__, variable), "Incorrect datatype.");
 				return 0.0f;
 			}
 		}
 
-		log.warning(log.function(__func__, variable), "Unable to find variable.");
+		log.warning(log.function(__FUNCTION__, variable), "Unable to find variable.");
 		return 0.0f;	
 	}
 
@@ -140,12 +140,12 @@ namespace jackal
 			}
 			else
 			{
-				log.warning(log.function(__func__, variable), "Incorrect datatype.");
+				log.warning(log.function(__FUNCTION__, variable), "Incorrect datatype.");
 				return 0.0;
 			}
 		}
 
-		log.warning(log.function(__func__, variable), "Unable to find variable.");
+		log.warning(log.function(__FUNCTION__, variable), "Unable to find variable.");
 		return 0.0;	
 	}
 
@@ -163,12 +163,12 @@ namespace jackal
 			}
 			else
 			{
-				log.warning(log.function(__func__, variable), "Incorrect datatype.");
+				log.warning(log.function(__FUNCTION__, variable), "Incorrect datatype.");
 				return false;
 			}
 		}
 
-		log.warning(log.function(__func__, variable), "Unable to find variable.");
+		log.warning(log.function(__FUNCTION__, variable), "Unable to find variable.");
 		return false;
 	}
 
@@ -186,13 +186,49 @@ namespace jackal
 			}
 			else
 			{
-				log.warning(log.function(__func__, variable), "Incorrect datatype.");
+				log.warning(log.function(__FUNCTION__, variable), "Incorrect datatype.");
 				return "";
 			}
 		}
 
-		log.warning(log.function(__func__, variable), "Unable to find variable.");
+		log.warning(log.function(__FUNCTION__, variable), "Unable to find variable.");
 		return "";
+	}
+
+	////////////////////////////////////////////////////////////
+	template <>
+	Vector2i ConfigFile::get<Vector2i>(const std::string& variable) const
+	{
+		auto itr = m_variants.find(variable);
+		if (itr != std::end(m_variants))
+		{
+			ConfigVariant_t cv = itr->second;
+			if (cv.type == eVariantType::VECTOR2I)
+			{
+				std::stringstream ss(cv.value);
+				std::vector<std::string> elements;
+
+				while (ss.good())
+				{
+					std::string el;
+					std::getline(ss, el, ',');
+					elements.push_back(el);
+				}
+
+				Vector2i result;
+				result.x = std::stoi(elements.at(0));
+				result.y = std::stoi(elements.at(1));
+
+				return result;
+			}
+			else
+			{
+				log.warning(log.function(__FUNCTION__, variable), "Unable to find variable");
+				return Vector2i::zero();
+			}
+		}
+
+		return Vector2i::zero();
 	}
 
 	//====================
@@ -215,7 +251,7 @@ namespace jackal
 		auto itr = m_variants.find(variable);
 		if (itr != std::end(m_variants))
 		{
-			log.warning(log.function(__func__, variable, datatype, value), "Failed to parse.", variable, "is already defined.");
+			log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse.", variable, "is already defined.");
 			return false; 
 		}
 
@@ -229,7 +265,7 @@ namespace jackal
 		{
 			if (!isDigit(value))
 			{	
-				log.warning(log.function(__func__, variable, datatype, value), "Failed to parse. It is not numerical");
+				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not numerical");
 				return false;
 			}
 
@@ -245,7 +281,7 @@ namespace jackal
 		{
 			if (value != "true" || value != "false")
 			{
-				log.warning(log.function(__func__, variable, datatype, value), "Failed to parse. It is not a boolean value");
+				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not a boolean value");
 				return false;
 			}
 
@@ -256,12 +292,35 @@ namespace jackal
 		{
 			if (value.at(0) != '\"' || value.at(value.length() - 1) != '\"')
 			{
-				log.warning(log.function(__func__, variable, datatype, value), "Failed to parse. It is not a correctly formatted value");
+				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not a correctly formatted string");
 				return false;
 			}
 
 			variant.type = eVariantType::STRING;
 			variant.value = value.substr(1, value.length() - 2);
+		} 
+		else if (datatype.substr(0, 4) == "vec2") 
+		{
+			if (value.at(0) == '(' && value.at(value.length() - 1) == ')') 
+			{
+				switch (datatype.at(4))
+				{
+				case 'i':
+					variant.type = eVariantType::VECTOR2I;
+					break;
+
+				case 'd':
+					variant.type = eVariantType::VECTOR2D;
+					break;
+				}
+			} 
+			else
+			{
+				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not a correctly formatted vec2");
+				return false;
+			}
+
+			variant.value = value.substr(1, value.length() - 1);
 		}
 
 		m_variants.insert(std::make_pair(variable, variant));
@@ -277,7 +336,7 @@ namespace jackal
 		FileSystem system;
 		if (!system.hasExtension(filename, Constants::Extensions::CONFIGURATION))
 		{
-			log.error(log.function(__func__, filename), "Failed. Incorrect extension.");
+			log.error(log.function(__FUNCTION__, filename), "Failed. Incorrect extension.");
 			return false;
 		}
 
@@ -294,12 +353,16 @@ namespace jackal
 			line.erase(std::remove_if(std::begin(line), std::end(line), [](char c) {
 				return c == '\r' || c == '\n' || c == '\t' || std::isspace(c);
 			}));
-			// For some reason the last two characters are copied, remove them.
-			line = line.substr(0, line.length() - 2);
 
 			if (line.empty())
 			{
 				continue;
+			}
+
+			// For some reason the last two characters are copied, remove them.
+			if (line.at(0) != '[')
+			{
+				line = line.substr(0, line.length() - 2);
 			}
 
 			switch (line.at(0))
@@ -308,7 +371,7 @@ namespace jackal
 					continue;
 
 				case '[':
-					section = line.substr(1, line.length() - 1);
+					section = line.substr(1, line.length() - 2);
 					continue;
 			}
 
@@ -331,7 +394,7 @@ namespace jackal
 
 			if (namePos == -1 || dataPos == -1)
 			{
-				log.warning(log.function(__func__, filename), "Failed to parse line:", line);
+				log.warning(log.function(__FUNCTION__, filename), "Failed to parse line:", line);
 				continue;
 			}
 
@@ -340,7 +403,7 @@ namespace jackal
 
 			if (m_variants.find(variable) != std::end(m_variants))
 			{
-				log.warning(log.function(__func__, filename), variable, "is already defined within the config file.");
+				log.warning(log.function(__FUNCTION__, filename), variable, "is already defined within the config file.");
 				continue;
 			}
 
@@ -358,7 +421,7 @@ namespace jackal
 			}
 		}
 
-		log.debug(log.function(__func__, filename), "Parsed successfully.");
+		log.debug(log.function(__FUNCTION__, filename), "Parsed successfully.");
 		return true;
 	}
 

@@ -72,7 +72,7 @@ namespace jackal
 			return itr->second.value;
 		}
 
-		m_log.warning(m_log.function(__func__, name), "Property cannot be found in properties file.");
+		m_log.warning(m_log.function(__FUNCTION__, name), "Property cannot be found in properties file.");
 		return std::string();
 	}
 
@@ -87,7 +87,7 @@ namespace jackal
 			FileSystem system;
 			if (!system.hasExtension(filename, "properties"))
 			{
-				m_log.warning(m_log.function(__func__, filename), "Failed to load. Incorrect extension.");
+				m_log.warning(m_log.function(__FUNCTION__, filename), "Failed to load. Incorrect extension.");
 				return false;
 			}
 
@@ -125,7 +125,7 @@ namespace jackal
 				std::size_t equalPos = line.find(EQUALS_SYMBOL);
 				if (equalPos == std::string::npos)
 				{
-					m_log.warning(m_log.function(__func__, filename), "Incorrectly formatted property on line ", lineNumber);
+					m_log.warning(m_log.function(__FUNCTION__, filename), "Incorrectly formatted property on line ", lineNumber);
 					lineNumber++;
 					continue;
 				}
@@ -134,7 +134,7 @@ namespace jackal
 				std::string key = formattedStr.substr(0, formattedStr.find(EQUALS_SYMBOL));
 				if (this->exists(key))
 				{
-					m_log.warning(m_log.function(__func__, filename), "Duplicate property found on line ", lineNumber, ":", key);
+					m_log.warning(m_log.function(__FUNCTION__, filename), "Duplicate property found on line ", lineNumber, ":", key);
 					lineNumber++;
 					continue;
 				}
@@ -166,7 +166,7 @@ namespace jackal
 				lineNumber++;
 			}
 
-			m_log.debug(m_log.function(__func__, filename), "Parsed successfully.");
+			m_log.debug(m_log.function(__FUNCTION__, filename), "Parsed successfully.");
 			m_loaded = true;
 		}
 
