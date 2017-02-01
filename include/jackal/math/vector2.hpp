@@ -50,19 +50,19 @@ namespace jackal
 		//====================
 		////////////////////////////////////////////////////////////
 		/// @brief Default constructor for the Vector2 object.
-        ///
-        /// When the default constructor for the Vector2 object is called, 
-        /// it sets the x and y values to 0.
-        ///
+		///
+		/// When the default constructor for the Vector2 object is called, 
+		/// it sets the x and y values to 0.
+		///
 		////////////////////////////////////////////////////////////
 		explicit Vector2(void);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Constructor for a Vector2 object with defined x and y values.
 		///
-        /// This constructor is used to set the two values of the
-        /// Vector2 objects to user defined amounts.
-        ///
+		/// This constructor is used to set the two values of the
+		/// Vector2 objects to user defined amounts.
+		///
 		/// @param x	The x value of the Vector2 object.
 		///	@param y	The y value of the Vector2 object.
 		///
@@ -72,9 +72,9 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		/// @brief Constructor for a Vector2 object, generating values from anoher Vector2.
 		///
-        /// As there are numerous different type definitions and Vector2
-        /// types, this constructor will convert from one Vector2 type to another.
-        ///
+		/// As there are numerous different type definitions and Vector2
+		/// types, this constructor will convert from one Vector2 type to another.
+		///
 		/// @param vector	The different Vector2 type.
 		///
 		////////////////////////////////////////////////////////////
@@ -582,7 +582,7 @@ namespace jackal
 /// @code
 /// using namespace jackal;
 ///
-/// // Create two vectors to calculate the cross product.
+/// // Create two vectors to calculate the dot product.
 /// Vector2f v1 = Vector2f::up();
 /// Vector2f v2 = Vector2f::right();
 ///

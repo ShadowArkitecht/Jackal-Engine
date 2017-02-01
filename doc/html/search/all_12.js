@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['value',['value',['../structjackal_1_1_config_variant__t.html#a3edb0e3529c4ccda695b7e9dd34392ce',1,'jackal::ConfigVariant_t::value()'],['../structjackal_1_1_property__t.html#adb0b23fccaf0d3da04afdd51f9634c42',1,'jackal::Property_t::value()']]],
-  ['vector2',['Vector2',['../classjackal_1_1_vector2.html',1,'jackal']]],
-  ['vector2',['Vector2',['../classjackal_1_1_vector2.html#a5f2782381c7d60bafebcb7cd818ef1b9',1,'jackal::Vector2::Vector2(void)'],['../classjackal_1_1_vector2.html#ae0b0d5fc25a88e868afbe12d0c367bc4',1,'jackal::Vector2::Vector2(T x, T y)'],['../classjackal_1_1_vector2.html#ae918f34dac9a915abec090b739366354',1,'jackal::Vector2::Vector2(const Vector2&lt; U &gt; &amp;vector)']]],
-  ['vector2_3c_20int_20_3e',['Vector2&lt; int &gt;',['../classjackal_1_1_vector2.html',1,'jackal']]],
-  ['vertex_5fshader',['VERTEX_SHADER',['../structjackal_1_1_constants_1_1_extensions.html#ac3dafe49d79772b64f0454eca215d0d9',1,'jackal::Constants::Extensions']]],
-  ['virtualfilesystem',['VirtualFileSystem',['../classjackal_1_1_virtual_file_system.html',1,'jackal']]]
+  ['unbind',['unbind',['../classjackal_1_1_buffer.html#abe91bd778b33cad72366712581b56145',1,'jackal::Buffer']]],
+  ['up',['up',['../classjackal_1_1_vector2.html#a55bf5e8a02f8eb3ba901caca516cb30b',1,'jackal::Vector2::up()'],['../classjackal_1_1_vector3.html#a897c32e792d0a76fff346e014af3b4ab',1,'jackal::Vector3::up()']]]
 ];

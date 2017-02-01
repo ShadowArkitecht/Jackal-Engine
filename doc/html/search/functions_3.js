@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['error',['error',['../classjackal_1_1_log.html#abcce1e4d0fe0e4310bc8f03219525d3f',1,'jackal::Log']]],
-  ['exists',['exists',['../classjackal_1_1_file_system.html#adce75b8d9b99e7bb05a50af8de44cad6',1,'jackal::FileSystem::exists()'],['../classjackal_1_1_properties.html#a20e9e3c522e60e8532301abd5fcde9aa',1,'jackal::Properties::exists()']]]
+  ['debug',['debug',['../classjackal_1_1_log.html#a6c7a6cf29c0ef56808464d18838feb9e',1,'jackal::Log']]],
+  ['destroy',['destroy',['../classjackal_1_1_buffer.html#addc20590ce63687b3c6b36e344df636e',1,'jackal::Buffer']]],
+  ['dismount',['dismount',['../classjackal_1_1_virtual_file_system.html#a770abe530124192097a000b443b8861a',1,'jackal::VirtualFileSystem']]],
+  ['dismountall',['dismountAll',['../classjackal_1_1_virtual_file_system.html#a423110a6fb4cf56c34b32778dce0b05f',1,'jackal::VirtualFileSystem']]],
+  ['distance',['distance',['../classjackal_1_1_vector2.html#a67c5ec6433ac88d901de5b6119a32107',1,'jackal::Vector2::distance()'],['../classjackal_1_1_vector3.html#a2f44d94ab2d27f8001dbe1fbbadcfc2a',1,'jackal::Vector3::distance()']]],
+  ['distancesqr',['distanceSqr',['../classjackal_1_1_vector2.html#afe842a18b3313cb4077bc2d09ed7cefa',1,'jackal::Vector2::distanceSqr()'],['../classjackal_1_1_vector3.html#ab4ab78bccb3fa28dedd246e924371416',1,'jackal::Vector3::distanceSqr()']]],
+  ['dot',['dot',['../classjackal_1_1_vector2.html#ac630d1cad247b2022eca6e19d4373e09',1,'jackal::Vector2::dot()'],['../classjackal_1_1_vector3.html#a696bf57083536f372255f34b0cf9f001',1,'jackal::Vector3::dot()']]]
 ];

@@ -82,4 +82,4 @@ set(SOURCE_FILES ${CMAKE_SOURCE_DIR}/main.cpp)
 add_executable(jackal ${SOURCE_FILES})
 
 set_target_properties(jackal PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(jackal jackal_core jackal_utils)
+target_link_libraries(jackal jackal_core jackal_utils jackal_rendering)

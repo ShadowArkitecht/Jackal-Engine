@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vector2',['Vector2',['../classjackal_1_1_vector2.html#a5f2782381c7d60bafebcb7cd818ef1b9',1,'jackal::Vector2::Vector2(void)'],['../classjackal_1_1_vector2.html#ae0b0d5fc25a88e868afbe12d0c367bc4',1,'jackal::Vector2::Vector2(T x, T y)'],['../classjackal_1_1_vector2.html#ae918f34dac9a915abec090b739366354',1,'jackal::Vector2::Vector2(const Vector2&lt; U &gt; &amp;vector)']]]
+  ['unbind',['unbind',['../classjackal_1_1_buffer.html#abe91bd778b33cad72366712581b56145',1,'jackal::Buffer']]],
+  ['up',['up',['../classjackal_1_1_vector2.html#a55bf5e8a02f8eb3ba901caca516cb30b',1,'jackal::Vector2::up()'],['../classjackal_1_1_vector3.html#a897c32e792d0a76fff346e014af3b4ab',1,'jackal::Vector3::up()']]]
 ];

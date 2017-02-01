@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html',1,'jackal']]],
-  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html#a62a63010af0c81679b158ba66ae7fef9',1,'jackal::IPolicy']]],
-  ['isrunning',['isRunning',['../classjackal_1_1_window.html#a33db9f27a5b99d3ce9b2d1ee57f47857',1,'jackal::Window']]]
+  ['hasextension',['hasExtension',['../classjackal_1_1_file_system.html#ab99892f4789fe6d1e2cd998d8599607a',1,'jackal::FileSystem']]],
+  ['hasextensions',['hasExtensions',['../classjackal_1_1_file_system.html#a86a5ef8acd30d4d6efb0290ef89f8807',1,'jackal::FileSystem']]]
 ];

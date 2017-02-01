@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['setposition',['setPosition',['../classjackal_1_1_window.html#a7f25b7627ea6eadd4e49529b9286bb43',1,'jackal::Window']]],
-  ['setsize',['setSize',['../classjackal_1_1_window.html#aa79dcf3e8247717258aaf122f70d5162',1,'jackal::Window']]],
-  ['settitle',['setTitle',['../classjackal_1_1_window.html#a67f364fa821d06e06c15a5c8802d386c',1,'jackal::Window']]],
-  ['singleton',['Singleton',['../classjackal_1_1_singleton.html#a35a5c88a49799c2b70ffd4d6f050317f',1,'jackal::Singleton']]],
-  ['swap',['swap',['../classjackal_1_1_window.html#ae5393e76c997c9813e740dace9d31916',1,'jackal::Window']]]
+  ['read',['read',['../classjackal_1_1_c_s_v_file_reader.html#afc1b210af88327267a3b078031efb10b',1,'jackal::CSVFileReader::read()'],['../classjackal_1_1_file_reader.html#a82da37137cd4e10429d4148ac3ad309a',1,'jackal::FileReader::read()']]],
+  ['resolve',['resolve',['../classjackal_1_1_virtual_file_system.html#a72fa27c6d41abb6d811a6b31eaffa233',1,'jackal::VirtualFileSystem']]],
+  ['right',['right',['../classjackal_1_1_vector2.html#a982095308093bde7c8abf076806a73e0',1,'jackal::Vector2::right()'],['../classjackal_1_1_vector3.html#a8127dc27e530f0676048e2994bf4f936',1,'jackal::Vector3::right()']]],
+  ['rotate',['rotate',['../classjackal_1_1_vector2.html#a99952226a37a30b797a7c5e7b675a696',1,'jackal::Vector2']]]
 ];

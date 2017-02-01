@@ -36,6 +36,7 @@
 //====================
 #include <jackal/utils/non_copyable.hpp> // ConfigFile should be copied or assigned to different objects.
 #include <jackal/math/vector2.hpp>       // Returning elements as a Vector2.
+#include <jackal/math/vector3.hpp>       // Returning elements as a Vector3.
 
 namespace jackal 
 {
@@ -52,7 +53,10 @@ namespace jackal
 		STRING,
 		VECTOR2I,
 		VECTOR2F,
-		VECTOR2D
+		VECTOR2D,
+		VECTOR3I,
+		VECTOR3F,
+		VECTOR3D
 	};
 
 	struct ConfigVariant_t
