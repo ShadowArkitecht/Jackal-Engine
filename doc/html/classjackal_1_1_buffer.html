@@ -65,6 +65,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classjackal_1_1_buffer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">jackal::Buffer Class Reference</div>  </div>
@@ -108,12 +109,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a467595f31728421814f4e5682046d58e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_buffer.html#a467595f31728421814f4e5682046d58e">allocate</a> (const void *pData, int count)</td></tr>
 <tr class="memdesc:a467595f31728421814f4e5682046d58e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates data to the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a>.  <a href="#a467595f31728421814f4e5682046d58e">More...</a><br /></td></tr>
 <tr class="separator:a467595f31728421814f4e5682046d58e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63d6c1e47e1a0d7884398706154a80c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_buffer.html#a63d6c1e47e1a0d7884398706154a80c4">bind</a> ()</td></tr>
-<tr class="memdesc:a63d6c1e47e1a0d7884398706154a80c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> for use.  <a href="#a63d6c1e47e1a0d7884398706154a80c4">More...</a><br /></td></tr>
-<tr class="separator:a63d6c1e47e1a0d7884398706154a80c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe91bd778b33cad72366712581b56145"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_buffer.html#abe91bd778b33cad72366712581b56145">unbind</a> ()</td></tr>
-<tr class="memdesc:abe91bd778b33cad72366712581b56145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a>.  <a href="#abe91bd778b33cad72366712581b56145">More...</a><br /></td></tr>
-<tr class="separator:abe91bd778b33cad72366712581b56145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ab758e5344a20e17692912d2254a80998"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_buffer.html#ab758e5344a20e17692912d2254a80998">bind</a> (const <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="memdesc:ab758e5344a20e17692912d2254a80998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> object for use.  <a href="#ab758e5344a20e17692912d2254a80998">More...</a><br /></td></tr>
+<tr class="separator:ab758e5344a20e17692912d2254a80998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72e95b9ae473e33a1594f5aefdc13dfc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_buffer.html#a72e95b9ae473e33a1594f5aefdc13dfc">unbind</a> (const <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr class="memdesc:a72e95b9ae473e33a1594f5aefdc13dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unbinds a Buffers object.  <a href="#a72e95b9ae473e33a1594f5aefdc13dfc">More...</a><br /></td></tr>
+<tr class="separator:a72e95b9ae473e33a1594f5aefdc13dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
@@ -242,23 +246,32 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a63d6c1e47e1a0d7884398706154a80c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63d6c1e47e1a0d7884398706154a80c4">&sect;&nbsp;</a></span>bind()</h2>
+<a id="ab758e5344a20e17692912d2254a80998"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab758e5344a20e17692912d2254a80998">&sect;&nbsp;</a></span>bind()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void jackal::Buffer::bind </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Binds the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> for use. </p>
-<p>The buffer must be bound in order for the rendering capabilities to render correctly. Commonly only buffers that are assigned the flag eBufferType::ARRAY will need to be constantly bound each frame. </p>
+<p>Binds a <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> object for use. </p>
+<p>A buffer must be bound in order for the rendering capabilities to render correctly. Commonly only buffers that are assigned the flag eBufferType::ARRAY will need to be constantly bound each frame. </p>
 
 </div>
 </div>
@@ -421,23 +434,32 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abe91bd778b33cad72366712581b56145"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe91bd778b33cad72366712581b56145">&sect;&nbsp;</a></span>unbind()</h2>
+<a id="a72e95b9ae473e33a1594f5aefdc13dfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72e95b9ae473e33a1594f5aefdc13dfc">&sect;&nbsp;</a></span>unbind()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void jackal::Buffer::unbind </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Unbinds the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a>. </p>
-<p>At the end of each iteration or use, the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> should be unbound so that it does not effect other objects or processes outside the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> objects scope. </p>
+<p>Unbinds a Buffers object. </p>
+<p>At the end of each iteration or use, the buffers should be unbound so that it does not effect other objects or processes outside the <a class="el" href="classjackal_1_1_buffer.html">Buffer</a> objects scope. </p>
 
 </div>
 </div>

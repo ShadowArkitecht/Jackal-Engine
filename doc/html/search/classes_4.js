@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ipolicy',['IPolicy',['../classjackal_1_1_i_policy.html',1,'jackal']]]
+  ['glslobject',['GLSLObject',['../classjackal_1_1_g_l_s_l_object.html',1,'jackal']]]
 ];

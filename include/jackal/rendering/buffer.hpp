@@ -194,25 +194,25 @@ namespace jackal
 		void allocate(const void* pData, int count);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Binds the Buffer for use.
+		/// @brief Binds a Buffer object for use.
 		///
-		/// The buffer must be bound in order for the rendering capabilities
+		/// A buffer must be bound in order for the rendering capabilities
 		/// to render correctly. Commonly only buffers that are assigned the
 		/// flag eBufferType::ARRAY will need to be constantly bound each
 		/// frame.
 		///
 		////////////////////////////////////////////////////////////
-		void bind();
+		static void bind(const Buffer& buffer);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Unbinds the Buffer.
+		/// @brief Unbinds a Buffers object.
 		///
-		/// At the end of each iteration or use, the Buffer should be unbound
+		/// At the end of each iteration or use, the buffers should be unbound
 		/// so that it does not effect other objects or processes outside the
 		/// Buffer objects scope. 
 		///
 		////////////////////////////////////////////////////////////
-		void unbind();
+		static void unbind(const Buffer& buffer);
 	};
 
 } // namespace jackal

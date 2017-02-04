@@ -74,3 +74,20 @@ namespace jackal
 /// the lua scripting interface. 
 ///
 ////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+/// @author Benjamin Carter
+///
+/// @class jackal::Constants::Extensions
+/// @ingroup utils
+///
+/// jackal::Constants::Extensions is a basic nested struct that
+/// contains a number of static string member variables that is used
+/// to represent the various different file extensions for external file
+/// that will be loaded in for the application to function.
+///
+/// As the class is just a collection of member variables, no example
+/// is provided and specific variables are exposed to the lua scripting
+/// interface.
+///
+////////////////////////////////////////////////////////////

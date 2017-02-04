@@ -70,6 +70,8 @@ $(function() {
 <div class="title">jackal::FileReader Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="file__reader_8hpp_source.html">file_reader.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -87,7 +89,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a82da37137cd4e10429d4148ac3ad309a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads in the external file into memory.  <a href="#a82da37137cd4e10429d4148ac3ad309a">More...</a><br /></td></tr>
 <tr class="separator:a82da37137cd4e10429d4148ac3ad309a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
+<p>The <a class="el" href="classjackal_1_1_file_reader.html">jackal::FileReader</a> object is a basic wrapper class for loading and manipulating streams of information that is currently contained on disk. The <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> will automatically provide a number of checks critical to success when loading files within the Jackal Engine.</p>
+<p>The class can make use of the <a class="el" href="classjackal_1_1_virtual_file_system.html">VirtualFileSystem</a>, or load information directly from a specified source. Due to the streaming nature, it is not exposed to the lua scripting interface.</p>
+<p>C++ Code example: </p><div class="fragment"><div class="line"><span class="comment">// Create a new FileReader object and check it read the file correctly.</span></div><div class="line"><a class="code" href="classjackal_1_1_file_reader.html">jackal::FileReader</a> reader;</div><div class="line"><span class="comment">// The reader can use the virtual file system.</span></div><div class="line"><span class="keywordflow">if</span> (!reader.<a class="code" href="classjackal_1_1_file_reader.html#a82da37137cd4e10429d4148ac3ad309a">read</a>(<span class="stringliteral">&quot;~data/file.txt&quot;</span>))</div><div class="line">{</div><div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;File failed to load!&quot;</span> &lt;&lt; std::endl;</div><div class="line">}</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a173c6e617d8d2ce25021fb6fa196d0be"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a173c6e617d8d2ce25021fb6fa196d0be">&sect;&nbsp;</a></span>FileReader()</h2>
 

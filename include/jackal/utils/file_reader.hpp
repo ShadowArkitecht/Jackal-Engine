@@ -122,5 +122,6 @@ namespace jackal
 /// {
 ///		std::cout << "File failed to load!" << std::endl;
 /// }
+/// @endcode
 ///
 ////////////////////////////////////////////////////////////

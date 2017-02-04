@@ -31,8 +31,10 @@
 #include <jackal/core/config_file.hpp>         // Load the main configuration file. 
 #include <jackal/utils/properties.hpp>         // Load the locale for the current application.
 #include <jackal/core/window.hpp>              // Creating test window instance.
+#include <jackal/rendering/glsl_object.hpp>    // Loading external shaders.
 #include <jackal/rendering/buffer.hpp>         // Binding different buffers.
 #include <jackal/rendering/vertex.hpp>         // Creating vertices for the buffers.
+#include <jackal/rendering/shader.hpp>
 
 using namespace jackal;
 
@@ -41,9 +43,12 @@ int main(int argc, char** argv)
 	SDL_SetMainReady();
 
 	auto& vfs = VirtualFileSystem::getInstance();
+	// utils
 	vfs.mount("locale", "data/locale");
 	vfs.mount("config", "data/config");
 	vfs.mount("csv", "data/csv");
+	// rendering
+	vfs.mount("shaders", "assets/shaders");
 
 	ConfigFile config;
 	config.open("~config/main.jcfg");
@@ -54,10 +59,16 @@ int main(int argc, char** argv)
 	Window window;
 	window.create(config);
 
+	Shader shader;
+	shader.attachShader("~shaders/basic_shader.vertex.glsl", eShaderType::VERTEX);
+	shader.attachShader("~shaders/basic_shader.fragment.glsl", eShaderType::FRAGMENT);
+
+	shader.compile();
+
 	Buffer vao(eBufferType::ARRAY);
 	vao.create();
 
-	vao.bind();
+	Buffer::bind(vao);
 
 	Buffer vbo(eBufferType::VERTEX);
 	vbo.create();
@@ -71,7 +82,7 @@ int main(int argc, char** argv)
 	verts.push_back(v2);
 	verts.push_back(v3);
 	
-	vbo.bind();
+	Buffer::bind(vbo);
 	vbo.allocate(verts.data(), verts.size());
 
 	Buffer ibo(eBufferType::INDEX);
@@ -82,19 +93,23 @@ int main(int argc, char** argv)
 	indices.push_back(1);
 	indices.push_back(2);
 
-	ibo.bind();
+	Buffer::bind(ibo);
 	ibo.allocate(indices.data(), indices.size());
 
-	vao.unbind();
+	Buffer::unbind(vao);
 
 	while (window.isRunning())
 	{
 		window.clear();
+		Shader::bind(shader);
 
-		vao.bind();
+		shader.process();
+		
+		Buffer::bind(vao);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-		vao.unbind();
+		Buffer::unbind(vao);
 
+		Shader::unbind();
 		window.swap();
 
 		window.pollEvents();

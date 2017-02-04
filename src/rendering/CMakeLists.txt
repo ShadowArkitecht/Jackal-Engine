@@ -32,9 +32,17 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/rendering")            # Source files
 # Variables
 #====================
 set(HEADER_FILES "${INCLUDE_DIR}/buffer.hpp"
+	             "${INCLUDE_DIR}/glsl_object.hpp"
+	             "${INCLUDE_DIR}/program.hpp"
+	             "${INCLUDE_DIR}/shader.hpp"
+	             "${INCLUDE_DIR}/uniform.hpp"
                  "${INCLUDE_DIR}/vertex.hpp")
 
-set(SOURCE_FILES "${SOURCE_DIR}/buffer.cpp")
+set(SOURCE_FILES "${SOURCE_DIR}/buffer.cpp"
+	             "${SOURCE_DIR}/glsl_object.cpp"
+	             "${SOURCE_DIR}/program.cpp"
+	             "${SOURCE_DIR}/shader.cpp"
+	             "${SOURCE_DIR}/uniform.cpp")
 
 #====================
 # Library

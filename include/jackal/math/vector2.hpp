@@ -389,6 +389,7 @@ namespace jackal
 		/// Rotates the vector by the angle specified, the angle is
 		/// in degrees.
 		///
+		/// @param position The position of the Vector2 to rotate.
 		/// @param angle    The angle to rotate the Vector2 by.
 		///
         /// @returns        The rotated Vector2 object.

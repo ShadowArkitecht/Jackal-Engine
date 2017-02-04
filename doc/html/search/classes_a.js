@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['window',['Window',['../classjackal_1_1_window.html',1,'jackal']]]
+  ['uniform',['Uniform',['../classjackal_1_1_uniform.html',1,'jackal']]]
 ];

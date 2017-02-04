@@ -31,7 +31,7 @@
 // Jackal includes
 //====================
 #include <jackal/rendering/buffer.hpp>   // Buffer class declaration.
-#include <jackal/rendering/vertex.hpp>  // Vertex_t size use.
+#include <jackal/rendering/vertex.hpp>   // Vertex_t size use.
 
 namespace jackal
 {
@@ -158,29 +158,29 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	void Buffer::bind()
+	void Buffer::bind(const Buffer& buffer)
 	{
-		switch (m_type)
+		switch (buffer.getType())
 		{
 		case eBufferType::VERTEX:
-			glBindBuffer(GL_ARRAY_BUFFER, m_ID);
+			glBindBuffer(GL_ARRAY_BUFFER, buffer.getID());
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), 0);
 			break;
 
 		case eBufferType::INDEX:
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ID);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.getID());
 			break;
 
 		case eBufferType::ARRAY:
-			glBindVertexArray(m_ID);
+			glBindVertexArray(buffer.getID());
 			break;
 		}
 	}
 
 	////////////////////////////////////////////////////////////
-	void Buffer::unbind()
+	void Buffer::unbind(const Buffer& buffer)
 	{
-		switch (m_type)
+		switch (buffer.getType())
 		{
 		case eBufferType::VERTEX:
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -191,7 +191,7 @@ namespace jackal
 			break;
 
 		case eBufferType::ARRAY:
-			glBindVertexArray(m_ID);
+			glBindVertexArray(0);
 			break;
 		}
 	}
