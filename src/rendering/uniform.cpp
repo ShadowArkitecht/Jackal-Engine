@@ -27,6 +27,7 @@
 //====================
 #include <jackal/rendering/uniform.hpp> // Uniform class declaration.
 #include <jackal/rendering/program.hpp> // Getting the unique ID of the Program.
+#include <jackal/utils/json/json.hpp>   // Setting uniforms by a value in a json file.
 
 namespace jackal
 {
@@ -100,6 +101,19 @@ namespace jackal
 	void Uniform::set(GLint location, const Vector3d& vector) const
 	{
 		glUniform3d(location, vector.x, vector.y, vector.z);
+	}
+	
+	////////////////////////////////////////////////////////////
+	void Uniform::setParameter(const Json::Value& uniform)
+	{
+		Json::Value type = uniform["type"].asString();
+		if (type == "vec3")
+		{
+			Json::Value values = uniform["values"];
+			Vector3f vec3 = Vector3f(values["x"].asFloat(), values["y"].asFloat(), values["z"].asFloat());
+
+			this->setParameter(uniform["name"].asString(), vec3);
+		}
 	}
 
 } // namespace jackal

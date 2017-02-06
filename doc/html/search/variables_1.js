@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['depthbits',['depthBits',['../structjackal_1_1_context_settings__t.html#abb29bae69f1f69672e4a6f3f1e5c740d',1,'jackal::ContextSettings_t']]]
+  ['configuration',['CONFIGURATION',['../structjackal_1_1_constants_1_1_extensions.html#a510ee5d39a0436f8387251a61723672b',1,'jackal::Constants::Extensions']]],
+  ['csv',['CSV',['../structjackal_1_1_constants_1_1_extensions.html#a5ba191be744ad3a144fcd2f273ebb141',1,'jackal::Constants::Extensions']]]
 ];

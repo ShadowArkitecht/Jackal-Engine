@@ -28,7 +28,7 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 project(Jackal-Editor)
-set(CMAKE_CXX_STANDARD 14)	# C++14 standard. 
+set(CMAKE_CXX_STANDARD 17)	# C++17 standard. 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 

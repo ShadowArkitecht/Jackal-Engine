@@ -22,7 +22,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <vector>
+//====================
+// C++ includes
+//====================
+#include <vector>                       // Storing subsequent extensions of file.
 
 //====================
 // Jackal includes
@@ -34,8 +37,6 @@
 //====================
 #ifdef WIN32
 #include <Windows.h>                    // Checking the existence of files within Windows.
-#elif __linux__
-#include <sys/stat.h>                   // Checking the existence of files within Linux.
 #endif
 
 namespace jackal 
@@ -49,9 +50,6 @@ namespace jackal
 #ifdef WIN32
 		DWORD result = GetFileAttributes(filename.c_str());
 		return !(result == INVALID_FILE_ATTRIBUTES && GetLastError() == ERROR_FILE_NOT_FOUND);
-#elif __linux__
-		struct stat info;
-		return stat(filename.c_str(), &info) == 0;
 #endif
 		return false;
 	}

@@ -22,14 +22,22 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#version 330 core 
+#ifndef __JACKAL_RESOURCE_HPP__
+#define __JACKAL_RESOURCE_HPP__
 
-uniform vec3 basic_colour;
+#include <string>
 
-//====================
-// Functions
-//====================
-void main()
+namespace jackal
 {
-	gl_FragColor = vec4(basic_colour, 1.0);
-}
+	class Resource
+	{
+	public:
+		explicit Resource() = default;
+		virtual ~Resource() = default;
+
+		virtual bool load(const std::string& filename) = 0;
+	};
+
+} // namespace jackal
+
+#endif//__JACKAL_RESOURCE_HPP__

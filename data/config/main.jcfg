@@ -34,6 +34,8 @@ locale_file : string = "en_UK.properties" # This should be changed to the langua
 title: string   = "Jackal Engine" # Name of the window (title-bar).
 position: vec2i = (200, 200)      # Its starting position on the desktop.
 size: vec2i     = (640, 480)      # The width and height of the window.
+full_screen: boolean  = false     # Whether the window will start full-screen.
+enable_vsync: boolean = true      # Enables vsync for the window. (Without vsync input on scripts do not behave).
 
 #====================
 # Context settings

@@ -34,7 +34,7 @@
 #include <jackal/rendering/glsl_object.hpp>    // Loading external shaders.
 #include <jackal/rendering/buffer.hpp>         // Binding different buffers.
 #include <jackal/rendering/vertex.hpp>         // Creating vertices for the buffers.
-#include <jackal/rendering/shader.hpp>
+#include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
 
 using namespace jackal;
 
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 	vfs.mount("config", "data/config");
 	vfs.mount("csv", "data/csv");
 	// rendering
-	vfs.mount("shaders", "assets/shaders");
+	vfs.mount("shaders", "data/shaders");
 
 	ConfigFile config;
 	config.open("~config/main.jcfg");
@@ -59,11 +59,8 @@ int main(int argc, char** argv)
 	Window window;
 	window.create(config);
 
-	Shader shader;
-	shader.attachShader("~shaders/basic_shader.vertex.glsl", eShaderType::VERTEX);
-	shader.attachShader("~shaders/basic_shader.fragment.glsl", eShaderType::FRAGMENT);
-
-	shader.compile();
+	// TODO(BEN): Abstract this into a Shader::create() method.
+	Shader* pShader = ResourceManager::getInstance().get<Shader>("assets/shaders/basic-shader.json");
 
 	Buffer vao(eBufferType::ARRAY);
 	vao.create();
@@ -73,14 +70,16 @@ int main(int argc, char** argv)
 	Buffer vbo(eBufferType::VERTEX);
 	vbo.create();
 
-	Vertex_t v1; v1.position = Vector3f(-0.25f, -0.25f, 1.0f);
-	Vertex_t v2; v2.position = Vector3f( 0.25f, -0.25f, 1.0f);
-	Vertex_t v3; v3.position = Vector3f( 0.0f,   0.25f, 1.0f);
+	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, 1.0f);
+	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, 1.0f);
+	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, 1.0f);
+	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, 1.0f);
 
 	std::vector<Vertex_t> verts;
 	verts.push_back(v1);
 	verts.push_back(v2);
 	verts.push_back(v3);
+	verts.push_back(v4);
 	
 	Buffer::bind(vbo);
 	vbo.allocate(verts.data(), verts.size());
@@ -92,6 +91,9 @@ int main(int argc, char** argv)
 	indices.push_back(0);
 	indices.push_back(1);
 	indices.push_back(2);
+	indices.push_back(0);
+	indices.push_back(2);
+	indices.push_back(3);
 
 	Buffer::bind(ibo);
 	ibo.allocate(indices.data(), indices.size());
@@ -101,10 +103,10 @@ int main(int argc, char** argv)
 	while (window.isRunning())
 	{
 		window.clear();
-		Shader::bind(shader);
+		Shader::bind(*pShader);
 
-		shader.process();
-		
+		pShader->process();
+
 		Buffer::bind(vao);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 		Buffer::unbind(vao);
@@ -113,6 +115,9 @@ int main(int argc, char** argv)
 		window.swap();
 
 		window.pollEvents();
+
+		ResourceManager::getInstance().reload();
+		SDL_Delay(16);
 	}
 
 	SDL_Quit();

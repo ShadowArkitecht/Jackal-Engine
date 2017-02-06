@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['value',['value',['../structjackal_1_1_config_variant__t.html#a3edb0e3529c4ccda695b7e9dd34392ce',1,'jackal::ConfigVariant_t::value()'],['../structjackal_1_1_property__t.html#adb0b23fccaf0d3da04afdd51f9634c42',1,'jackal::Property_t::value()']]],
-  ['vertex_5fshader',['VERTEX_SHADER',['../structjackal_1_1_constants_1_1_extensions.html#ac3dafe49d79772b64f0454eca215d0d9',1,'jackal::Constants::Extensions']]]
+  ['settings_5f',['settings_',['../class_json_1_1_char_reader_builder.html#ac69b7911ad64c171c51ebaf2ea26d958',1,'Json::CharReaderBuilder::settings_()'],['../class_json_1_1_stream_writer_builder.html#a79bdf2e639a52f4e758c0b95bd1d3423',1,'Json::StreamWriterBuilder::settings_()']]],
+  ['stencilbits',['stencilBits',['../structjackal_1_1_context_settings__t.html#ac73ade26ed4c44cb8f8f0dff81faf3c9',1,'jackal::ContextSettings_t']]],
+  ['strictroot_5f',['strictRoot_',['../class_json_1_1_features.html#a1162c37a1458adc32582b585b552f9c3',1,'Json::Features']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x',['x',['../classjackal_1_1_vector2.html#a9326df8e16af34036b155b57665e5395',1,'jackal::Vector2::x()'],['../classjackal_1_1_vector3.html#a3a0712c74db8195bd3a9b1cb4bade68b',1,'jackal::Vector3::x()']]]
+  ['type',['type',['../structjackal_1_1_config_variant__t.html#ac31e092d159bb78171198ef5ee29b262',1,'jackal::ConfigVariant_t']]]
 ];

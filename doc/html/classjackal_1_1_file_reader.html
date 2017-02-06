@@ -78,13 +78,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a173c6e617d8d2ce25021fb6fa196d0be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_reader.html#a173c6e617d8d2ce25021fb6fa196d0be">FileReader</a> ()</td></tr>
 <tr class="memdesc:a173c6e617d8d2ce25021fb6fa196d0be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor for the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a>.  <a href="#a173c6e617d8d2ce25021fb6fa196d0be">More...</a><br /></td></tr>
 <tr class="separator:a173c6e617d8d2ce25021fb6fa196d0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44a706fe8c247c4495a547d62cbee02f"><td class="memItemLeft" align="right" valign="top"><a id="a44a706fe8c247c4495a547d62cbee02f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_reader.html#a44a706fe8c247c4495a547d62cbee02f">~FileReader</a> ()=default</td></tr>
-<tr class="memdesc:a44a706fe8c247c4495a547d62cbee02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> object. <br /></td></tr>
+<tr class="memitem:a44a706fe8c247c4495a547d62cbee02f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_reader.html#a44a706fe8c247c4495a547d62cbee02f">~FileReader</a> ()=default</td></tr>
+<tr class="memdesc:a44a706fe8c247c4495a547d62cbee02f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor for the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> object.  <a href="#a44a706fe8c247c4495a547d62cbee02f">More...</a><br /></td></tr>
 <tr class="separator:a44a706fe8c247c4495a547d62cbee02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85026ff3e38ba48606986178caf8aec5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_reader.html#a85026ff3e38ba48606986178caf8aec5">getLines</a> () const</td></tr>
 <tr class="memdesc:a85026ff3e38ba48606986178caf8aec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the lines of the stream loaded in.  <a href="#a85026ff3e38ba48606986178caf8aec5">More...</a><br /></td></tr>
 <tr class="separator:a85026ff3e38ba48606986178caf8aec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1427282d837d762a4bb06f92c0547b6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_reader.html#ab1427282d837d762a4bb06f92c0547b6">getAbsolutePath</a> () const</td></tr>
+<tr class="memdesc:ab1427282d837d762a4bb06f92c0547b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the absolute path of the file being read.  <a href="#ab1427282d837d762a4bb06f92c0547b6">More...</a><br /></td></tr>
+<tr class="separator:ab1427282d837d762a4bb06f92c0547b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82da37137cd4e10429d4148ac3ad309a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_file_reader.html#a82da37137cd4e10429d4148ac3ad309a">read</a> (const std::string &amp;filename)</td></tr>
 <tr class="memdesc:a82da37137cd4e10429d4148ac3ad309a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads in the external file into memory.  <a href="#a82da37137cd4e10429d4148ac3ad309a">More...</a><br /></td></tr>
 <tr class="separator:a82da37137cd4e10429d4148ac3ad309a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -122,7 +124,56 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a44a706fe8c247c4495a547d62cbee02f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44a706fe8c247c4495a547d62cbee02f">&sect;&nbsp;</a></span>~FileReader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">jackal::FileReader::~FileReader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destructor for the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> object. </p>
+<p>The destructor for the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> closes the stream if it is currently being used. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab1427282d837d762a4bb06f92c0547b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1427282d837d762a4bb06f92c0547b6">&sect;&nbsp;</a></span>getAbsolutePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string jackal::FileReader::getAbsolutePath </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieves the absolute path of the file being read. </p>
+<p>As the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> can make use of the the <a class="el" href="classjackal_1_1_virtual_file_system.html">VirtualFileSystem</a>, if the system is utilised, this method will return the actual path that the reader utilised.</p>
+<dl class="section return"><dt>Returns</dt><dd>The absolute path of the <a class="el" href="classjackal_1_1_file_reader.html">FileReader</a> object. </dd></dl>
+
+</div>
+</div>
 <a id="a85026ff3e38ba48606986178caf8aec5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85026ff3e38ba48606986178caf8aec5">&sect;&nbsp;</a></span>getLines()</h2>
 

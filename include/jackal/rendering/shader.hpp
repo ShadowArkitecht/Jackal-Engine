@@ -28,12 +28,13 @@
 //====================
 // Jackal includes
 //====================
+#include <jackal/core/resource.hpp>     // Shader is a type of resource.
 #include <jackal/rendering/program.hpp> // The Program to attach shader files to.
 #include <jackal/rendering/uniform.hpp> // Adding uniforms to the shaders.
 
 namespace jackal
 {
-	class Shader // TODO: Extend from resource and store it.
+	class Shader : public Resource
 	{
 	private:
 		//====================
@@ -60,9 +61,37 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		~Shader() = default;
 
+		std::vector<GLSLObject>& getShaders();
+
 		//====================
 		// Methods
 		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Loads the data associated with this shader.
+		///
+		/// The data of a shader is represented as an external json file
+		/// that stores the information of a Shader in a serialized format,
+		/// this is so the different shader objects can be used between application
+		/// instances and allow quick-swapping of variables without
+		/// compilation.
+		///
+		/// @param filename   The file directory of the json file.
+		///
+		////////////////////////////////////////////////////////////
+		bool load(const std::string& filename) override;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Attaches a glsl shader to the Program object.
+		///
+		/// When this method is invoked, it will utilise the Program objects
+		/// attachShader method and create and attach the shader to the
+		/// Program for use.
+		///
+		/// @param filename    The filename of the shader.
+		///
+		////////////////////////////////////////////////////////////
+		void attachShader(const std::string& filename);
+
 		////////////////////////////////////////////////////////////
 		/// @brief Attaches a glsl shader to the Program object.
 		///
@@ -87,6 +116,8 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////		
 		bool compile();
+
+		bool recompile();
 
 		////////////////////////////////////////////////////////////
 		/// @brief Processes the uniforms attached to the shader.

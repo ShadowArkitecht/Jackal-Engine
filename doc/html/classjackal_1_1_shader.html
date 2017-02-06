@@ -73,6 +73,15 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="shader_8hpp_source.html">shader.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for jackal::Shader:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classjackal_1_1_shader.png" usemap="#jackal::Shader_map" alt=""/>
+  <map id="jackal::Shader_map" name="jackal::Shader_map">
+<area href="classjackal_1_1_resource.html" alt="jackal::Resource" shape="rect" coords="0,0,105,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -83,12 +92,24 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_shader.html#ab14b41d4394bf606b5949a01d1f41bbc">~Shader</a> ()=default</td></tr>
 <tr class="memdesc:ab14b41d4394bf606b5949a01d1f41bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor for the <a class="el" href="classjackal_1_1_shader.html">Shader</a> object. <br /></td></tr>
 <tr class="separator:ab14b41d4394bf606b5949a01d1f41bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad96176bad1258dfaaafdda9a40b6aa85"><td class="memItemLeft" align="right" valign="top"><a id="ad96176bad1258dfaaafdda9a40b6aa85"></a>
+std::vector&lt; <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getShaders</b> ()</td></tr>
+<tr class="separator:ad96176bad1258dfaaafdda9a40b6aa85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1db403d9635f4073e7c2e182bc4a9e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_shader.html#a3c1db403d9635f4073e7c2e182bc4a9e">load</a> (const std::string &amp;filename) override</td></tr>
+<tr class="memdesc:a3c1db403d9635f4073e7c2e182bc4a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the data associated with this shader.  <a href="#a3c1db403d9635f4073e7c2e182bc4a9e">More...</a><br /></td></tr>
+<tr class="separator:a3c1db403d9635f4073e7c2e182bc4a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04460c188646fc6ed100ffb10b158b45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_shader.html#a04460c188646fc6ed100ffb10b158b45">attachShader</a> (const std::string &amp;filename)</td></tr>
+<tr class="memdesc:a04460c188646fc6ed100ffb10b158b45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a glsl shader to the <a class="el" href="classjackal_1_1_program.html">Program</a> object.  <a href="#a04460c188646fc6ed100ffb10b158b45">More...</a><br /></td></tr>
+<tr class="separator:a04460c188646fc6ed100ffb10b158b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a288ae2aada3180442690d36460764685"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_shader.html#a288ae2aada3180442690d36460764685">attachShader</a> (const std::string &amp;filename, eShaderType type)</td></tr>
 <tr class="memdesc:a288ae2aada3180442690d36460764685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a glsl shader to the <a class="el" href="classjackal_1_1_program.html">Program</a> object.  <a href="#a288ae2aada3180442690d36460764685">More...</a><br /></td></tr>
 <tr class="separator:a288ae2aada3180442690d36460764685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b5ed61ae5c5094b3bd8b4034b070031"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_shader.html#a0b5ed61ae5c5094b3bd8b4034b070031">compile</a> ()</td></tr>
 <tr class="memdesc:a0b5ed61ae5c5094b3bd8b4034b070031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiles the shader object, ready for use.  <a href="#a0b5ed61ae5c5094b3bd8b4034b070031">More...</a><br /></td></tr>
 <tr class="separator:a0b5ed61ae5c5094b3bd8b4034b070031"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa7e3c373448f1e8e52741be105f1dc"><td class="memItemLeft" align="right" valign="top"><a id="aeaa7e3c373448f1e8e52741be105f1dc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>recompile</b> ()</td></tr>
+<tr class="separator:aeaa7e3c373448f1e8e52741be105f1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08f5dc2cc4ad2e6fcfb0ee651e0ca2d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_shader.html#a08f5dc2cc4ad2e6fcfb0ee651e0ca2d2">process</a> ()</td></tr>
 <tr class="memdesc:a08f5dc2cc4ad2e6fcfb0ee651e0ca2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes the uniforms attached to the shader.  <a href="#a08f5dc2cc4ad2e6fcfb0ee651e0ca2d2">More...</a><br /></td></tr>
 <tr class="separator:a08f5dc2cc4ad2e6fcfb0ee651e0ca2d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -106,7 +127,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
 <p>The <a class="el" href="classjackal_1_1_shader.html">jackal::Shader</a> class is an object that is used to render and update the uniform variables contained within glsl shaders to apply the behavior to subsequent meshes that render.</p>
 <p>Due to the internal use of the shaders, they are not exposed to the lua scripting inteface. To alter the appearance of objects with the shader, calls to the Material instance should be made through lua.</p>
-<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a shader object.</span></div><div class="line"><a class="code" href="classjackal_1_1_shader.html">Shader</a> shader;</div><div class="line"></div><div class="line"><span class="comment">// Attach glsl objects.</span></div><div class="line">shader.<a class="code" href="classjackal_1_1_shader.html#a288ae2aada3180442690d36460764685">attachShader</a>(<span class="stringliteral">&quot;~shaders/test_shader.vertex.glsl&quot;</span>, eShaderType::VERTEX);</div><div class="line">shader.<a class="code" href="classjackal_1_1_shader.html#a288ae2aada3180442690d36460764685">attachShader</a>(<span class="stringliteral">&quot;~shaders/test_shader.fragment.glsl&quot;</span>, eShaderType::FRAGMENT);</div><div class="line"></div><div class="line"><span class="comment">// Compile it for use.</span></div><div class="line">shader.<a class="code" href="classjackal_1_1_shader.html#a0b5ed61ae5c5094b3bd8b4034b070031">compile</a>();</div><div class="line"></div><div class="line"><span class="comment">// Bind the shader...</span></div><div class="line"><a class="code" href="classjackal_1_1_shader.html#aa79e7f6f5fb6308d240767beeb36742d">Shader::bind</a>(shader);</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a shader object.</span></div><div class="line"><a class="code" href="classjackal_1_1_shader.html">Shader</a> shader;</div><div class="line"></div><div class="line"><span class="comment">// Attach glsl objects.</span></div><div class="line">shader.<a class="code" href="classjackal_1_1_shader.html#a04460c188646fc6ed100ffb10b158b45">attachShader</a>(<span class="stringliteral">&quot;~shaders/test_shader.vertex.glsl&quot;</span>, eShaderType::VERTEX);</div><div class="line">shader.<a class="code" href="classjackal_1_1_shader.html#a04460c188646fc6ed100ffb10b158b45">attachShader</a>(<span class="stringliteral">&quot;~shaders/test_shader.fragment.glsl&quot;</span>, eShaderType::FRAGMENT);</div><div class="line"></div><div class="line"><span class="comment">// Compile it for use.</span></div><div class="line">shader.<a class="code" href="classjackal_1_1_shader.html#a0b5ed61ae5c5094b3bd8b4034b070031">compile</a>();</div><div class="line"></div><div class="line"><span class="comment">// Bind the shader...</span></div><div class="line"><a class="code" href="classjackal_1_1_shader.html#aa79e7f6f5fb6308d240767beeb36742d">Shader::bind</a>(shader);</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5e551c0657e7d4117101c72cdc80ad55"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e551c0657e7d4117101c72cdc80ad55">&sect;&nbsp;</a></span>Shader()</h2>
 
@@ -136,8 +157,35 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a04460c188646fc6ed100ffb10b158b45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04460c188646fc6ed100ffb10b158b45">&sect;&nbsp;</a></span>attachShader() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void jackal::Shader::attachShader </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Attaches a glsl shader to the <a class="el" href="classjackal_1_1_program.html">Program</a> object. </p>
+<p>When this method is invoked, it will utilise the <a class="el" href="classjackal_1_1_program.html">Program</a> objects attachShader method and create and attach the shader to the <a class="el" href="classjackal_1_1_program.html">Program</a> for use.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The filename of the shader. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a288ae2aada3180442690d36460764685"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a288ae2aada3180442690d36460764685">&sect;&nbsp;</a></span>attachShader()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a288ae2aada3180442690d36460764685">&sect;&nbsp;</a></span>attachShader() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,6 +275,43 @@ Static Public Member Functions</h2></td></tr>
 <p>Compiles the shader object, ready for use. </p>
 <p>This method abstracts the behavior from the <a class="el" href="classjackal_1_1_program.html">Program</a> object and invokes the subsequent objects compile method. The <a class="el" href="classjackal_1_1_program.html">Program</a> will only compile if it not already been compiled.</p>
 <dl class="section return"><dt>Returns</dt><dd>True if the shader compiled successfully. </dd></dl>
+
+</div>
+</div>
+<a id="a3c1db403d9635f4073e7c2e182bc4a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c1db403d9635f4073e7c2e182bc4a9e">&sect;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool jackal::Shader::load </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads the data associated with this shader. </p>
+<p>The data of a shader is represented as an external json file that stores the information of a <a class="el" href="classjackal_1_1_shader.html">Shader</a> in a serialized format, this is so the different shader objects can be used between application instances and allow quick-swapping of variables without compilation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The file directory of the json file. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classjackal_1_1_resource.html">jackal::Resource</a>.</p>
 
 </div>
 </div>

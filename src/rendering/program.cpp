@@ -58,6 +58,12 @@ namespace jackal
 	{
 		return m_ID;
 	}
+	
+	////////////////////////////////////////////////////////////
+	std::vector<GLSLObject>& Program::getShaders()
+	{
+		return m_shaders;
+	}
 
 	//====================
 	// Methods
@@ -75,6 +81,22 @@ namespace jackal
 		{
 			glDeleteProgram(m_ID);
 		}
+
+		m_compiled = false;
+	}
+
+	////////////////////////////////////////////////////////////
+	void Program::attachShader(const std::string& filename)
+	{
+		GLSLObject object;
+		if (object.create(filename))
+		{
+			m_shaders.push_back(object);
+		}
+		else
+		{
+			log.warning(log.function(__FUNCTION__, filename), "Failed to attach.");	
+		}
 	}
 
 	////////////////////////////////////////////////////////////
@@ -88,7 +110,7 @@ namespace jackal
 		}
 		else
 		{
-			log.error(log.function(__FUNCTION__, filename), "Failed to attach.");
+			log.warning(log.function(__FUNCTION__, filename), "Failed to attach.");
 		}
 	}
 
@@ -140,6 +162,20 @@ namespace jackal
 
 		log.warning(log.function(__FUNCTION__), "Already compiled.");
 		return true;
+	}
+
+	////////////////////////////////////////////////////////////
+	bool Program::recompile()
+	{
+		this->destroy();
+		for (auto& shader : m_shaders)
+		{
+			shader.destroy();
+			shader.create(shader.getFilename());
+		}
+
+		this->create();
+		return this->compile();
 	}
 
 	////////////////////////////////////////////////////////////

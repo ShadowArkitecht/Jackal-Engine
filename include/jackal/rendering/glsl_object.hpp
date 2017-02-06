@@ -43,7 +43,8 @@ namespace jackal
 	enum class eShaderType
 	{
 		VERTEX,
-		FRAGMENT
+		FRAGMENT,
+		MAX
 	};
 
 	class GLSLObject final 
@@ -54,6 +55,7 @@ namespace jackal
 		//====================
 		GLuint      m_ID;       ///< The unique ID of the GLSL object.
 		GLenum      m_type;     ///< The type of shader this object is.
+		std::string m_filename; ///< The file location of the glsl shader.
 		std::string m_source;   ///< The source (file contents) of the shader.
 		bool        m_compiled; ///< Whether the object has already been compiled.
 
@@ -117,6 +119,18 @@ namespace jackal
 		GLuint getID() const;
 
 		////////////////////////////////////////////////////////////
+		/// @brief Returns the file name of the glsl shader.
+		///
+		/// The filename represents the name of the file that was loaded
+		/// in during parsing, the file name will either state the absolute
+		/// or virtual path to the shader.
+		///
+		/// @returns  The file location of the glsl shader.
+		///
+		////////////////////////////////////////////////////////////
+		std::string getFilename() const;
+
+		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the compile state of the GLSL object.
 		///
 		/// When the shader is compiled, if it compiled successfully, 
@@ -130,6 +144,22 @@ namespace jackal
 		//====================
 		// Methods
 		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Creates the GLSLObject and loads the external file.
+		///
+		/// When the GLSLObject is created, it will check that the specified
+		/// file has the correct extension and then parse the shader. If the
+		/// shader fails to parse, warning and errors are logged to the external
+		/// log file. This create will assign the correct type to the shader, depending
+		/// on its extension.
+		/// 
+		/// @param filename    The external file directory of the shader.
+		///
+		/// @returns           True if the shader parsed successfully.
+		///
+		////////////////////////////////////////////////////////////
+		bool create(const std::string& filename);
+
 		////////////////////////////////////////////////////////////
 		/// @brief Creates the GLSLObject and loads the external file.
 		///
@@ -201,4 +231,5 @@ namespace jackal
 /// }
 /// // Shader can now be used.
 /// @endcode
+///
 ////////////////////////////////////////////////////////////

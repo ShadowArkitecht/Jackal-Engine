@@ -84,9 +84,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a62c316f0014460af5bc42988ae853011"><td class="memItemLeft" align="right" valign="top">GLuint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_g_l_s_l_object.html#a62c316f0014460af5bc42988ae853011">getID</a> () const</td></tr>
 <tr class="memdesc:a62c316f0014460af5bc42988ae853011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the ID of the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a>.  <a href="#a62c316f0014460af5bc42988ae853011">More...</a><br /></td></tr>
 <tr class="separator:a62c316f0014460af5bc42988ae853011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a923ec6a290259d030e4e385b9c9f8e49"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_g_l_s_l_object.html#a923ec6a290259d030e4e385b9c9f8e49">getFilename</a> () const</td></tr>
+<tr class="memdesc:a923ec6a290259d030e4e385b9c9f8e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the file name of the glsl shader.  <a href="#a923ec6a290259d030e4e385b9c9f8e49">More...</a><br /></td></tr>
+<tr class="separator:a923ec6a290259d030e4e385b9c9f8e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec99a8eab7d3c021619d291b283d1231"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_g_l_s_l_object.html#aec99a8eab7d3c021619d291b283d1231">isCompiled</a> () const</td></tr>
 <tr class="memdesc:aec99a8eab7d3c021619d291b283d1231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the compile state of the GLSL object.  <a href="#aec99a8eab7d3c021619d291b283d1231">More...</a><br /></td></tr>
 <tr class="separator:aec99a8eab7d3c021619d291b283d1231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78f326138a469667bca9b777bb8fbde9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_g_l_s_l_object.html#a78f326138a469667bca9b777bb8fbde9">create</a> (const std::string &amp;filename)</td></tr>
+<tr class="memdesc:a78f326138a469667bca9b777bb8fbde9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> and loads the external file.  <a href="#a78f326138a469667bca9b777bb8fbde9">More...</a><br /></td></tr>
+<tr class="separator:a78f326138a469667bca9b777bb8fbde9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d92633453a5e38939fb30d89980fb1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_g_l_s_l_object.html#a1d92633453a5e38939fb30d89980fb1e">create</a> (const std::string &amp;filename, eShaderType type)</td></tr>
 <tr class="memdesc:a1d92633453a5e38939fb30d89980fb1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> and loads the external file.  <a href="#a1d92633453a5e38939fb30d89980fb1e">More...</a><br /></td></tr>
 <tr class="separator:a1d92633453a5e38939fb30d89980fb1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,7 +107,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
 <p>The <a class="el" href="classjackal_1_1_g_l_s_l_object.html">jackal::GLSLObject</a> is responsible for laoding and compiling external shader files for use within the application. The <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> is commonly used by the <a class="el" href="classjackal_1_1_program.html">jackal::Program</a> class for linking and use.</p>
 <p>Various messages are sent to the log is creation or compilation errors occur during creation and compilation of the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a>. Due to the shaders internal use, it is not exposed to the lua scripting interface.</p>
-<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a new GLSLObject and attempt to compile it.</span></div><div class="line"><a class="code" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> object;</div><div class="line"><span class="keywordflow">if</span> (<span class="keywordtype">object</span>.<a class="code" href="classjackal_1_1_g_l_s_l_object.html#a1d92633453a5e38939fb30d89980fb1e">create</a>(<span class="stringliteral">&quot;~shaders/basic_shader.vertex.glsl&quot;</span>, eShaderType::VERTEX))</div><div class="line">{</div><div class="line">    <span class="keywordtype">object</span>.<a class="code" href="classjackal_1_1_g_l_s_l_object.html#abfa6d9dc80c3ab9d91695bddc709916c">compile</a>();</div><div class="line">}</div><div class="line"><span class="comment">// Shader can now be used.</span></div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a new GLSLObject and attempt to compile it.</span></div><div class="line"><a class="code" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> object;</div><div class="line"><span class="keywordflow">if</span> (<span class="keywordtype">object</span>.<a class="code" href="classjackal_1_1_g_l_s_l_object.html#a78f326138a469667bca9b777bb8fbde9">create</a>(<span class="stringliteral">&quot;~shaders/basic_shader.vertex.glsl&quot;</span>, eShaderType::VERTEX))</div><div class="line">{</div><div class="line">    <span class="keywordtype">object</span>.<a class="code" href="classjackal_1_1_g_l_s_l_object.html#abfa6d9dc80c3ab9d91695bddc709916c">compile</a>();</div><div class="line">}</div><div class="line"><span class="comment">// Shader can now be used.</span></div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac79d5f2d2d9f69aa71217a938081a5cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac79d5f2d2d9f69aa71217a938081a5cc">&sect;&nbsp;</a></span>GLSLObject()</h2>
 
@@ -180,8 +186,36 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a78f326138a469667bca9b777bb8fbde9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78f326138a469667bca9b777bb8fbde9">&sect;&nbsp;</a></span>create() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool jackal::GLSLObject::create </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> and loads the external file. </p>
+<p>When the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> is created, it will check that the specified file has the correct extension and then parse the shader. If the shader fails to parse, warning and errors are logged to the external log file. This create will assign the correct type to the shader, depending on its extension.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The external file directory of the shader.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the shader parsed successfully. </dd></dl>
+
+</div>
+</div>
 <a id="a1d92633453a5e38939fb30d89980fb1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d92633453a5e38939fb30d89980fb1e">&sect;&nbsp;</a></span>create()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d92633453a5e38939fb30d89980fb1e">&sect;&nbsp;</a></span>create() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,6 +270,27 @@ Public Member Functions</h2></td></tr>
 
 <p>Destroys the created <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a>. </p>
 <p>The only object that is retained by the <a class="el" href="classjackal_1_1_g_l_s_l_object.html">GLSLObject</a> is the unique ID mapped to memory on the GPU. The destroy method will free these resources for additional use. </p>
+
+</div>
+</div>
+<a id="a923ec6a290259d030e4e385b9c9f8e49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a923ec6a290259d030e4e385b9c9f8e49">&sect;&nbsp;</a></span>getFilename()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string jackal::GLSLObject::getFilename </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the file name of the glsl shader. </p>
+<p>The filename represents the name of the file that was loaded in during parsing, the file name will either state the absolute or virtual path to the shader.</p>
+<dl class="section return"><dt>Returns</dt><dd>The file location of the glsl shader. </dd></dl>
 
 </div>
 </div>

@@ -86,12 +86,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a53c9a0e4f363e99218fc206c300fbb45"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classjackal_1_1_uniform.html#a53c9a0e4f363e99218fc206c300fbb45">setParameter</a> (const std::string &amp;uniform, T value)</td></tr>
 <tr class="memdesc:a53c9a0e4f363e99218fc206c300fbb45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a variable as a uniform to the attached shaders.  <a href="#a53c9a0e4f363e99218fc206c300fbb45">More...</a><br /></td></tr>
 <tr class="separator:a53c9a0e4f363e99218fc206c300fbb45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630904a272f1bb7e0c996130373ee3a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjackal_1_1_uniform.html#a630904a272f1bb7e0c996130373ee3a7">setParameter</a> (const <a class="el" href="class_json_1_1_value.html">Json::Value</a> &amp;uniform)</td></tr>
+<tr class="memdesc:a630904a272f1bb7e0c996130373ee3a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a <a class="el" href="namespace_json.html" title="JSON (JavaScript Object Notation). ">Json</a> value as a uniform to the attached shaders.  <a href="#a630904a272f1bb7e0c996130373ee3a7">More...</a><br /></td></tr>
+<tr class="separator:a630904a272f1bb7e0c996130373ee3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Benjamin Carter</dd></dl>
 <p>The <a class="el" href="classjackal_1_1_uniform.html">jackal::Uniform</a> class is a basic class that encapsulates the behavior needed to send various different parameters and values to shaders as uniform variables. It is internally used by the <a class="el" href="classjackal_1_1_shader.html">Shader</a> class to bind the various parameters and values of the Material object.</p>
 <p>Due to its internal use, it is not exposed to the lua scripting interface.</p>
-<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a new program object and attach shaders.</span></div><div class="line"><a class="code" href="classjackal_1_1_program.html">Program</a> program;</div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a9dd0ce2985b3fda57f26415c1f642555">create</a>();</div><div class="line"></div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a3be5f2d0e8acd84826eb18f52d4db766">attachShader</a>(<span class="stringliteral">&quot;~shaders/example_shader.vertex.glsl&quot;</span>, eShaderType::VERTEX);</div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a3be5f2d0e8acd84826eb18f52d4db766">attachShader</a>(<span class="stringliteral">&quot;~shaders/example_shader.fragment.glsl&quot;</span>, eShaderType::FRAGMENT);</div><div class="line"></div><div class="line"><span class="comment">// Compile and link the shaders.</span></div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a401c9e55bad6a9dbdde2037a96bfc174">compile</a>();</div><div class="line"></div><div class="line"><span class="comment">// Create a new Uniform object and link it to the program.</span></div><div class="line"><a class="code" href="classjackal_1_1_uniform.html">Uniform</a> uniform(program);</div><div class="line"></div><div class="line"><span class="comment">// Send a fictional value as a uniform.</span></div><div class="line">uniform.setParameter(<span class="stringliteral">&quot;test_variable&quot;</span>, <a class="code" href="classjackal_1_1_vector3.html#a9e830c81471ad651684e9d5c11e6420a">Vector3f::one</a>());</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="namespacejackal.html">jackal</a>;</div><div class="line"></div><div class="line"><span class="comment">// Create a new program object and attach shaders.</span></div><div class="line"><a class="code" href="classjackal_1_1_program.html">Program</a> program;</div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a9dd0ce2985b3fda57f26415c1f642555">create</a>();</div><div class="line"></div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a333a36d447359784d9565b8a64720a04">attachShader</a>(<span class="stringliteral">&quot;~shaders/example_shader.vertex.glsl&quot;</span>, eShaderType::VERTEX);</div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a333a36d447359784d9565b8a64720a04">attachShader</a>(<span class="stringliteral">&quot;~shaders/example_shader.fragment.glsl&quot;</span>, eShaderType::FRAGMENT);</div><div class="line"></div><div class="line"><span class="comment">// Compile and link the shaders.</span></div><div class="line">program.<a class="code" href="classjackal_1_1_program.html#a401c9e55bad6a9dbdde2037a96bfc174">compile</a>();</div><div class="line"></div><div class="line"><span class="comment">// Create a new Uniform object and link it to the program.</span></div><div class="line"><a class="code" href="classjackal_1_1_uniform.html">Uniform</a> uniform(program);</div><div class="line"></div><div class="line"><span class="comment">// Send a fictional value as a uniform.</span></div><div class="line">uniform.setParameter(<span class="stringliteral">&quot;test_variable&quot;</span>, <a class="code" href="classjackal_1_1_vector3.html#a9e830c81471ad651684e9d5c11e6420a">Vector3f::one</a>());</div></div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a397a1a2f29e4966559762ef6cbf61c6a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a397a1a2f29e4966559762ef6cbf61c6a">&sect;&nbsp;</a></span>Uniform()</h2>
 
@@ -129,7 +132,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a53c9a0e4f363e99218fc206c300fbb45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53c9a0e4f363e99218fc206c300fbb45">&sect;&nbsp;</a></span>setParameter()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a53c9a0e4f363e99218fc206c300fbb45">&sect;&nbsp;</a></span>setParameter() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,6 +165,33 @@ template&lt;typename T &gt; </div>
   <table class="params">
     <tr><td class="paramname">uniform</td><td>The name of the uniform in the GLSL shader. </td></tr>
     <tr><td class="paramname">value</td><td>The value to send to the shader. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a630904a272f1bb7e0c996130373ee3a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630904a272f1bb7e0c996130373ee3a7">&sect;&nbsp;</a></span>setParameter() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void jackal::Uniform::setParameter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value.html">Json::Value</a> &amp;&#160;</td>
+          <td class="paramname"><em>uniform</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends a <a class="el" href="namespace_json.html" title="JSON (JavaScript Object Notation). ">Json</a> value as a uniform to the attached shaders. </p>
+<p>So communication can be achieved between C++ and GLSL, uniform variables can be transferred to give shaders additional behavior. This method makes use of forwarding of variables in order to support many different variable types. This method is invoked by the <a class="el" href="classjackal_1_1_shader.html">Shader</a> load method to apply constant uniforms.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uniform</td><td>The JSON value that contains the uniform. </td></tr>
   </table>
   </dd>
 </dl>

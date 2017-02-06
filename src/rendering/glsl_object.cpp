@@ -25,11 +25,11 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/rendering/glsl_object.hpp> // GLSL object class declaration.
-#include <jackal/utils/log.hpp>             // Logging warnings and errors.
-#include <jackal/utils/file_reader.hpp>     // Reading in the external file.
-#include <jackal/utils/file_system.hpp>     // Checking the file extensions.
-#include <jackal/utils/constants.hpp>       // Comparing against the file extensions.
+#include <jackal/rendering/glsl_object.hpp>     // GLSL object class declaration.
+#include <jackal/utils/log.hpp>                 // Logging warnings and errors.
+#include <jackal/utils/file_reader.hpp>         // Reading in the external file.
+#include <jackal/utils/file_system.hpp>         // Checking the file extensions.
+#include <jackal/utils/constants.hpp>           // Comparing against the file extensions.
 
 namespace jackal 
 {
@@ -43,7 +43,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	GLSLObject::GLSLObject()
-		: m_ID(0), m_type(0), m_compiled(false)
+		: m_ID(0), m_type(0), m_filename(), m_source(), m_compiled(false)
 	{
 	}
 
@@ -63,6 +63,12 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
+	std::string GLSLObject::getFilename() const
+	{
+		return m_filename;
+	}
+
+	////////////////////////////////////////////////////////////
 	bool GLSLObject::isCompiled() const
 	{
 		return m_compiled;
@@ -77,10 +83,11 @@ namespace jackal
 		FileReader reader;
 		if (!reader.read(filename))
 		{
-			log.error(log.function(__FUNCTION__, filename), "Failed to read shader.");
+			log.warning(log.function(__FUNCTION__, filename), "Failed to read shader.");
 			return false;
 		}
 
+		m_filename = reader.getAbsolutePath();
 		for (auto line : reader.getLines())
 		{
 			m_source.append(line + '\n');
@@ -93,6 +100,33 @@ namespace jackal
 	//====================
 	// Methods
 	//====================
+	////////////////////////////////////////////////////////////
+	bool GLSLObject::create(const std::string& filename)
+	{
+		FileSystem system;
+
+		if (system.hasExtensions(filename, Constants::Extensions::VERTEX_SHADER, 2)) 
+		{
+			m_type = GL_VERTEX_SHADER;
+		} 
+		else if (system.hasExtensions(filename, Constants::Extensions::FRAGMENT_SHADER, 2))
+		{
+			m_type = GL_FRAGMENT_SHADER;
+		}
+		else
+		{
+			log.warning(log.function(__FUNCTION__, filename), "Incorrect file extension found.");
+			return false;
+		}
+
+		if (!this->parse(filename))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	////////////////////////////////////////////////////////////
 	bool GLSLObject::create(const std::string& filename, eShaderType type)
 	{
@@ -139,6 +173,8 @@ namespace jackal
 			glDeleteShader(m_ID);
 			m_ID = 0;
 		}
+
+		m_compiled = false;
 	}
 
 	////////////////////////////////////////////////////////////

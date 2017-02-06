@@ -23,10 +23,19 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
+// C++ includes
+//====================
+#include <fstream>                      // The stream to store the result reading.
+
+//====================
 // Jackal includes
 //====================
-#include <jackal/rendering/shader.hpp> // Shader class declaration.
-#include <jackal/utils/log.hpp>        // Logging warnings and errors.
+#include <jackal/rendering/shader.hpp>  // Shader class declaration.
+#include <jackal/utils/log.hpp>         // Logging warnings and errors.
+#include <jackal/utils/file_reader.hpp> // Reading the json file.
+#include <jackal/utils/json/json.hpp>   // De-serializing a shader file.
+
+#include <SDL2/SDL.h>
 
 namespace jackal
 {	
@@ -40,14 +49,67 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Shader::Shader()
-		: m_program(), m_uniform(m_program)
+		: Resource(), m_program(), m_uniform(m_program)
 	{
 		m_program.create();
 	}
 
 	//====================
+	// Getters and setters
+	//====================
+	////////////////////////////////////////////////////////////
+	std::vector<GLSLObject>& Shader::getShaders()
+	{
+		return m_program.getShaders();
+	}
+
+	//====================
 	// Methods
 	//====================
+	////////////////////////////////////////////////////////////
+	bool Shader::load(const std::string& filename) // override
+	{
+		Json::Value root;
+
+		std::ifstream file;
+		file.open(filename);
+
+		Json::Reader reader;
+		if (!file.fail() && reader.parse(file, root))
+		{
+			Json::Value files = root["glsl-files"];
+			for (const auto& gf : files)
+			{
+				this->attachShader(gf["glsl-file"].asString());
+			}
+
+			this->compile();
+
+			Shader::bind(*this);
+
+			Json::Value uniforms = root["const-uniforms"];
+			for (const auto& uniform : uniforms)
+			{
+				m_uniform.setParameter(uniform);
+			}
+
+			Shader::unbind();
+		}
+		else
+		{
+			log.error(log.function(__FUNCTION__, filename), "Failed to find or parse json shader.");
+			return false;
+		}
+
+		return true;
+	}
+
+	////////////////////////////////////////////////////////////
+	void Shader::attachShader(const std::string& filename)
+	{
+		m_program.attachShader(filename);
+	}
+
 	////////////////////////////////////////////////////////////
 	void Shader::attachShader(const std::string& filename, eShaderType type)
 	{
@@ -67,11 +129,15 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
+	bool Shader::recompile()
+	{
+		return m_program.recompile();
+	}
+
+	////////////////////////////////////////////////////////////
 	void Shader::process()
 	{
-		//TODO(BEN): These are temporary to test uniform variables.
-		// Replace them with the eventual material class.
-		m_uniform.setParameter("basic_colour", Vector3f(1.0f, 0.0f, 0.0f));
+		m_uniform.setParameter("time", static_cast<float>(SDL_GetTicks()));
 	}
 
 	////////////////////////////////////////////////////////////

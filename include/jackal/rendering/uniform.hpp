@@ -28,19 +28,20 @@
 //====================
 // C++ includes
 //====================
-#include <utility>                  // Using forward values.
-#include <string>                   // Passing uniforms by string literal name.
+#include <utility>                             // Using forward values.
+#include <string>                              // Passing uniforms by string literal name.
 
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/vector2.hpp>  // Passing Vector2 objects as uniforms.
-#include <jackal/math/vector3.hpp>  // Passing Vector3 objects as uniforms.
+#include <jackal/math/vector2.hpp>             // Passing Vector2 objects as uniforms.
+#include <jackal/math/vector3.hpp>             // Passing Vector3 objects as uniforms.
+#include <jackal/utils/json/json-forwards.hpp> // Setting uniforms by the value of Json values.
 
 //====================
 // Additional includes
 //====================
-#include <GL/glew.h>                // Sending uniforms to glsl.
+#include <GL/glew.h>                           // Sending uniforms to glsl.
 
 namespace jackal
 {	
@@ -234,6 +235,20 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		template <typename T>
 		void setParameter(const std::string& uniform, T value);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sends a Json value as a uniform to the attached shaders.
+		///
+		/// So communication can be achieved between C++ and GLSL, uniform
+		/// variables can be transferred to give shaders additional behavior. 
+		/// This method makes use of forwarding of variables in order to support
+		/// many different variable types. This method is invoked by the Shader load
+		/// method to apply constant uniforms.
+		///
+		/// @param uniform   The JSON value that contains the uniform.
+		///
+		////////////////////////////////////////////////////////////
+		void setParameter(const Json::Value& uniform);
 	};
 
 	//====================

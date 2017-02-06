@@ -1,6 +1,15 @@
 var searchData=
 [
-  ['unbind',['unbind',['../classjackal_1_1_buffer.html#a72e95b9ae473e33a1594f5aefdc13dfc',1,'jackal::Buffer::unbind()'],['../classjackal_1_1_program.html#a3cf89f22a0aa1f5112009ec4eba44ebb',1,'jackal::Program::unbind()'],['../classjackal_1_1_shader.html#a77f249732cfa9c1ff440c2bb302985d9',1,'jackal::Shader::unbind()']]],
-  ['uniform',['Uniform',['../classjackal_1_1_uniform.html#a397a1a2f29e4966559762ef6cbf61c6a',1,'jackal::Uniform']]],
-  ['up',['up',['../classjackal_1_1_vector2.html#a55bf5e8a02f8eb3ba901caca516cb30b',1,'jackal::Vector2::up()'],['../classjackal_1_1_vector3.html#a897c32e792d0a76fff346e014af3b4ab',1,'jackal::Vector3::up()']]]
+  ['setcomment',['setComment',['../class_json_1_1_value.html#a29f3a30f7e5d3af6f38d57999bf5b480',1,'Json::Value::setComment(const char *comment, CommentPlacement placement)'],['../class_json_1_1_value.html#a2900152a2887b410a9ddabe278b9d492',1,'Json::Value::setComment(const char *comment, size_t len, CommentPlacement placement)'],['../class_json_1_1_value.html#a2c5d13a5f45eb77e912008778e65b27f',1,'Json::Value::setComment(const JSONCPP_STRING &amp;comment, CommentPlacement placement)']]],
+  ['setdefaults',['setDefaults',['../class_json_1_1_char_reader_builder.html#a03ff031e06aabff989ab4addc87294ab',1,'Json::CharReaderBuilder::setDefaults()'],['../class_json_1_1_stream_writer_builder.html#a53bf106b141e28637b01ad0ecd2acbf6',1,'Json::StreamWriterBuilder::setDefaults()']]],
+  ['setparameter',['setParameter',['../classjackal_1_1_uniform.html#a53c9a0e4f363e99218fc206c300fbb45',1,'jackal::Uniform::setParameter(const std::string &amp;uniform, T value)'],['../classjackal_1_1_uniform.html#a630904a272f1bb7e0c996130373ee3a7',1,'jackal::Uniform::setParameter(const Json::Value &amp;uniform)']]],
+  ['setposition',['setPosition',['../classjackal_1_1_window.html#a7f25b7627ea6eadd4e49529b9286bb43',1,'jackal::Window']]],
+  ['setsize',['setSize',['../classjackal_1_1_window.html#aa79dcf3e8247717258aaf122f70d5162',1,'jackal::Window']]],
+  ['settitle',['setTitle',['../classjackal_1_1_window.html#a67f364fa821d06e06c15a5c8802d386c',1,'jackal::Window']]],
+  ['shader',['Shader',['../classjackal_1_1_shader.html#a5e551c0657e7d4117101c72cdc80ad55',1,'jackal::Shader']]],
+  ['singleton',['Singleton',['../classjackal_1_1_singleton.html#a35a5c88a49799c2b70ffd4d6f050317f',1,'jackal::Singleton']]],
+  ['size',['size',['../class_json_1_1_value.html#a0ec2808e1d7efa4e9fad938d6667be44',1,'Json::Value']]],
+  ['strictmode',['strictMode',['../class_json_1_1_features.html#ae23176c14b2e79e81fb61fb1a8ab58ee',1,'Json::Features::strictMode()'],['../class_json_1_1_char_reader_builder.html#a9c19e3c5475f9072d527810d4bf56749',1,'Json::CharReaderBuilder::strictMode()']]],
+  ['swap',['swap',['../classjackal_1_1_window.html#ae5393e76c997c9813e740dace9d31916',1,'jackal::Window::swap()'],['../class_json_1_1_value.html#aab841120d78e296e1bc06a373345e822',1,'Json::Value::swap()']]],
+  ['swappayload',['swapPayload',['../class_json_1_1_value.html#a5263476047f20e2fc6de470e4de34fe5',1,'Json::Value']]]
 ];

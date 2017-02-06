@@ -28,8 +28,8 @@
 //====================
 // C++ includes
 //====================
-#include <vector>   // The results of the FileReader.
-#include <string>   // Using strings as the directory location.
+#include <vector>                             // The results of the FileReader.
+#include <string>                             // Using strings as the directory location.
 
 namespace jackal
 {
@@ -39,7 +39,8 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		std::vector<std::string> m_lines; ///< Each subsequent line of the stream.
+		std::vector<std::string> m_lines;        ///< Each subsequent line of the stream.
+		std::string              m_absolutePath; ///< The absolute path of the file passed in.
 
 	public:
 		//====================
@@ -55,7 +56,11 @@ namespace jackal
 		explicit FileReader();
 
 		////////////////////////////////////////////////////////////
-		/// @brief Default destructor for the FileReader object.
+		/// @brief Destructor for the FileReader object.
+		///
+		/// The destructor for the FileReader closes the stream if it
+		/// is currently being used.
+		///
 		////////////////////////////////////////////////////////////
 		~FileReader() = default;
 
@@ -73,6 +78,18 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		std::vector<std::string> getLines() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the absolute path of the file being read.
+		///
+		/// As the FileReader can make use of the the VirtualFileSystem, if
+		/// the system is utilised, this method will return the actual path
+		/// that the reader utilised.
+		///
+		/// @returns The absolute path of the FileReader object.
+		///
+		////////////////////////////////////////////////////////////
+		std::string getAbsolutePath() const;
 
 		//====================
 		// Methods

@@ -86,6 +86,8 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		GLuint getID() const;
 
+		std::vector<GLSLObject>& getShaders();
+
 		//====================
 		// Methods
 		//====================
@@ -117,6 +119,19 @@ namespace jackal
 		/// readied for use.
 		///
 		/// @param filename   The file location of the external shader.
+		///
+		////////////////////////////////////////////////////////////
+		void attachShader(const std::string& filename);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Creates and attaches a shader to the Program object.
+		///
+		/// When this method is invoked, a GLSLObject is created on the stack
+		/// and the create method is invoked. The object is then retained by the 
+		/// Program and subsequently compiled by the Program when they are linked and
+		/// readied for use.
+		///
+		/// @param filename   The file location of the external shader.
 		/// @param type       The shader type to create.
 		///
 		////////////////////////////////////////////////////////////
@@ -134,6 +149,17 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		bool compile();
+
+		////////////////////////////////////////////////////////////
+		/// @brief Recompiles the Program and its attached shaders.
+		///
+		/// When the re-compile method is invoked, it will destroy the
+		/// program and glsl object ID's and re-generate and re-compile them.
+		/// This method is used so that the glsl files can be hot-swapped
+		/// and reloaded, so that the application does not have to be restarted.
+		///
+		////////////////////////////////////////////////////////////
+		bool recompile();
 
 		////////////////////////////////////////////////////////////
 		/// @brief Bind the specified Program object.

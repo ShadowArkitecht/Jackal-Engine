@@ -1,14 +1,21 @@
 var searchData=
 [
-  ['setparameter',['setParameter',['../classjackal_1_1_uniform.html#a53c9a0e4f363e99218fc206c300fbb45',1,'jackal::Uniform']]],
-  ['setposition',['setPosition',['../classjackal_1_1_window.html#a7f25b7627ea6eadd4e49529b9286bb43',1,'jackal::Window']]],
-  ['setsize',['setSize',['../classjackal_1_1_window.html#aa79dcf3e8247717258aaf122f70d5162',1,'jackal::Window']]],
-  ['settitle',['setTitle',['../classjackal_1_1_window.html#a67f364fa821d06e06c15a5c8802d386c',1,'jackal::Window']]],
-  ['shader',['Shader',['../classjackal_1_1_shader.html#a5e551c0657e7d4117101c72cdc80ad55',1,'jackal::Shader']]],
-  ['shader',['Shader',['../classjackal_1_1_shader.html',1,'jackal']]],
-  ['singleton',['Singleton',['../classjackal_1_1_singleton.html',1,'jackal']]],
-  ['singleton',['Singleton',['../classjackal_1_1_singleton.html#a35a5c88a49799c2b70ffd4d6f050317f',1,'jackal::Singleton']]],
-  ['singleton_3c_20virtualfilesystem_20_3e',['Singleton&lt; VirtualFileSystem &gt;',['../classjackal_1_1_singleton.html',1,'jackal']]],
-  ['stencilbits',['stencilBits',['../structjackal_1_1_context_settings__t.html#ac73ade26ed4c44cb8f8f0dff81faf3c9',1,'jackal::ContextSettings_t']]],
-  ['swap',['swap',['../classjackal_1_1_window.html#ae5393e76c997c9813e740dace9d31916',1,'jackal::Window']]]
+  ['read',['read',['../classjackal_1_1_c_s_v_file_reader.html#afc1b210af88327267a3b078031efb10b',1,'jackal::CSVFileReader::read()'],['../classjackal_1_1_file_reader.html#a82da37137cd4e10429d4148ac3ad309a',1,'jackal::FileReader::read()']]],
+  ['reader',['Reader',['../class_json_1_1_reader.html#a0b3c4e24c8393354bab57a6ba3ffc27f',1,'Json::Reader::Reader()'],['../class_json_1_1_reader.html#a45f17831118337309180313e93ac33f8',1,'Json::Reader::Reader(const Features &amp;features)']]],
+  ['reader',['Reader',['../class_json_1_1_reader.html',1,'Json']]],
+  ['realvalue',['realValue',['../namespace_json.html#a7d654b75c16a57007925868e38212b4eab837c7b869c14d8be712deb45c9e490e',1,'Json']]],
+  ['recompile',['recompile',['../classjackal_1_1_program.html#a1a0ee36bc93706780a277f543ce579a5',1,'jackal::Program']]],
+  ['reload',['reload',['../classjackal_1_1_resource_manager.html#ac8d91bbfdf4af05d7713825d2c4a6c21',1,'jackal::ResourceManager']]],
+  ['removeindex',['removeIndex',['../class_json_1_1_value.html#ae9e67e08a85a2f3be3396ec0f4c47f65',1,'Json::Value']]],
+  ['removemember',['removeMember',['../class_json_1_1_value.html#aa52f7873b95d29627d6e83ba96f69aaa',1,'Json::Value::removeMember(const char *key)'],['../class_json_1_1_value.html#a1dfd5d30fbc53fcd9c4955b8b3e7885c',1,'Json::Value::removeMember(const JSONCPP_STRING &amp;key)'],['../class_json_1_1_value.html#a708e599489adf30d65bf85a8ee16e6fb',1,'Json::Value::removeMember(const char *key, Value *removed)'],['../class_json_1_1_value.html#ae385ecef98427970df525ee876e9f54a',1,'Json::Value::removeMember(JSONCPP_STRING const &amp;key, Value *removed)'],['../class_json_1_1_value.html#a49c91af727d6b4eb0af02a81bb2def87',1,'Json::Value::removeMember(const char *begin, const char *end, Value *removed)']]],
+  ['resize',['resize',['../class_json_1_1_value.html#aa284353271ada427dbfa04a42f2be407',1,'Json::Value']]],
+  ['resolve',['resolve',['../classjackal_1_1_virtual_file_system.html#a72fa27c6d41abb6d811a6b31eaffa233',1,'jackal::VirtualFileSystem']]],
+  ['resource',['Resource',['../classjackal_1_1_resource.html',1,'jackal']]],
+  ['resourcecache',['ResourceCache',['../classjackal_1_1_resource_cache.html',1,'jackal']]],
+  ['resourcecache',['ResourceCache',['../classjackal_1_1_resource_cache.html#aa32ecd9283b2caa705d01b80b75e11b0',1,'jackal::ResourceCache']]],
+  ['resourcecache_3c_20jackal_3a_3ashader_20_3e',['ResourceCache&lt; jackal::Shader &gt;',['../classjackal_1_1_resource_cache.html',1,'jackal']]],
+  ['resourcemanager',['ResourceManager',['../classjackal_1_1_resource_manager.html',1,'jackal']]],
+  ['right',['right',['../classjackal_1_1_vector2.html#a982095308093bde7c8abf076806a73e0',1,'jackal::Vector2::right()'],['../classjackal_1_1_vector3.html#a8127dc27e530f0676048e2994bf4f936',1,'jackal::Vector3::right()']]],
+  ['rotate',['rotate',['../classjackal_1_1_vector2.html#a99952226a37a30b797a7c5e7b675a696',1,'jackal::Vector2']]],
+  ['runtimeerror',['RuntimeError',['../class_json_1_1_runtime_error.html',1,'Json']]]
 ];

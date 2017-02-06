@@ -42,7 +42,12 @@ set(HEADER_FILES "${INCLUDE_DIR}/constants.hpp"
                  "${INCLUDE_DIR}/log.inl" 
                  "${INCLUDE_DIR}/non_copyable.hpp"
                  "${INCLUDE_DIR}/properties.hpp"
-                 "${INCLUDE_DIR}/singleton.hpp")
+                 "${INCLUDE_DIR}/resource_cache.hpp"
+                 "${INCLUDE_DIR}/resource_cache.inl"
+                 "${INCLUDE_DIR}/resource_manager.hpp"
+                 "${INCLUDE_DIR}/singleton.hpp"
+                 "${INCLUDE_DIR}/json/json.hpp"
+                 "${INCLUDE_DIR}/json/json-forwards.hpp")
 
 set(SOURCE_FILES "${SOURCE_DIR}/constants.cpp" 
                  "${SOURCE_DIR}/context_settings.cpp" 
@@ -50,7 +55,9 @@ set(SOURCE_FILES "${SOURCE_DIR}/constants.cpp"
                  "${SOURCE_DIR}/file_policy.cpp" 
 	         "${SOURCE_DIR}/file_reader.cpp" 
                  "${SOURCE_DIR}/file_system.cpp" 
-                 "${SOURCE_DIR}/properties.cpp")
+                 "${SOURCE_DIR}/properties.cpp"
+                 "${SOURCE_DIR}/resource_manager.cpp"
+                 "${SOURCE_DIR}/json/jsoncpp.cpp")
 
 #====================
 # Library

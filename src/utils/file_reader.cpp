@@ -25,7 +25,7 @@
 //====================
 // C++ includes
 //====================
-#include <fstream>                              // Streaming a file in from disk.
+#include <fstream>                               // Streaming a file in from disk.
 
 //====================
 // Jackal includes
@@ -46,7 +46,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	FileReader::FileReader()
-		: m_lines()
+		: m_lines(), m_absolutePath()
 	{
 	}
 
@@ -59,21 +59,26 @@ namespace jackal
 		return m_lines;
 	}
 
+	////////////////////////////////////////////////////////////
+	std::string FileReader::getAbsolutePath() const
+	{
+		return m_absolutePath;
+	}
+
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
 	bool FileReader::read(const std::string& filename)
 	{
-		std::string path;
-		if (!VirtualFileSystem::getInstance().resolve(filename, path))
+		if (!VirtualFileSystem::getInstance().resolve(filename, m_absolutePath))
 		{
 			log.error(log.function(__FUNCTION__, filename), "Failed. File does not exist.");
 			return false;
 		}
 		
 		std::ifstream file;
-		file.open(path, std::ios::in | std::ios::binary);
+		file.open(m_absolutePath, std::ios::in | std::ios::binary);
 
 		if (file.fail())
 		{
@@ -89,6 +94,7 @@ namespace jackal
 			m_lines.push_back(line);
 		}
 
+		file.close();
 		return true;
 	}
 
