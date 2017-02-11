@@ -33,6 +33,7 @@
 // Additional includes
 //==================== 
 #include <GL/glew.h>                   // Initialising GLEW context.
+#include <SDL2/SDL_image.h>            // Initializing SDL image.
 
 namespace jackal
 {
@@ -144,6 +145,12 @@ namespace jackal
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO))
 		{
 			log.error(log.function(__FUNCTION__, title, position, size), "SDL failed to initialize:", SDL_GetError());
+			return false;
+		}
+
+		if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0)
+		{
+			log.error(log.function(__FUNCTION__, title, position, size), "SDL image failed to initialize:", IMG_GetError());
 			return false;
 		}
 

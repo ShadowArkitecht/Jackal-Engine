@@ -28,12 +28,17 @@
 //====================
 // C++ includes
 //====================
-#include <vector> // Storage type for each row of the csv file.
-#include <string> // Each element of the csv is stored as a string.
+#include <vector>                        // Storage type for each row of the csv file.
+#include <string>                        // Each element of the csv is stored as a string.
+
+//====================
+// Jackal includes
+//====================
+#include <jackal/utils/file_reader.hpp> // CSVFileReader inherits from the FileReader object.
 
 namespace jackal 
 {
-	class CSVFileReader final
+	class CSVFileReader final : public FileReader
 	{
 	private:
 		//====================

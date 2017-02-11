@@ -1,0 +1,7 @@
+{
+	"image": "~textures/image.png",
+	"description": {
+		"wrap-mode": "clamp",
+		"filter": "nearest"
+	}
+}

@@ -47,6 +47,7 @@ namespace jackal
 			static const std::string PROPERTIES;      ///< String literal extension of properties files.
 			static const std::string CONFIGURATION;   ///< String literal extension of configuration files.
 			static const std::string CSV;             ///< String literal extension of comma seperated values files.
+			static const std::string JSON;            ///< String literal extension of json files.
 			// Graphics-specific.
 			static const std::string VERTEX_SHADER;   ///< String literal extension of vertex shader files.
 			static const std::string FRAGMENT_SHADER; ///< String literal extension of fragment shader files.

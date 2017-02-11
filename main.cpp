@@ -31,12 +31,19 @@
 #include <jackal/core/config_file.hpp>         // Load the main configuration file. 
 #include <jackal/utils/properties.hpp>         // Load the locale for the current application.
 #include <jackal/core/window.hpp>              // Creating test window instance.
-#include <jackal/rendering/glsl_object.hpp>    // Loading external shaders.
 #include <jackal/rendering/buffer.hpp>         // Binding different buffers.
 #include <jackal/rendering/vertex.hpp>         // Creating vertices for the buffers.
 #include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
 
+#include <jackal/rendering/gui_texture.hpp>
+#include <jackal/rendering/gui_texture_factory.hpp>
+
+#include <Awesomium/WebCore.h>
+#include <Awesomium/BitmapSurface.h>
+#include <Awesomium/STLHelpers.h>
+
 using namespace jackal;
+using namespace Awesomium;
 
 int main(int argc, char** argv)
 {
@@ -49,6 +56,7 @@ int main(int argc, char** argv)
 	vfs.mount("csv", "data/csv");
 	// rendering
 	vfs.mount("shaders", "data/shaders");
+	vfs.mount("textures", "data/textures");
 
 	ConfigFile config;
 	config.open("~config/main.jcfg");
@@ -59,9 +67,7 @@ int main(int argc, char** argv)
 	Window window;
 	window.create(config);
 
-	// TODO(BEN): Abstract this into a Shader::create() method.
-	Shader* pShader = ResourceManager::getInstance().get<Shader>("assets/shaders/basic-shader.json");
-
+	Shader shader = ResourceManager::getInstance().get<Shader>("assets/shaders/basic-shader.json");	
 	Buffer vao(eBufferType::ARRAY);
 	vao.create();
 
@@ -71,9 +77,16 @@ int main(int argc, char** argv)
 	vbo.create();
 
 	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, 1.0f);
+	v1.uv = Vector2f::zero();
+
 	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, 1.0f);
+	v2.uv = Vector2f(1.0f, 0.0f);
+
 	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, 1.0f);
+	v3.uv = Vector2f(1.0f, 1.0f);
+
 	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, 1.0f);
+	v4.uv = Vector2f(0.0f, 1.0f);
 
 	std::vector<Vertex_t> verts;
 	verts.push_back(v1);
@@ -100,26 +113,56 @@ int main(int argc, char** argv)
 
 	Buffer::unbind(vao);
 
+	Texture texture = ResourceManager::getInstance().get<Texture>("assets/textures/basic-texture.json");
+	
+	// Test Awesomium initialization.
+	WebCore* pCore = WebCore::Initialize(WebConfig());
+	WebView* pView = pCore->CreateWebView(300, 300);
+
+	pCore->set_surface_factory(new GUITextureFactory());
+
+	WebURL url(WSLit("file:///C:/Users/Benjamin/Documents/ui/index.html"));
+	pView->LoadURL(url);
+	
+	while (pView->IsLoading())
+	{
+	 	pCore->Update();
+	}
+	
+	GUITexture* pTexture = (GUITexture*)pView->surface();
+
 	while (window.isRunning())
 	{
-		window.clear();
-		Shader::bind(*pShader);
+		pCore->Update();
 
-		pShader->process();
+		window.clear();
+
+		Shader::bind(shader);
+		// Texture::bind(texture);
+		GUITexture::bind(*pTexture);
+
+		shader.process();
 
 		Buffer::bind(vao);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 		Buffer::unbind(vao);
 
+		//Texture::unbind();
+		GUITexture::unbind();
+		
 		Shader::unbind();
+
 		window.swap();
 
 		window.pollEvents();
 
 		ResourceManager::getInstance().reload();
-		SDL_Delay(16);
 	}
 
 	SDL_Quit();
+
+	pView->Destroy();
+	Awesomium::WebCore::Shutdown();
+
 	return 0;
 }

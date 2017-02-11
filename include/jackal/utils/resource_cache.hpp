@@ -89,7 +89,7 @@ namespace jackal
 		/// @returns      The Resource associated with the key.
 		///
 		////////////////////////////////////////////////////////////
-		T* get(const std::string& name);
+		const T& get(const std::string& name);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the resources of the cache.

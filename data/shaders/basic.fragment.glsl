@@ -27,13 +27,23 @@
 //====================
 // Uniform variables
 //====================
-uniform vec3 basic_colour; // Test uniform variable parsed in from json file. 
-uniform float time;        // Current time the application has been open for. 
+uniform vec3 basic_colour;  // Test uniform variable parsed in from json file. 
+uniform float u_time;       // Time since the application has been open.
+uniform sampler2D u_texture;// The currently bound texture
+
+//====================
+// Layout variables
+//====================
+in vec2 uv_coords;
 
 //====================
 // Functions
 //====================
 void main()
 {
-	gl_FragColor = vec4(basic_colour, 1.0);
+//	float red = sin(u_time / 5.0);
+//	vec4 colour = vec4(red, 0.0, 0.0, 1.0);
+
+	vec4 result = texture2D(u_texture, uv_coords) * vec4(1.0);
+	gl_FragColor = vec4(result.xyz, 1.0);
 }

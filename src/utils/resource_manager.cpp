@@ -39,7 +39,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	ResourceManager::ResourceManager()
-		: Singleton<ResourceManager>(), m_shaders(), m_timeStamps(), m_changedShaders(),
+		: Singleton<ResourceManager>(), m_shaders(), m_textures(), m_timeStamps(), m_changedShaders(),
 			m_listening(true), m_mutex(), m_listener(&ResourceManager::fileChangeListener, this)
 	{
 	}
@@ -56,9 +56,16 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	template <>
-	Shader* ResourceManager::get(const std::string& filename)
+	const Shader& ResourceManager::get(const std::string& filename)
 	{
 		return m_shaders.get(filename);
+	}
+
+	////////////////////////////////////////////////////////////
+	template <>
+	const Texture& ResourceManager::get(const std::string& filename)
+	{
+		return m_textures.get(filename);
 	}
 
 	//====================

@@ -25,33 +25,22 @@
 #====================
 # Directories
 #====================
-set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include/jackal/rendering") # Headers and inline files.
-set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/rendering")            # Source files.
+set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include/jackal/math") # Headers and inline files.
+set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/math")            # Source files.
 
 #====================
 # Variables
 #====================
-set(HEADER_FILES "${INCLUDE_DIR}/buffer.hpp"
-	             "${INCLUDE_DIR}/glsl_object.hpp"
-	             "${INCLUDE_DIR}/gui_texture.hpp"
-	             "${INCLUDE_DIR}/gui_texture_factory.hpp"
-	             "${INCLUDE_DIR}/program.hpp"
-	             "${INCLUDE_DIR}/shader.hpp"
-	             "${INCLUDE_DIR}/texture.hpp"
-	             "${INCLUDE_DIR}/uniform.hpp"
-                 "${INCLUDE_DIR}/vertex.hpp")
+set(HEADER_FILES "${INCLUDE_DIR}/colour.hpp"
+	             "${INCLUDE_DIR}/vector2.hpp"
+	             "${INCLUDE_DIR}/vector2.inl"
+	             "${INCLUDE_DIR}/vector3.hpp"
+	             "${INCLUDE_DIR}/vector3.inl")
 
-set(SOURCE_FILES "${SOURCE_DIR}/buffer.cpp"
-	             "${SOURCE_DIR}/glsl_object.cpp"
-	             "${SOURCE_DIR}/gui_texture.cpp"
-	             "${SOURCE_DIR}/gui_texture_factory.cpp"
-	             "${SOURCE_DIR}/program.cpp"
-	             "${SOURCE_DIR}/shader.cpp"
-	             "${SOURCE_DIR}/texture.cpp"
-	             "${SOURCE_DIR}/uniform.cpp")
+set(SOURCE_FILES "${SOURCE_DIR}/colour.cpp")
 
 #====================
 # Library
 #====================
-add_library(jackal_rendering ${HEADER_FILES} ${SOURCE_FILES})
-set_target_properties(jackal_rendering PROPERTIES LINKER_LANGUAGE CXX)
+add_library(jackal_math ${HEADER_FILES} ${SOURCE_FILES})
+set_target_properties(jackal_math PROPERTIES LINKER_LANGUAGE CXX)

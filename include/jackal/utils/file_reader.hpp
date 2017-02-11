@@ -30,18 +30,30 @@
 //====================
 #include <vector>                             // The results of the FileReader.
 #include <string>                             // Using strings as the directory location.
+#include <fstream>                            // Opening the file of the reader.
+
+//====================
+// Jackal includes
+//====================
+#include <jackal/utils/non_copyable.hpp>      // The FileReader is a non copyable object.
 
 namespace jackal
 {
-	class FileReader final
+	class FileReader
 	{
 	private:
 		//====================
 		// Member variables
 		//====================
 		std::vector<std::string> m_lines;        ///< Each subsequent line of the stream.
-		std::string              m_absolutePath; ///< The absolute path of the file passed in.
 
+	protected:
+		//====================
+		// Protected member variables
+		//====================
+		std::ifstream            m_file;         ///< Opening the file from a directory.
+		std::string              m_absolutePath; ///< The absolute path of the file passed in.
+		
 	public:
 		//====================
 		// Ctor and dtor
@@ -62,7 +74,7 @@ namespace jackal
 		/// is currently being used.
 		///
 		////////////////////////////////////////////////////////////
-		~FileReader() = default;
+		virtual ~FileReader();
 
 		//====================
 		// Getters and setters
@@ -107,7 +119,17 @@ namespace jackal
 		/// @returns           True if the file opened and streamed correctly.
 		///
 		////////////////////////////////////////////////////////////
-		bool read(const std::string& filename);
+		virtual bool read(const std::string& filename);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Closes the stream and prevents further use.
+		/// 
+		/// When the close method is invoked, it will close the stream
+		/// and prevent further use. The close method is also invoked when
+		/// the FileReader destructor is called.
+		///
+		///////////////////////////////////////////////////////////
+		void close();
 	};
 
 } // namespace jackal

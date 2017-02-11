@@ -1,11 +1,9 @@
 {
-	// The glsl shaders to attach and compile to the Shader object.
 	"glsl-files": [{
 		"glsl-file": "~shaders/basic.vertex.glsl"
 	}, {
 		"glsl-file": "~shaders/basic.fragment.glsl"
 	}],
-	// Constant uniforms are variables that will not change throughout the shader lifetime.
 	"const-uniforms": [{
 		"name": "basic_colour",
 		"type": "vec3",

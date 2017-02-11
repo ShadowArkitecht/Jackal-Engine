@@ -36,6 +36,7 @@ namespace jackal
 	const std::string Constants::Extensions::PROPERTIES    = "properties";
 	const std::string Constants::Extensions::CONFIGURATION = "jcfg";
 	const std::string Constants::Extensions::CSV           = "csv";
+	const std::string Constants::Extensions::JSON          = "json";
 	// Graphics-specific
 	const std::string Constants::Extensions::VERTEX_SHADER   = "vertex.glsl";
 	const std::string Constants::Extensions::FRAGMENT_SHADER = "fragment.glsl";

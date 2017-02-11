@@ -12,7 +12,7 @@
 #
 # 1. The origin of this software must not be misrepresented;
 #    you must not claim that you wrote the original software.
-#    If you use this software in a product, an acknowledgement
+#    if  you use this software in a product, an acknowledgement
 #    in the product documentation would be appreciated but is not required.
 #
 # 2. Altered source versions must be plainly marked as such,
@@ -22,10 +22,26 @@
 #
 ###################################################################################################
 
-#====================
-# Directories
-#====================
-add_subdirectory(core)
-add_subdirectory(math)
-add_subdirectory(rendering)
-add_subdirectory(utils)
+####################
+# FindSDL2
+####################
+set(SDL2_SEARCH_PATHS ~/Library/Frameworks
+	                  /Library/Frameworks
+                	  /usr/local
+                	  /usr
+                	  /sw # Fink
+                	  /opt/local # DarwinPorts
+                	  /opt/csw # Blastwave
+                	  /opt)
+
+find_library(SDL2_IMAGE_LIBRARY_LOCATION NAMES SDL2_image
+                                         HINTS $ENV{SDL2DIR}
+	                                     PATH_SUFFIXES lib lib/x86
+	                                     PATHS ${SDL2_SEARCH_PATHS})
+
+
+set(SDL2_IMAGE_LIBRARY ${SDL2_IMAGE_LIBRARY_LOCATION} CACHE STRING "Where the SDL2 Library can be found")
+set(SDL2_IMAGE_LIBRARY_LOCATION "${SDL2_IMAGE_LIBRARY_LOCATION}" CACHE INTERNAL "")
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(SDL2_IMAGE REQUIRED_VARS SDL2_IMAGE_LIBRARY)

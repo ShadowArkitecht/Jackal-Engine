@@ -23,19 +23,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
-// C++ includes
-//====================
-#include <fstream>                      // The stream to store the result reading.
-
-//====================
 // Jackal includes
 //====================
-#include <jackal/rendering/shader.hpp>  // Shader class declaration.
-#include <jackal/utils/log.hpp>         // Logging warnings and errors.
-#include <jackal/utils/file_reader.hpp> // Reading the json file.
-#include <jackal/utils/json/json.hpp>   // De-serializing a shader file.
+#include <jackal/rendering/shader.hpp>       // Shader class declaration.
+#include <jackal/utils/log.hpp>              // Logging warnings and errors.
+#include <jackal/utils/json_file_reader.hpp> // Loading and parsing the json file.
+#include <jackal/utils/json/json.hpp>        // De-serializing a shader file.
 
-#include <SDL2/SDL.h>
+//====================
+// Additional includes
+//====================
+#include <SDL2/SDL.h>                        // Used to retrieve the ticks of the application.
 
 namespace jackal
 {	
@@ -69,15 +67,12 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	bool Shader::load(const std::string& filename) // override
 	{
-		Json::Value root;
-
-		std::ifstream file;
-		file.open(filename);
-
-		Json::Reader reader;
-		if (!file.fail() && reader.parse(file, root))
+		JSONFileReader reader;
+		if (reader.read(filename))
 		{
+			Json::Value root = reader.getRoot();
 			Json::Value files = root["glsl-files"];
+			
 			for (const auto& gf : files)
 			{
 				this->attachShader(gf["glsl-file"].asString());
@@ -137,7 +132,8 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	void Shader::process()
 	{
-		m_uniform.setParameter("time", static_cast<float>(SDL_GetTicks()));
+		m_uniform.setParameter("u_time", static_cast<float>(SDL_GetTicks()));
+		m_uniform.setParameter("u_texture", 0);
 	}
 
 	////////////////////////////////////////////////////////////

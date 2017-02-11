@@ -28,7 +28,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/core/resource.hpp>     // Shader is a type of resource.
+#include <jackal/utils/resource.hpp>    // Shader is a type of resource.
 #include <jackal/rendering/program.hpp> // The Program to attach shader files to.
 #include <jackal/rendering/uniform.hpp> // Adding uniforms to the shaders.
 
@@ -61,6 +61,17 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		~Shader() = default;
 
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the glsl shaders attached to the Shader object.
+		///
+		/// Each shader is made up of a collection of glsl files, which are
+		/// used to render the behavior of meshes. This method will retrieve
+		/// a references to all of the glsl objects. This method is mostly utilised
+		/// by the file change listener system to dynamically reload shaders.
+		///
+		/// @returns A list of all the glsl files attached to this shader.
+		//
+		////////////////////////////////////////////////////////////
 		std::vector<GLSLObject>& getShaders();
 
 		//====================
@@ -117,6 +128,15 @@ namespace jackal
 		////////////////////////////////////////////////////////////		
 		bool compile();
 
+		////////////////////////////////////////////////////////////
+		/// @brief Re-compiles the Shader for use.
+		///
+		/// When the shader is re-compiled, all of the ID's assigned to the
+		/// program and glsl objects are reset. The compilation and linking of
+		/// the files is then re-done. This re-compilation allows for hot-swapping
+		/// of shaders without the need for re-compilation.
+		///
+		////////////////////////////////////////////////////////////
 		bool recompile();
 
 		////////////////////////////////////////////////////////////

@@ -22,22 +22,32 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __JACKAL_RESOURCE_HPP__
-#define __JACKAL_RESOURCE_HPP__
-
-#include <string>
+//====================
+// Jackal includes
+//====================
+#include <jackal/math/colour.hpp> // Colour class declaration.
 
 namespace jackal
 {
-	class Resource
+	//====================
+	// Ctor and dtor
+	//====================
+	////////////////////////////////////////////////////////////
+	Colour::Colour()
+		: r(0.0f), g(0.0f), b(0.0f), a(1.0f)
 	{
-	public:
-		explicit Resource() = default;
-		virtual ~Resource() = default;
+	}
 
-		virtual bool load(const std::string& filename) = 0;
-	};
+	////////////////////////////////////////////////////////////
+	Colour::Colour(float r, float g, float b)
+		: r(r), g(g), b(b)
+	{
+	}
+
+	////////////////////////////////////////////////////////////
+	Colour::Colour(float r, float g, float b, float a)
+		: r(r), g(g), b(b), a(a)
+	{
+	}
 
 } // namespace jackal
-
-#endif//__JACKAL_RESOURCE_HPP__

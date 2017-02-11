@@ -49,6 +49,15 @@ else()
 	message(FATAL_ERROR "CMake build failed. SDL2 could not be found.")
 endif()
 
+find_package(SDL2_IMAGE REQUIRED)
+if (SDL2_IMAGE_FOUND)
+	message(STATUS "SDL2_image found. Linking to Jackal Engine.")
+	link_libraries(${SDL2_IMAGE_LIBRARY})
+else()
+	message(FATAL_ERROR "CMake build failed. SDL2_image could not be found.")
+endif()
+
+
 find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
 	message(STATUS "OpenGL found. Linking to Jackal Engine.")
@@ -64,6 +73,15 @@ if (JGLEW_FOUND)
 	link_libraries(${JGLEW_LIBRARY})
 else()
 	message(FATAL_ERROR "CMake build failed. GLEW count not be found.")
+endif()
+
+find_package(AWESOMIUM REQUIRED)
+if (AWESOMIUM_FOUND)
+	message(STATUS "Awesomium found. Linking to Jackal Engine.")
+	include_directories(${AWESOMIUM_INCLUDE_DIR})
+	link_libraries(${AWESOMIUM_LIBRARY})
+else()
+	message(FATAL_ERROR "CMake build failed. Awesomium could not be found.")
 endif()
 
 #====================
@@ -82,4 +100,4 @@ set(SOURCE_FILES ${CMAKE_SOURCE_DIR}/main.cpp)
 add_executable(jackal ${SOURCE_FILES})
 
 set_target_properties(jackal PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(jackal jackal_core jackal_utils jackal_rendering)
+target_link_libraries(jackal jackal_core jackal_utils jackal_rendering jackal_math)

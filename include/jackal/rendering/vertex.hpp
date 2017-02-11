@@ -29,7 +29,7 @@
 // Jackal includes
 //====================
 #include <jackal/math/vector3.hpp> // The position of the vertex.
-
+#include <jackal/math/vector2.hpp> // The uv co-ordinates of the vertex.
 namespace jackal
 {
 	struct Vertex_t final
@@ -38,6 +38,8 @@ namespace jackal
 		// Member variables
 		//====================
 		Vector3f position;  ///< The position of the vertex in 3D space. 
+		Vector3f normal;    ///< The vertex normal.
+		Vector2f uv;        ///< The uv co-ordinate of the vertex.
 	};
 
 } // namespace jackal

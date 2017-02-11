@@ -28,11 +28,19 @@
 // Layout variables
 //====================
 layout (location = 0) in vec3 position; // The world position of the vertices. 
+layout (location = 1) in vec3 normal;   // Vertex normals of the mesh.
+layout (location = 2) in vec2 uv;       // UV co-ordinate of the mesh.
+
+//====================
+// Interfaces
+//====================
+out vec2 uv_coords;
 
 //====================
 // Functions
 //====================
 void main()
-{	
+{
+	uv_coords = vec2(uv.x, 1.0 - uv.y);	
 	gl_Position = vec4(position, 1.0);
 }

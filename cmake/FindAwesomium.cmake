@@ -12,7 +12,7 @@
 #
 # 1. The origin of this software must not be misrepresented;
 #    you must not claim that you wrote the original software.
-#    If you use this software in a product, an acknowledgement
+#    if  you use this software in a product, an acknowledgement
 #    in the product documentation would be appreciated but is not required.
 #
 # 2. Altered source versions must be plainly marked as such,
@@ -22,10 +22,27 @@
 #
 ###################################################################################################
 
-#====================
-# Directories
-#====================
-add_subdirectory(core)
-add_subdirectory(math)
-add_subdirectory(rendering)
-add_subdirectory(utils)
+####################
+# FindAwesomium
+####################
+set(AWESOMIUM_SEARCH_PATHS ~/Library/Frameworks
+	                        /Library/Frameworks
+                	        /usr/local
+                	        /usr
+                	        /sw # Fink
+                	        /opt/local # DarwinPorts
+                	        /opt/csw # Blastwave
+                	        /opt)
+
+find_path(AWESOMIUM_INCLUDE_DIR NAMES Awesomium/WebCore.h
+	                            HINTS $ENV{AWE_DIR}
+	                            PATH_SUFFIXES include
+	                            PATHS ${AWESOMIUM_SEARCH_PATHS})
+
+find_library(AWESOMIUM_LIBRARY NAMES awesomium
+                               HINTS $ENV{AWE_DIR}
+	                           PATH_SUFFIXES lib64 lib build/lib
+	                           PATHS ${AWESOMIUM_SEARCH_PATHS})
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(AWESOMIUM REQUIRED_VARS AWESOMIUM_LIBRARY AWESOMIUM_INCLUDE_DIR)

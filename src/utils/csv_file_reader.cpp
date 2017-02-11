@@ -35,7 +35,6 @@
 #include <jackal/utils/log.hpp>             // Logging warnings and errors.
 #include <jackal/utils/file_system.hpp>     // Checking for the correct extension.
 #include <jackal/utils/constants.hpp>       // Constant for file extension.
-#include <jackal/utils/file_reader.hpp>     // Loading the file from disk.
 
 namespace jackal
 {	
@@ -50,7 +49,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	CSVFileReader::CSVFileReader()
-		: m_rows()
+		: FileReader(), m_rows()
 	{
 	}
 
@@ -82,18 +81,17 @@ namespace jackal
 			return false;
 		}
 
-		FileReader reader;
-		if (!reader.read(filename))
+		if (!this->read(filename))
 		{
 			return false;
 		}
 
-		std::string definition = reader.getLines().at(0);
+		std::string definition = this->getLines().at(0);
 		std::size_t columns = std::count(std::begin(definition), std::end(definition), COMMA_SYMBOL);
 
-		for (std::size_t i = 0; i < reader.getLines().size(); i++)
+		for (std::size_t i = 0; i < this->getLines().size(); i++)
 		{
-			std::string row = reader.getLines().at(i);
+			std::string row = this->getLines().at(i);
 			if (uniformColumns)
 			{
 				if (i == 0)
@@ -102,7 +100,6 @@ namespace jackal
 				}
 
 				std::size_t count = std::count(std::begin(row), std::end(row), COMMA_SYMBOL);
-
 				if (count != columns)
 				{
 					log.warning(log.function(__FUNCTION__, filename), "Failed to parse line", i, "incorrect number of elements.");

@@ -39,6 +39,8 @@ namespace jackal
 	// Local variables
 	//====================
 	const GLvoid* POS_OFFSET = reinterpret_cast<const GLvoid*>(offsetof(Vertex_t, position));
+	const GLvoid* NOR_OFFSET = reinterpret_cast<const GLvoid*>(offsetof(Vertex_t, normal));
+	const GLvoid* UV_OFFSET = reinterpret_cast<const GLvoid*>(offsetof(Vertex_t, uv));
 
 	//====================
 	// Ctor and dtor
@@ -108,7 +110,11 @@ namespace jackal
 		case eBufferType::VERTEX:
 			glGenBuffers(1, &m_ID);
 			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), 0);
+			glEnableVertexAttribArray(1);
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), POS_OFFSET);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), NOR_OFFSET);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), UV_OFFSET);
 			break;
 
 		case eBufferType::INDEX:
@@ -129,6 +135,8 @@ namespace jackal
 			if (m_type == eBufferType::VERTEX || m_type == eBufferType::INDEX)
 			{
 				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
+				glDisableVertexAttribArray(2);
 
 				glDeleteBuffers(1, &m_ID);
 				m_ID = 0;
@@ -164,7 +172,10 @@ namespace jackal
 		{
 		case eBufferType::VERTEX:
 			glBindBuffer(GL_ARRAY_BUFFER, buffer.getID());
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), 0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), POS_OFFSET);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), NOR_OFFSET);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex_t), UV_OFFSET);
+
 			break;
 
 		case eBufferType::INDEX:

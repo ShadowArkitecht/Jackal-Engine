@@ -26,11 +26,17 @@
 // Jackal includes
 //====================
 #include <jackal/rendering/uniform.hpp> // Uniform class declaration.
+#include <jackal/utils/log.hpp>         // Logging any json parsing errors.
 #include <jackal/rendering/program.hpp> // Getting the unique ID of the Program.
 #include <jackal/utils/json/json.hpp>   // Setting uniforms by a value in a json file.
 
 namespace jackal
 {
+	//====================
+	// Ctor and dtor
+	//====================
+	static DebugLog log("logs/engine_log.txt"); // Logging warnings and errors.
+
 	//====================
 	// Ctor and dtor
 	//====================
@@ -106,13 +112,39 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	void Uniform::setParameter(const Json::Value& uniform)
 	{
-		Json::Value type = uniform["type"].asString();
-		if (type == "vec3")
+		std::string type = uniform["type"].asString();
+		if (type.substr(0, 4) == "vec3") // The uniform is a type of vec3
 		{
 			Json::Value values = uniform["values"];
-			Vector3f vec3 = Vector3f(values["x"].asFloat(), values["y"].asFloat(), values["z"].asFloat());
+			if (type.length() == 4)
+			{
+				Vector3f vec3 = Vector3f(values["x"].asFloat(), values["y"].asFloat(), values["z"].asFloat());
+				this->setParameter(uniform["name"].asString(), vec3);				
+			}
+			else if (type.length() == 5)
+			{
+				switch (type[5])
+				{
+				case 'i':
+					{
+						Vector3i vec3i = Vector3i(values["x"].asInt(), values["y"].asInt(), values["z"].asInt());
+						this->setParameter(uniform["name"].asString(), vec3i);
+						break;					
+					}
 
-			this->setParameter(uniform["name"].asString(), vec3);
+				case 'd':
+					{
+						Vector3d vec3d = Vector3d(values["x"].asDouble(), values["y"].asDouble(), values["z"].asDouble());
+						this->setParameter(uniform["name"].asString(), vec3d);
+						break;					
+					}
+				}
+			}
+			else
+			{
+				log.warning(log.function(__FUNCTION__, uniform["name"].asString()), "Failed to parse vec3 value.");
+				return;
+			}
 		}
 	}
 

@@ -39,6 +39,7 @@
 #include <jackal/utils/singleton.hpp>      // ResourceManager is a singleton object.
 #include <jackal/utils/resource_cache.hpp> // Different caches for the all the resources. 
 #include <jackal/rendering/shader.hpp>     // Storing the Shader objects within the manager.
+#include <jackal/rendering/texture.hpp>    // Storing the Texture objects within the manager.
 
 namespace jackal
 {
@@ -53,6 +54,8 @@ namespace jackal
 		using TimeArray = std::array<int64_t, static_cast<int>(eShaderType::MAX)>;
 
 		ResourceCache<Shader>                      m_shaders;        ///< The resource cache for all the shaders.
+		ResourceCache<Texture>                     m_textures;       ///< The resource cache for all the textures.
+
 		std::unordered_map<std::string, TimeArray> m_timeStamps;     ///< The time stamps for all of the different shaders.
 		std::vector<Shader*>                       m_changedShaders; ///< A list of all the changed shaders.
 		bool                                       m_listening;      ///< Whether the seperate thread is listening for changes.
@@ -118,7 +121,7 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		template <typename T>
-		T* get(const std::string& filename);
+		const T& get(const std::string& filename);
 
 		//====================
 		// Methods
@@ -150,7 +153,22 @@ namespace jackal
 	///
 	////////////////////////////////////////////////////////////
 	template <>
-	Shader* ResourceManager::get(const std::string& filename);
+	const Shader& ResourceManager::get(const std::string& filename);
+	
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Texture object from the resource cache.
+	///
+	/// When this method is invoked, it will use one of the resource cache
+	/// of textures to retrieve a value without constantly having to allocate
+	/// new textures.
+	///
+	/// @param filename    The filename of the texture to retrieve.
+	///
+	/// @returns           The texture to retrieve from the caches.
+	///
+	////////////////////////////////////////////////////////////
+	template <>
+	const Texture& ResourceManager::get(const std::string& filename);
 
 } // namespace jackal
 

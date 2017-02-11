@@ -25,81 +25,85 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/file_reader.hpp>          // FileReader class declaration.
-#include <jackal/utils/log.hpp>                  // Logging warnings or errors to the external logs.
-#include <jackal/core/virtual_file_system.hpp>   // Using the virtual file paths.
+#include <jackal/utils/json_file_reader.hpp>   // JSONFileReader class declaration.
+#include <jackal/utils/log.hpp>                // Logging warnings and errors.
+#include <jackal/utils/file_system.hpp>        // Checking the extension of the file passed into the read method.
+#include <jackal/utils/constants.hpp>          // File extension constants.
+#include <jackal/core/virtual_file_system.hpp> // Utilising the virtual file system for file paths.
 
 namespace jackal
-{	
+{
 	//====================
 	// Local variables
 	//====================
-	static DebugLog log("logs/engine_log.txt");
+	static DebugLog log("logs/engine_log.txt"); // Logging warnings and errors
 
 	//====================
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	FileReader::FileReader()
-		: m_file(), m_lines(), m_absolutePath()
+	JSONFileReader::JSONFileReader()
+		: FileReader(), m_root()
 	{
-	}
-
-	////////////////////////////////////////////////////////////
-	FileReader::~FileReader()
-	{
-		this->close();
 	}
 
 	//====================
 	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	std::vector<std::string> FileReader::getLines() const
+	Json::Value JSONFileReader::getRoot() const
 	{
-		return m_lines;
-	}
-
-	////////////////////////////////////////////////////////////
-	std::string FileReader::getAbsolutePath() const
-	{
-		return m_absolutePath;
+		return m_root;
 	}
 
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	bool FileReader::read(const std::string& filename)
+	bool JSONFileReader::read(const std::string& filename)//override
 	{
+		FileSystem system;
+		if (!system.hasExtension(filename, Constants::Extensions::JSON))
+		{
+			log.warning(log.function(__FUNCTION__, filename), "Incorrect file extension");
+			return false;
+		}
+
+		// For some reason the file reader from the parent class won't pass correctly
+		// therefore the vfs has to be re-used here aswell.
+		std::ifstream file;
 		if (!VirtualFileSystem::getInstance().resolve(filename, m_absolutePath))
 		{
 			log.error(log.function(__FUNCTION__, filename), "Failed. File does not exist.");
-			return false;
-		}
-		
-		m_file.open(m_absolutePath, std::ios::in | std::ios::binary);
-		if (m_file.fail())
-		{
-			log.error(log.function(__FUNCTION__, filename), "Failed. File failed to open.");
-			m_file.close();
+			file.close();
 
 			return false;
 		}
-		
-		std::string line;
-		while (std::getline(m_file, line))
+
+		file.open(m_absolutePath, std::ios::in | std::ios::binary);
+		if (file.fail())
 		{
-			m_lines.push_back(line);
+			log.error(log.function(__FUNCTION__, filename), "Failed. File failed to open.");
+			file.close();
+
+			return false;
+		}
+
+		Json::Reader reader;
+		if (reader.parse(file, m_root))
+		{
+			file.close();
+			return true;
+		}
+		else
+		{
+			log.error(log.function(__FUNCTION__, filename), "Failed to find or parse json shader.");
+			file.close();
+
+			return false;
 		}
 
 		return true;
 	}
-
-	////////////////////////////////////////////////////////////
-	void FileReader::close()
-	{
-		m_file.close();
-	}
-
+	
 } // namespace jackal
