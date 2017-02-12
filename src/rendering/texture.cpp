@@ -27,6 +27,7 @@
 //==================== 
 #include <jackal/rendering/texture.hpp>          // Texture class declaration.
 #include <jackal/utils/log.hpp>                  // Logging warnings and errors.
+#include <jackal/utils/constants.hpp>            // Using the constant log location.
 #include <jackal/core/virtual_file_system.hpp>   // Searching paths with the virtual file system.
 #include <jackal/utils/json_file_reader.hpp>     // Parsing the json file and utilising the result.
 

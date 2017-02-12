@@ -36,6 +36,8 @@
 //====================
 #include <jackal/math/vector2.hpp>             // Passing Vector2 objects as uniforms.
 #include <jackal/math/vector3.hpp>             // Passing Vector3 objects as uniforms.
+#include <jackal/math/matrix4.hpp>             // Passing Matrix4 objects as uniforms.
+#include <jackal/math/colour.hpp>              // Passing Colour objects as uniforms.
 #include <jackal/utils/json/json-forwards.hpp> // Setting uniforms by the value of Json values.
 
 //====================
@@ -56,7 +58,7 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		Program& m_program; ///< The program that the uniforms are attached to.
+		Program* m_pProgram; ///< The program that the uniforms are attached to.
 
 	private:
 		//====================
@@ -91,7 +93,7 @@ namespace jackal
 		/// of an integer.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param variable The integer to send to the server.
+		/// @param variable The integer to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, int variable) const;
@@ -103,7 +105,7 @@ namespace jackal
 		/// of a float.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param variable The float to send to the server.
+		/// @param variable The float to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, float variable) const;
@@ -115,7 +117,7 @@ namespace jackal
 		/// of a double.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param variable The double to send to the server.
+		/// @param variable The double to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, double variable) const;
@@ -127,7 +129,7 @@ namespace jackal
 		/// of a Vector2i object.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param vector   The Vector2i object to send to the server.
+		/// @param vector   The Vector2i object to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, const Vector2i& vector) const;
@@ -139,7 +141,7 @@ namespace jackal
 		/// of a Vector2f object.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param vector   The Vector2f object to send to the server.
+		/// @param vector   The Vector2f object to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, const Vector2f& vector) const;
@@ -151,7 +153,7 @@ namespace jackal
 		/// of a Vector2d object.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param vector   The Vector2d object to send to the server.
+		/// @param vector   The Vector2d object to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, const Vector2d& vector) const;
@@ -163,7 +165,7 @@ namespace jackal
 		/// of a Vector3i object.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param vector   The Vector3i object to send to the server.
+		/// @param vector   The Vector3i object to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, const Vector3i& vector) const;
@@ -175,7 +177,7 @@ namespace jackal
 		/// of a Vector3f object.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param vector   The Vector3f object to send to the server.
+		/// @param vector   The Vector3f object to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, const Vector3f& vector) const;
@@ -187,10 +189,34 @@ namespace jackal
 		/// of a Vector3d object.
 		///
 		/// @param location The location of the uniform within the shader.
-		/// @param vector   The Vector3d object to send to the server.
+		/// @param vector   The Vector3d object to send to the shader.
 		///
 		////////////////////////////////////////////////////////////
 		void set(GLint location, const Vector3d& vector) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the value of a uniform variable.
+		///
+		/// This method is used to set a uniform variable to the value
+		/// of a Colour object.
+		///
+		/// @param location The location of the uniform within the shader.
+		/// @param colour   The Colour object to send to the shader.
+		///
+		////////////////////////////////////////////////////////////
+		void set(GLint location, const Colour& colour) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the value of a uniform variable.
+		///
+		/// This method is used to set a uniform variable to the value
+		/// of a Matrix4 object.
+		///
+		/// @param location The location of the uniform within the shader.
+		/// @param matrix   The Matrix4 object to send to the shader.
+		///
+		////////////////////////////////////////////////////////////
+		void set(GLint location, const Matrix4& matrix) const;
 
 	public:
 		//====================

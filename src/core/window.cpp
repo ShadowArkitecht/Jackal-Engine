@@ -27,6 +27,7 @@
 //==================== 
 #include <jackal/core/window.hpp>      // Window class declaration. 
 #include <jackal/utils/log.hpp>        // Logging warnings and errors.
+#include <jackal/utils/constants.hpp>  // Constant log location.
 #include <jackal/core/config_file.hpp> // ConfigFile variable retrieval.
 
 //====================

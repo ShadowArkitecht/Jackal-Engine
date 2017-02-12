@@ -34,6 +34,8 @@
 
 namespace jackal
 {
+	class Material;
+
 	class Shader : public Resource
 	{
 	private:
@@ -60,6 +62,22 @@ namespace jackal
 		/// @brief Default destructor for the Shader object.
 		////////////////////////////////////////////////////////////
 		~Shader() = default;
+
+		//====================
+		// Getters and setters
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the unique ID of the Shader object.
+		///
+		/// The ID refers to the unique identifier of this shader, that
+		/// when used, will utilise the rendering behavior declared within the
+		/// glsl shader objects attached to thie shader. The Shader's ID is
+		/// identical the program member variable. 
+		///
+		/// @returns The unique ID of the Shader object.
+		///
+		////////////////////////////////////////////////////////////
+		GLuint getID() const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the glsl shaders attached to the Shader object.
@@ -146,8 +164,10 @@ namespace jackal
 		/// uniform variables contained within the glsl objects and change their
 		/// values.
 		///
+		/// @param material The material that this shader is bound to.
+		///
 		////////////////////////////////////////////////////////////
-		void process();
+		void process(const Material& material);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Binds a shader to the OpenGL stack and utilises its behavior.

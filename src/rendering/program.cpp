@@ -27,6 +27,7 @@
 //====================
 #include <jackal/rendering/program.hpp> // Program class declaration.
 #include <jackal/utils/log.hpp>         // Logging warnings and errors.
+#include <jackal/utils/constants.hpp>   // Constant log location.
 
 namespace jackal
 {	

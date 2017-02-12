@@ -22,325 +22,328 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef __JACKAL_VECTOR2_HPP__
-#define __JACKAL_VECTOR2_HPP__
+#ifndef __JACKAL_VECTOR4_HPP__
+#define __JACKAL_VECTOR4_HPP__
 
 //====================
 // C++ includes
 //====================
-#include <cmath>        // Needed for trigonometry functions i.e sin, cos.
-#include <algorithm>    // Finding minimum and maximum.
-#include <iostream>     // operator<< overloading.
+#include <iostream> // Operator overloading for streams.
+#include <cmath>    // Math operations.
 
 namespace jackal
 {
 	template <typename T>
-	class Vector2 final
+	class Vector4 final
 	{
 	public:
-        //====================
-		// Member Variables
 		//====================
-		T x; ///< The x (right) value.
-		T y; ///< The y (up) value.
+		// Member variables
+		//====================
+		T x;	///< The x value.
+		T y;	///< The y value.
+		T z;	///< The z value.
+		T w;	///< The w value.
 
 	public:
-        //====================
-		// Ctor and dtor
+		//====================
+		// Ctor and Dtor
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Default constructor for the Vector2 object.
+		/// @brief Default constructor for the Vector4 object. 
 		///
-		/// When the default constructor for the Vector2 object is called, 
-		/// it sets the x and y values to 0.
+		/// The default constructor for the Vector4 object initialises
+		/// all of the member variables to 0.
 		///
 		////////////////////////////////////////////////////////////
-		explicit Vector2(void);
+		explicit Vector4();
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructor for a Vector2 object with defined x and y values.
+		/// @brief Constructs a Vector4 object with defined x, y, z and w values.
 		///
-		/// This constructor is used to set the two values of the
-		/// Vector2 objects to user defined amounts.
+		/// This constructor initialises the elements of a Vector4 object
+		/// to user defined values.
 		///
-		/// @param x	The x value of the Vector2 object.
-		///	@param y	The y value of the Vector2 object.
+		/// @param x    The x value of the Vector4 object.
+		///	@param y    The y value of the Vector4 object.
+		/// @param z    The z value of the Vector4 object.
+		///	@param w    The w value of the Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		explicit Vector2(T x, T y);
+		explicit Vector4(const T x, const T y, const T z, const T w);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructor for a Vector2 object, generating values from anoher Vector2.
+		/// @brief Constructor for a Vector4 object, generating values from anoher Vector4.
 		///
-		/// As there are numerous different type definitions and Vector2
-		/// types, this constructor will convert from one Vector2 type to another.
+		/// As there are numerous different type definitions and Vector4
+		/// types, this constructor will convert from one Vector4 type to another.
 		///
-		/// @param vector	The different Vector2 type.
+		/// @param vector	The different Vector4 type.
 		///
 		////////////////////////////////////////////////////////////
 		template <typename U>
-		explicit Vector2(const Vector2<U>& vector);
+		explicit Vector4(const Vector4<U>& vector);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Default destructor for the Vector2 object.
+		/// @brief Default destructor for the Vector4 object.
 		////////////////////////////////////////////////////////////
-		~Vector2(void) = default;
+		~Vector4(void) = default;
 
-        //====================
+		//====================
 		// Operators
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Addition operator between two Vector2 objects.
+		/// @brief Addition operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise addition of two vectors
-		/// and return the result as a new Vector2 object.
+		/// and return the result as a new Vector4 object.
 		///
-		/// @param vector   The Vector2 object to add.
+		/// @param vector   The Vector4 object to add.
 		///
-		/// @returns        A new Vector object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator+(const Vector2& vector) const;
+		Vector4 operator+(const Vector4& vector) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Addition operator between a Vector2 and a value.
+		/// @brief Addition operator between a Vector4 and a value.
 		///
-		/// This operator performs a member-wise addition of a Vector2
-		/// and a value and returns the result as a new Vector2 object.
+		/// This operator performs a member-wise addition of a Vector4
+		/// and a value and returns the result as a new Vector4 object.
 		///
 		/// @param value    The value to add.
 		///
-		/// @returns        A new Vector object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator+(T value) const;
+		Vector4 operator+(const T value) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Subtraction operator between two Vector2 objects.
+		/// @brief Subtraction operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise subtraction of two vectors
-		/// and return the result as a new Vector2 object.
+		/// and return the result as a new Vector4 object.
 		///
-		/// @param vector   The vector to subtract.
+		/// @param vector   The Vector4 to subtract.
 		///
-		/// @returns        A new Vector2 object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator-(const Vector2& vector) const;
+		Vector4 operator-(const Vector4& vector) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Subtraction operator between a Vector2 and a value.
+		/// @brief Subtraction operator between a Vector4 and a value.
 		///
 		/// This operator performs a member-wise subtraction of a vector
-		/// and a value and returns the result as a new Vector2 object.
+		/// and a value and returns the result as a new Vector4 object.
 		///
 		/// @param value    The value to subtract.
 		///
-		/// @returns        A new Vector2 object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator-(T value) const;
+		Vector4 operator-(const T value) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Multiplication operator between two Vector2 objects.
+		/// @brief Multiplication operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise multiplication of two
-		/// vectors and return the result as a new Vector2 object.
+		/// vectors and return the result as a new Vector4 object.
 		///
-		/// @param vector   The vector to multiply.
+		/// @param vector   The Vector4 to multiply.
 		///
-		/// @returns        A new Vector object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator*(const Vector2& vector) const;
+		Vector4 operator*(const Vector4& vector) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Multiplication operator between a Vector2 and a value.
+		/// @brief Multiplication operator between a Vector4 and a value.
 		///
-		/// This operator performs a member-wise multiplication of a Vector2
-		/// and a value and returns the result as a new Vector2 object.
+		/// This operator performs a member-wise multiplication of a Vector4
+		/// and a value and returns the result as a new Vector4 object.
 		///
 		/// @param value    The value to multiply.
 		///
-		/// @returns        A new Vector object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator*(T value) const;
+		Vector4 operator*(const T value) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Division operator between two Vector2 objects.
+		/// @brief Division operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise division of two
-		/// vectors and return the result as a new Vector2 object.
+		/// vectors and return the result as a new Vector4 object.
 		///
-		/// @param vector   The vector to divide.
+		/// @param vector   The Vector4 to divide.
 		///
-		/// @returns        A new Vector2 object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator/(const Vector2& vector) const;
+		Vector4 operator/(const Vector4& vector) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Division operator between a Vector2 and a value.
+		/// @brief Division operator between a Vector4 and a value.
 		///
-		/// This operator performs a member-wise division of a Vector2
-		/// and a value and returns the result as a new Vector2 object.
+		/// This operator performs a member-wise division of a Vector4
+		/// and a value and returns the result as a new Vector4 object.
 		///
 		/// @param value    The value to divide.
 		///
-		/// @returns        A new Vector2 object made from the result.
+		/// @returns        A new Vector4 object made from the result.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator/(T value) const;
+		Vector4 operator/(const T value) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Addition operator between two Vector2 objects.
+		/// @brief Addition operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise addition of two vectors
-		/// and applies the result to the current Vector2 object.
+		/// and applies the result to the current Vector4 object.
 		///
-		/// @param vector   The vector to add.
+		/// @param vector   The Vector4 to add.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator+=(const Vector2& vector);
+		const Vector4& operator+=(const Vector4& vector);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Addition operator between a Vector2 and value.
+		/// @brief Addition operator between a Vector4 and value.
 		///
 		/// This operator performs a member-wise addition of a vector
-		/// and value and applies the result to the current Vector2 object.
+		/// and value and applies the result to the current Vector4 object.
 		///
 		/// @param value    The value to add.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator+=(T value);
+		const Vector4& operator+=(const T value);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Subtraction operator between two Vector2 objects.
+		/// @brief Subtraction operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise subtraction of two vectors
-		/// and applies the result to the current Vector2 object.
+		/// and applies the result to the current Vector4 object.
 		///
-		/// @param vector   The vector to subtract.
+		/// @param vector   The Vector4 to subtract.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator-=(const Vector2& vector);
+		const Vector4& operator-=(const Vector4& vector);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Subtraction operator between a Vector2 and value.
+		/// @brief Subtraction operator between a Vector4 and value.
 		///
 		/// This operator performs a member-wise subtraction of a vector
-		/// and value and applies the result to the current Vector2 object.
+		/// and value and applies the result to the current Vector4 object.
 		///
 		/// @param value    The value to subtract.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator-=(T value);
+		const Vector4& operator-=(const T value);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Multiplication operator between two Vector2 objects.
+		/// @brief Multiplication operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise multiplication of two vectors
-		/// and applies the result to the current Vector2 object.
+		/// and applies the result to the current Vector4 object.
 		///
-		/// @param vector   The vector to multiply.
+		/// @param vector   The Vector4 to multiply.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator*=(const Vector2& vector);
+		const Vector4& operator*=(const Vector4& vector);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Multiplication operator between a Vector2 and value.
+		/// @brief Multiplication operator between a Vector4 and value.
 		///
 		/// This operator performs a member-wise multiplication of a vector
-		/// and value and applies the result to the current Vector2 object.
+		/// and value and applies the result to the current Vector4 object.
 		///
 		/// @param value    The value to multiply.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator*=(T value);
+		const Vector4& operator*=(const T value);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Division operator between two Vector2 objects.
+		/// @brief Division operator between two Vector4 objects.
 		///
 		/// This operator performs a member-wise division of two vectors
-		/// and applies the result to the current Vector2 object.
+		/// and applies the result to the current Vector4 object.
 		///
-		/// @param vector   The vector to divide.
+		/// @param vector   The Vector4 to divide.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator/=(const Vector2& vector);
+		const Vector4& operator/=(const Vector4& vector);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Division operator between a Vector2 and value.
+		/// @brief Division operator between a Vector4 and value.
 		///
 		/// This operator performs a member-wise division of a vector
-		/// and value and applies the result to the current Vector2 object.
+		/// and value and applies the result to the current Vector4 object.
 		///
 		/// @param value    The value to divide.
 		///
-		/// @returns        A reference to the current Vector2 object.
+		/// @returns        A reference to the current Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		const Vector2& operator/=(T value);
+		const Vector4& operator/=(const T value);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Equality operation between two vectors.
 		///
 		/// The operation will execute member wise comparisons. If the
-		/// members are the same, the Vector2 objects are equal.
+		/// members are the same, the Vector4 objects are equal.
 		///
-		/// @param vector   The Vector2 object to compare against.
+		/// @param vector   The Vector4 object to compare against.
 		///
-		/// @returns        True if the Vector2 objects are the same.
+		/// @returns        True if the Vector4 objects are the same.
 		///
 		////////////////////////////////////////////////////////////
-		bool operator==(const Vector2& vector) const;
+		bool operator==(const Vector4& vector) const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Non-Equality operation between two vectors.
 		///
 		/// The operation will execute member wise comparisons. If the
-		/// members are not the same, the Vector2 object are not equal.
+		/// members are not the same, the Vector4 object are not equal.
 		///
-		/// @param vector   The Vector2 object to compare against.
+		/// @param vector   The Vector4 object to compare against.
 		///
-		/// @returns        True if the Vector2 objects are not the same.
+		/// @returns        True if the Vector4 objects are not the same.
 		///
 		////////////////////////////////////////////////////////////
-		bool operator!=(const Vector2& vector) const;
+		bool operator!=(const Vector4& vector) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Unary operation on a Vector2 object.
+		/// @brief Unary operation on a Vector4 object.
 		///
 		/// This will invert the x and y components from positive to negative
 		/// values, and vice-versa.
 		///
-		/// @returns    An inverted Vector2 object.
+		/// @returns    An inverted Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 operator-(void) const;
+		Vector4 operator-(void) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Overload the output stream operator to print a Vector2
+		/// @brief Overload the output stream operator to print a Vector4
 		///        to the console window.
 		///
 		/// This method can be used for debugging processes to print a
 		/// vector to the console window. The matrix will be printed in the
-		/// following format: ( x, y )
+		/// following format: ( x, y, z, w ).
 		///
 		/// @param os       The output stream to stream into.
 		/// @param vector   The vector to print to the console window.
@@ -348,16 +351,16 @@ namespace jackal
 		/// @returns        The stream of the object.
 		///
 		////////////////////////////////////////////////////////////
-		friend std::ostream& operator<<(std::ostream& os, const Vector2& vector) 
+		friend std::ostream& operator<<(std::ostream& os, const Vector4& vector)
 		{
-			return os << "( " << vector.x << ", " << vector.y << " )";
+			return os << "( " << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << " )";
 		}
 
-        //====================
+		//====================
 		// Methods
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Calculates the squared length of the Vector2 object.
+		/// @brief Calculates the squared length of the Vector4 object.
 		///
 		/// @returns    The squared length of the Vector.
 		///
@@ -365,7 +368,7 @@ namespace jackal
 		T magnitudeSqr(void) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Calculates the length of the Vector2 object.
+		/// @brief Calculates the length of the Vector4 object.
 		///
 		/// @returns    The length of the Vector.
 		///
@@ -373,32 +376,18 @@ namespace jackal
 		T magnitude(void) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Calculates the unit length of the Vector2 object.
+		/// @brief Calculates the unit length of the Vector4 object.
 		///
-        /// A normalised vector is used to represent the direction of the
-        /// vector with values ranging from 0 to 1.
-        ///
-		/// @returns    The normalised Vector2 object.
+		/// A normalised vector is used to represent the direction of the
+		/// vector with values ranging from 0 to 1.
+		///
+		/// @returns    The normalised Vector4 object.
 		///
 		////////////////////////////////////////////////////////////
-		Vector2 normalised(void);
+		Vector4 normalised(void) const;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Rotates the vector by the specified angle.
-		///
-		/// Rotates the vector by the angle specified, the angle is
-		/// in degrees.
-		///
-		/// @param position The position of the Vector2 to rotate.
-		/// @param angle    The angle to rotate the Vector2 by.
-		///
-        /// @returns        The rotated Vector2 object.
-        ///
-		////////////////////////////////////////////////////////////
-		static Vector2 rotate(const Vector2& position, T angle);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Calculate the cosine angle between two Vector2 objects.
+		/// @brief Calculate the cosine angle between two Vector4 objects.
 		///
 		/// The dot product is the value equal to the magnitudes/length of
 		/// the two vectors multiplied together and then multiplied by the
@@ -407,24 +396,10 @@ namespace jackal
 		/// @param u    The first vector.
 		/// @param v    The second vector.
 		///
-		/// @returns    The cosine angle between two Vector2 objects.
+		/// @returns    The cosine angle between two Vector4 objects.
 		///
 		////////////////////////////////////////////////////////////
-		static T dot(const Vector2& u, const Vector2& v);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Gets the (degrees) angle between two Vector2 objects.
-		///
-		/// This will calculate the angle between two different vectors. The angle
-		/// will be returned in degrees.
-		///
-		/// @param from     The vector where the angle measurement will begin.
-		/// @param to       The vector where the angle measurement will end.
-		///
-		/// @returns        The angle between the vectors in degrees.
-		///
-		////////////////////////////////////////////////////////////
-		static T angle(const Vector2& from, const Vector2& to);
+		static T dot(const Vector4& u, const Vector4& v);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the squared euclidean distance between two different vectors.
@@ -435,7 +410,7 @@ namespace jackal
 		/// @returns        The squared euclidean distance.
 		///
 		////////////////////////////////////////////////////////////
-		static T distanceSqr(const Vector2& from, const Vector2& to);
+		static T distanceSqr(const Vector4& from, const Vector4& to);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the euclidean distance between two different vectors.
@@ -446,10 +421,10 @@ namespace jackal
 		/// @returns        The euclidean distance.
 		///
 		////////////////////////////////////////////////////////////
-		static T distance(const Vector2& from, const Vector2& to);
+		static T distance(const Vector4& from, const Vector4& to);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Gets the minimum values of two Vector2 objects.
+		/// @brief Gets the minimum values of two Vector4 objects.
 		///
 		/// This will get the lowest member values of the two Vector
 		/// objects and create a new Vector constructed of the low
@@ -461,10 +436,10 @@ namespace jackal
 		/// @returns        The minimum x and y values of the two vectors.
 		///
 		////////////////////////////////////////////////////////////
-		static Vector2 minimum(const Vector2& u, const Vector2& v);
+		static Vector4 minimum(const Vector4& u, const Vector4& v);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Gets the maximum values of two Vector2 objects.
+		/// @brief Gets the maximum values of two Vector4 objects.
 		///
 		/// This will get the highest member values of the two Vector
 		/// objects and create a new Vector constructed of the high
@@ -476,10 +451,10 @@ namespace jackal
 		/// @returns        The maximum x and y values of the two Vectors.
 		///
 		////////////////////////////////////////////////////////////
-		static Vector2 maximum(const Vector2& u, const Vector2& v);
+		static Vector4 maximum(const Vector4& u, const Vector4& v);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Moves a Vector2 towards a target.
+		/// @brief Moves a Vector4 towards a target.
 		///
 		/// The method will return a Vector moving from the current
 		/// Vector towards the target by the specified speed.
@@ -491,12 +466,12 @@ namespace jackal
 		/// @returns        The moved vector.
 		///
 		////////////////////////////////////////////////////////////
-		static Vector2 moveTowards(const Vector2& current, const Vector2& target, T speed);
+		static Vector4 moveTowards(const Vector4& current, const Vector4& target, const T speed);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Vector2 linear interpolation.
+		/// @brief Vector4 linear interpolation.
 		///
-		/// Linearly interpolates between the current Vector2 and target
+		/// Linearly interpolates between the current Vector4 and target
 		/// by the specfied speed.
 		///
 		/// @param current  The vector being linearly interpolated from.
@@ -506,74 +481,58 @@ namespace jackal
 		/// @returns        The interpolated Vector.
 		///
 		////////////////////////////////////////////////////////////
-		static Vector2 lerp(const Vector2& current, const Vector2& target, T speed);
+		static Vector4 lerp(const Vector4& current, const Vector4& target, const T speed);
 
-        //====================
+		//====================
 		// Properties
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Convenience method for initialising a Vector2 to ( 0, 0 ).
+		/// @brief Convenience method for initialising a Vector4 to ( 0, 0, 0, 0 ).
 		///
-		/// @returns   A Vector2 object equal to ( 0, 0 ).
+		/// @returns   A Vector4 object equal to ( 0, 0, 0, 0 ).
 		///
 		////////////////////////////////////////////////////////////
-		static Vector2 zero(void);
+		static Vector4 zero(void);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Convenience method for initialising a Vector2 to ( 1, 1 ).
+		/// @brief Convenience method for initialising a Vector4 to ( 1, 1, 1, 1 ).
 		///
-		/// @returns   A Vector2 object equal to ( 1, 1 ).
-		///
-		////////////////////////////////////////////////////////////
-		static Vector2 one(void);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Convenience method for initialising a Vector2 to ( 1, 0 ).
-		///
-		/// @returns   A Vector2 object equal to ( 1, 0 ).
+		/// @returns   A Vector4 object equal to ( 1, 1, 1, 1 ).
 		///
 		////////////////////////////////////////////////////////////
-		static Vector2 right(void);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Convenience method for initialising a Vector2 to ( 0, 1 ).
-		///
-		/// @returns   A Vector2 object equal to ( 0, 1 ).
-		///
-		////////////////////////////////////////////////////////////
-		static Vector2 up(void);
+		static Vector4 one(void);
 	};
 
-    //====================
-    // Additional includes
-    //====================
-    #include <jackal/math/vector2.inl>         // The Vector2 declarations.
+	//====================
+	// Additional Includes
+	//====================
+	#include <jackal/math/vector4.inl>
 
-    //====================
-    // Type definitions
-    //====================
-	typedef Vector2<int>          Vector2i;    ///< A Vector2 object made of integers.
-	typedef Vector2<unsigned int> Vector2u;    ///< A Vector2 object made of unsigned integers.
-	typedef Vector2<float>        Vector2f;    ///< A Vector2 object made of floats.
-    typedef Vector2<double>       Vector2d;    ///< A Vector2 object made of doubles.
+	//====================
+	// Type Definitions
+	//====================
+	typedef Vector4<int>          Vector4i;    ///< A Vector4 object made of integers.
+	typedef Vector4<unsigned int> Vector4u;    ///< A Vector4 object made of unsigned integers.
+	typedef Vector4<float>        Vector4f;    ///< A Vector4 object made of floats.
+	typedef Vector4<double>       Vector4d;    ///< A Vector4 object made of doubles.
 
-} // namespace jackal
+}//namespace jackal
 
-#endif//__JACKAL_VECTOR2_HPP__
+#endif//__JACKAL_VECTOR4_HPP__
 
 ////////////////////////////////////////////////////////////
 /// @author Benjamin Carter
 ///
-/// @class jackal::Vector2
+/// @class jackal::Vector4
 /// @ingroup math
 ///
-/// jackal::Vector2 is a templated class responsible for
-/// all Vector based mathematics in 2 dimensions. It is commonly
+/// jackal::Vector4 is a templated class responsible for
+/// all Vector based mathematics in 4 dimensions. It is commonly
 /// used throughout the engine for a variety of different tasks,
 /// such as placement of HUD elements within a scene and accessing
 /// multi-dimensional arrays.
 ///
-/// jackal::Vector2 also contains the most common mathematics
+/// jackal::Vector4 also contains the most common mathematics
 /// and algorithms associated with vectors, such as the dot 
 /// product and normalisation. As the mathematics is used commonly
 /// throughout the application, it is also exposed to the lua 
@@ -584,21 +543,21 @@ namespace jackal
 /// using namespace jackal;
 ///
 /// // Create two vectors to calculate the dot product.
-/// Vector2f v1 = Vector2f::up();
-/// Vector2f v2 = Vector2f::right();
+/// Vector4f v1 = Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
+/// Vector4f v2 = Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
 ///
 /// // Calculate the dot product.
-/// float dot = Vector2f::dot(up, right);
+/// float dot = Vector4f::dot(up, right);
 /// @endcode
 ///
 /// Lua Code example:
 /// @code
 /// -- Create two vectors to calculate the cross product.
-/// local v1 = Vector2.up()
-/// local v2 = Vector2.right()
+/// local v1 = Vector4(0.0, 1.0, 0.0, 1.0)
+/// local v2 = Vector4(1.0, 0.0, 0.0, 1.0)
 ///
 /// // Calculate the dot product.
-/// local dot = Vector2.dot(v1, v2)
+/// local dot = Vector4.dot(v1, v2)
 /// @endcode
 ///
 ////////////////////////////////////////////////////////////

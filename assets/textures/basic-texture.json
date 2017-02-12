@@ -1,5 +1,5 @@
 {
-	"image": "~textures/image.png",
+	"image": "~data/textures/image.png",
 	"description": {
 		"wrap-mode": "clamp",
 		"filter": "nearest"

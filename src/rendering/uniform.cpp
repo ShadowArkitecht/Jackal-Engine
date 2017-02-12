@@ -27,6 +27,7 @@
 //====================
 #include <jackal/rendering/uniform.hpp> // Uniform class declaration.
 #include <jackal/utils/log.hpp>         // Logging any json parsing errors.
+#include <jackal/utils/constants.hpp>   // Constant log location.
 #include <jackal/rendering/program.hpp> // Getting the unique ID of the Program.
 #include <jackal/utils/json/json.hpp>   // Setting uniforms by a value in a json file.
 
@@ -42,7 +43,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Uniform::Uniform(Program& program)
-		: m_program(program)
+		: m_pProgram(&program)
 	{
 	}
 
@@ -52,7 +53,7 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	GLint Uniform::getLocation(const std::string& uniform) const
 	{
-		return glGetUniformLocation(m_program.getID(), uniform.c_str());
+		return glGetUniformLocation(m_pProgram->getID(), uniform.c_str());
 	}
 
 	////////////////////////////////////////////////////////////
@@ -107,6 +108,18 @@ namespace jackal
 	void Uniform::set(GLint location, const Vector3d& vector) const
 	{
 		glUniform3d(location, vector.x, vector.y, vector.z);
+	}
+
+	////////////////////////////////////////////////////////////
+	void Uniform::set(GLint location, const Colour& colour) const
+	{
+		glUniform4f(location, colour.r, colour.g, colour.b, colour.a);
+	}
+
+	////////////////////////////////////////////////////////////
+	void Uniform::set(GLint location, const Matrix4& matrix) const
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE, &matrix.m[0]);
 	}
 	
 	////////////////////////////////////////////////////////////

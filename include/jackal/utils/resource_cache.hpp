@@ -36,6 +36,7 @@
 //====================
 #include <jackal/utils/non_copyable.hpp> // ResourceCache is a non-copyable object.
 #include <jackal/utils/log.hpp>          // Logging warning and errors.
+#include <jackal/utils/constants.hpp>    // Constant log location.
 
 namespace jackal
 {

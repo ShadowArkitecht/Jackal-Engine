@@ -38,7 +38,7 @@ namespace jackal
 		float b; ///< The "blue" value of the colour.
 		float a; ///< The "alpha" value of the colour.
 
-	private:
+	public:
 		//====================
 		// Ctor and dtor
 		//====================

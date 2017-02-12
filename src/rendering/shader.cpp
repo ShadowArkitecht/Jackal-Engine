@@ -27,8 +27,11 @@
 //====================
 #include <jackal/rendering/shader.hpp>       // Shader class declaration.
 #include <jackal/utils/log.hpp>              // Logging warnings and errors.
+#include <jackal/utils/constants.hpp>        // Using the constant log location.
 #include <jackal/utils/json_file_reader.hpp> // Loading and parsing the json file.
 #include <jackal/utils/json/json.hpp>        // De-serializing a shader file.
+#include <jackal/rendering/material.hpp>         // The material to render the shader with.
+#include <jackal/math/matrix4.hpp>
 
 //====================
 // Additional includes
@@ -55,6 +58,12 @@ namespace jackal
 	//====================
 	// Getters and setters
 	//====================
+	////////////////////////////////////////////////////////////
+	GLuint Shader::getID() const
+	{
+		return m_program.getID();
+	}
+	
 	////////////////////////////////////////////////////////////
 	std::vector<GLSLObject>& Shader::getShaders()
 	{
@@ -130,10 +139,19 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	void Shader::process()
+	void Shader::process(const Material& material)
 	{
+		// TODO(BEN): Pass the Material object as a uniform buffer object.
 		m_uniform.setParameter("u_time", static_cast<float>(SDL_GetTicks()));
 		m_uniform.setParameter("u_texture", 0);
+		m_uniform.setParameter("u_colour", material.getColour());
+
+		Matrix4 t = Matrix4::translation(0.0f, 1.0f, 0.0f);
+		Matrix4 s = Matrix4::scale(1.5f, 1.5f, 1.0f);
+		Matrix4 r = Matrix4::yaw(45.0f);
+
+		Matrix4 result = s * r * t;
+		m_uniform.setParameter("u_model", result);
 	}
 
 	////////////////////////////////////////////////////////////

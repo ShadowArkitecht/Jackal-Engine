@@ -231,6 +231,78 @@ namespace jackal
 		return Vector2i::zero();
 	}
 
+	////////////////////////////////////////////////////////////
+	template <>
+	Vector2f ConfigFile::get<Vector2f>(const std::string& variable) const
+	{
+		auto itr = m_variants.find(variable);
+		if (itr != std::end(m_variants))
+		{
+			ConfigVariant_t cv = itr->second;
+			if (cv.type == eVariantType::VECTOR2F)
+			{
+				std::stringstream ss(cv.value);
+				std::vector<std::string> elements;
+
+				while (ss.good())
+				{
+					std::string el;
+					std::getline(ss, el, ',');
+					elements.push_back(el);
+				}
+
+				Vector2f result;
+				result.x = std::stof(elements.at(0));
+				result.y = std::stof(elements.at(1));
+
+				return result;
+			}
+			else
+			{
+				log.warning(log.function(__FUNCTION__, variable), "Unable to find variable");
+				return Vector2f::zero();
+			}
+		}
+
+		return Vector2f::zero();
+	}
+
+	////////////////////////////////////////////////////////////
+	template <>
+	Vector2d ConfigFile::get<Vector2d>(const std::string& variable) const
+	{
+		auto itr = m_variants.find(variable);
+		if (itr != std::end(m_variants))
+		{
+			ConfigVariant_t cv = itr->second;
+			if (cv.type == eVariantType::VECTOR2F)
+			{
+				std::stringstream ss(cv.value);
+				std::vector<std::string> elements;
+
+				while (ss.good())
+				{
+					std::string el;
+					std::getline(ss, el, ',');
+					elements.push_back(el);
+				}
+
+				Vector2d result;
+				result.x = std::stod(elements.at(0));
+				result.y = std::stod(elements.at(1));
+
+				return result;
+			}
+			else
+			{
+				log.warning(log.function(__FUNCTION__, variable), "Unable to find variable");
+				return Vector2d::zero();
+			}
+		}
+
+		return Vector2d::zero();
+	}
+
 	//====================
 	// Private methods
 	//====================
@@ -303,15 +375,82 @@ namespace jackal
 		{
 			if (value.at(0) == '(' && value.at(value.length() - 1) == ')') 
 			{
-				switch (datatype.at(4))
+				if (datatype.length() > 4) 
 				{
-				case 'i':
-					variant.type = eVariantType::VECTOR2I;
-					break;
+					switch (datatype.at(4))
+					{
+					case 'i':
+						variant.type = eVariantType::VECTOR2I;
+						break;
 
-				case 'd':
-					variant.type = eVariantType::VECTOR2D;
-					break;
+					case 'd':
+						variant.type = eVariantType::VECTOR2D;
+						break;
+					}
+				}
+				else
+				{
+					variant.type = eVariantType::VECTOR2F;
+				}
+			} 
+			else
+			{
+				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not a correctly formatted vec2");
+				return false;
+			}
+
+			variant.value = value.substr(1, value.length() - 1);
+		}
+		else if (datatype.substr(0, 4) == "vec3")
+		{
+			if (value.at(0) == '(' && value.at(value.length() - 1) == ')') 
+			{
+				if (datatype.length() > 4) 
+				{
+					switch (datatype.at(4))
+					{
+					case 'i':
+						variant.type = eVariantType::VECTOR3I;
+						break;
+
+					case 'd':
+						variant.type = eVariantType::VECTOR3D;
+						break;
+					}
+				}
+				else
+				{
+					variant.type = eVariantType::VECTOR3F;
+				}
+			} 
+			else
+			{
+				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not a correctly formatted vec2");
+				return false;
+			}
+
+			variant.value = value.substr(1, value.length() - 1);
+		}
+		else if (datatype.substr(0, 4) == "vec4")
+		{
+			if (value.at(0) == '(' && value.at(value.length() - 1) == ')') 
+			{
+				if (datatype.length() > 4) 
+				{
+					switch (datatype.at(4))
+					{
+					case 'i':
+						variant.type = eVariantType::VECTOR4I;
+						break;
+
+					case 'd':
+						variant.type = eVariantType::VECTOR4D;
+						break;
+					}
+				}
+				else
+				{
+					variant.type = eVariantType::VECTOR4F;
 				}
 			} 
 			else

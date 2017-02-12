@@ -1,16 +1,10 @@
 {
 	"glsl-files": [{
-		"glsl-file": "~shaders/basic.vertex.glsl"
+		"glsl-file": "~data/shaders/basic.vertex.glsl"
 	}, {
-		"glsl-file": "~shaders/basic.fragment.glsl"
+		"glsl-file": "~data/shaders/basic.fragment.glsl"
 	}],
 	"const-uniforms": [{
-		"name": "basic_colour",
-		"type": "vec3",
-		"values": {
-			"x": 1.0,
-			"y": 1.0,
-			"z": 1.0
-		}
+		
 	}]
 }

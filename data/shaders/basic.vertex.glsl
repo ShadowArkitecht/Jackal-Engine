@@ -36,11 +36,13 @@ layout (location = 2) in vec2 uv;       // UV co-ordinate of the mesh.
 //====================
 out vec2 uv_coords;
 
+uniform mat4 u_model;
+
 //====================
 // Functions
 //====================
 void main()
 {
 	uv_coords = vec2(uv.x, 1.0 - uv.y);	
-	gl_Position = vec4(position, 1.0);
+	gl_Position = u_model * vec4(position, 1.0);
 }

@@ -1,0 +1,10 @@
+{
+	"shader": "~assets/shaders/basic-shader.json",
+	"texture": "~assets/textures/basic-texture.json",
+	"colour": {
+		"r": 1.0,
+		"g": 0.0,
+		"b": 0.0,
+		"a": 1.0
+	}
+}

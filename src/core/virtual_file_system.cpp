@@ -86,15 +86,9 @@ namespace jackal
 			return system.exists(result);
 		}
 
-		std::vector<std::string> directories;
-		std::istringstream ss(path);
+		std::size_t lastIndex = path.find_last_of('/');
+		std::string dir = path.substr(1, lastIndex - 1);
 
-		std::string dir;
-		// Only interested in the first section of the path. (Which will represent the virtual path).
-		std::getline(ss, dir, '/');
-		directories.push_back(dir);
-
-		dir = directories.front().substr(1, directories.front().length());
 		if (m_paths.find(dir) == std::end(m_paths))
 		{
 			return false;

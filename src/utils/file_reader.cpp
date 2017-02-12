@@ -27,6 +27,7 @@
 //====================
 #include <jackal/utils/file_reader.hpp>          // FileReader class declaration.
 #include <jackal/utils/log.hpp>                  // Logging warnings or errors to the external logs.
+#include <jackal/utils/constants.hpp>            // Using the constant log location.
 #include <jackal/core/virtual_file_system.hpp>   // Using the virtual file paths.
 
 namespace jackal

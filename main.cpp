@@ -34,6 +34,7 @@
 #include <jackal/rendering/buffer.hpp>         // Binding different buffers.
 #include <jackal/rendering/vertex.hpp>         // Creating vertices for the buffers.
 #include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
+#include <jackal/rendering/material.hpp>       // Binding and utilising a material.   
 
 #include <jackal/rendering/gui_texture.hpp>
 #include <jackal/rendering/gui_texture_factory.hpp>
@@ -54,9 +55,13 @@ int main(int argc, char** argv)
 	vfs.mount("locale", "data/locale");
 	vfs.mount("config", "data/config");
 	vfs.mount("csv", "data/csv");
-	// rendering
-	vfs.mount("shaders", "data/shaders");
-	vfs.mount("textures", "data/textures");
+	// Raw files (glsl, images etc.).
+	vfs.mount("data/shaders", "data/shaders");
+	vfs.mount("data/textures", "data/textures");
+	// JSON files.
+	vfs.mount("assets/textures", "assets/textures");
+	vfs.mount("assets/shaders", "assets/shaders");
+	vfs.mount("assets/materials", "assets/materials");
 
 	ConfigFile config;
 	config.open("~config/main.jcfg");
@@ -67,7 +72,6 @@ int main(int argc, char** argv)
 	Window window;
 	window.create(config);
 
-	Shader shader = ResourceManager::getInstance().get<Shader>("assets/shaders/basic-shader.json");	
 	Buffer vao(eBufferType::ARRAY);
 	vao.create();
 
@@ -76,16 +80,16 @@ int main(int argc, char** argv)
 	Buffer vbo(eBufferType::VERTEX);
 	vbo.create();
 
-	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, 1.0f);
+	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, -1.0f);
 	v1.uv = Vector2f::zero();
 
-	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, 1.0f);
+	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, -1.0f);
 	v2.uv = Vector2f(1.0f, 0.0f);
 
-	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, 1.0f);
+	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, -1.0f);
 	v3.uv = Vector2f(1.0f, 1.0f);
 
-	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, 1.0f);
+	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, -1.0f);
 	v4.uv = Vector2f(0.0f, 1.0f);
 
 	std::vector<Vertex_t> verts;
@@ -112,8 +116,6 @@ int main(int argc, char** argv)
 	ibo.allocate(indices.data(), indices.size());
 
 	Buffer::unbind(vao);
-
-	Texture texture = ResourceManager::getInstance().get<Texture>("assets/textures/basic-texture.json");
 	
 	// Test Awesomium initialization.
 	WebCore* pCore = WebCore::Initialize(WebConfig());
@@ -131,27 +133,24 @@ int main(int argc, char** argv)
 	
 	GUITexture* pTexture = (GUITexture*)pView->surface();
 
+	Material material;
+	material.load("~assets/materials/basic-material.json");
+
 	while (window.isRunning())
 	{
 		pCore->Update();
 
 		window.clear();
 
-		Shader::bind(shader);
-		// Texture::bind(texture);
-		GUITexture::bind(*pTexture);
+		Material::bind(material);
 
-		shader.process();
-
+		material.process();
+		
 		Buffer::bind(vao);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
 		Buffer::unbind(vao);
 
-		//Texture::unbind();
-		GUITexture::unbind();
-		
-		Shader::unbind();
-
+		Material::unbind();
 		window.swap();
 
 		window.pollEvents();

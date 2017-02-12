@@ -27,6 +27,7 @@
 //====================
 #include <jackal/utils/json_file_reader.hpp>   // JSONFileReader class declaration.
 #include <jackal/utils/log.hpp>                // Logging warnings and errors.
+#include <jackal/utils/constants.hpp>          // Using constants for log location.
 #include <jackal/utils/file_system.hpp>        // Checking the extension of the file passed into the read method.
 #include <jackal/utils/constants.hpp>          // File extension constants.
 #include <jackal/core/virtual_file_system.hpp> // Utilising the virtual file system for file paths.

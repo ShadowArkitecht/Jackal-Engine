@@ -56,7 +56,10 @@ namespace jackal
 		VECTOR2D,
 		VECTOR3I,
 		VECTOR3F,
-		VECTOR3D
+		VECTOR3D, 
+		VECTOR4I,
+		VECTOR4F, 
+		VECTOR4D
 	};
 
 	struct ConfigVariant_t
@@ -269,7 +272,37 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	template <>
 	Vector2i ConfigFile::get<Vector2i>(const std::string& variable) const;
-	
+
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Vector2f value from the ConfigFile.
+	///
+	/// This is the template specialization for retrieving Vector2i
+	/// values from the config file. If the variable is not found 
+	/// or is the incorrect datatype. An zero-ed Vector2 is returned.
+	///
+	/// @param variable The name of the variable.
+	///
+	/// @returns The value attached to the variable.
+	///
+	////////////////////////////////////////////////////////////	
+	template <>
+	Vector2f ConfigFile::get<Vector2f>(const std::string& variable) const;
+
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Vector2d value from the ConfigFile.
+	///
+	/// This is the template specialization for retrieving Vector2i
+	/// values from the config file. If the variable is not found 
+	/// or is the incorrect datatype. An zero-ed Vector2 is returned.
+	///
+	/// @param variable The name of the variable.
+	///
+	/// @returns The value attached to the variable.
+	///
+	////////////////////////////////////////////////////////////	
+	template <>
+	Vector2d ConfigFile::get<Vector2d>(const std::string& variable) const;
+
 } // namespace jackal
 
 #endif//__JACKAL_CONFIG_FILE_HPP__
