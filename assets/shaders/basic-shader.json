@@ -4,7 +4,5 @@
 	}, {
 		"glsl-file": "~data/shaders/basic.fragment.glsl"
 	}],
-	"const-uniforms": [{
-		
-	}]
+	"const-uniforms": []
 }

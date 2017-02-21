@@ -25,6 +25,11 @@
 #ifndef __JACKAL_COLOUR_HPP__
 #define __JACKAL_COLOUR_HPP__
 
+//====================
+// Member variables
+//====================
+#include <jackal/utils/json/json.hpp> // Serializing and de-serializing json objects.
+
 namespace jackal
 {
 	class Colour final
@@ -80,6 +85,35 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		explicit Colour(float r, float g, float b, float a);
 	};
+
+	//====================
+	// Functions
+	//====================
+	////////////////////////////////////////////////////////////
+	/// @brief Serializes the Colour object to a json object.
+	///
+	/// When the application saves instances for persistence use,
+	/// any objects that utilise the Colour object as a member
+	/// variable can be successfully serializes as a json object.
+	///
+	/// @param j       The json object to serialize to.
+	/// @param vector  The colour to serialize from.
+	///
+	////////////////////////////////////////////////////////////
+	void to_json(nlohmann::json& j, const Colour& colour);
+
+	////////////////////////////////////////////////////////////
+	/// @brief De-serializes a json object as a Colour value.
+	///
+	/// When a Colour object is de-serialized, it will use the values
+	/// declared within the json object and create a Colour from each
+	/// member field.
+	///
+	/// @param j      The json object to de-serialize from.
+	/// @param vector The colour to de-serialize into. 
+	///
+	////////////////////////////////////////////////////////////
+	void from_json(const nlohmann::json& j, Colour& colour);
 
 } // namespace jackal
 

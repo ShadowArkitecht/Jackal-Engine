@@ -32,16 +32,19 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/math")            # Source files.
 # Variables
 #====================
 set(HEADER_FILES "${INCLUDE_DIR}/colour.hpp"
-		         "${INCLUDE_DIR}/matrix4.hpp"
-	             "${INCLUDE_DIR}/vector2.hpp"
-	             "${INCLUDE_DIR}/vector2.inl"
-	             "${INCLUDE_DIR}/vector3.hpp"
-	             "${INCLUDE_DIR}/vector3.inl"	             
-	             "${INCLUDE_DIR}/vector4.hpp"
-	             "${INCLUDE_DIR}/vector4.inl")
+		 "${INCLUDE_DIR}/matrix4.hpp"
+		 "${INCLUDE_DIR}/transform.hpp"
+	         "${INCLUDE_DIR}/vector2.hpp"
+	         "${INCLUDE_DIR}/vector2.inl"
+	         "${INCLUDE_DIR}/vector3.hpp"
+	         "${INCLUDE_DIR}/vector3.inl"	             
+	         "${INCLUDE_DIR}/vector4.hpp"
+	          "${INCLUDE_DIR}/vector4.inl")
 
 set(SOURCE_FILES "${SOURCE_DIR}/colour.cpp"
-	             "${SOURCE_DIR}/matrix4.cpp")
+                 "${SOURCE_DIR}/matrix4.cpp"
+                 "${SOURCE_DIR}/transform.cpp"
+                 "${SOURCE_DIR}/vector2.cpp")
 
 #====================
 # Library

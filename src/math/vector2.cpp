@@ -25,47 +25,50 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/colour.hpp> // Colour class declaration.
+#include <jackal/math/vector2.hpp> // Vector2 class declaration.
 
 namespace jackal
 {
 	//====================
-	// Ctor and dtor
-	//====================
-	////////////////////////////////////////////////////////////
-	Colour::Colour()
-		: r(0.0f), g(0.0f), b(0.0f), a(1.0f)
-	{
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b)
-		: r(r), g(g), b(b)
-	{
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b, float a)
-		: r(r), g(g), b(b), a(a)
-	{
-	}
-
-	//====================
 	// Functions
 	//====================
 	////////////////////////////////////////////////////////////
-	void to_json(nlohmann::json& j, const Colour& colour)
+	void to_json(nlohmann::json& j, const Vector2f& vector) 
 	{
-		j = nlohmann::json{ { "r", colour.r }, { "g", colour.g }, { "b", colour.b }, { "a", colour.a } };
+		j = nlohmann::json{{ "x", vector.x }, { "y", vector.y }};
 	}
 
 	////////////////////////////////////////////////////////////
-	void from_json(const nlohmann::json& j, Colour& colour)
+	void from_json(const nlohmann::json& j, Vector2f& vector) 
 	{
-		colour.r = j.value("r", 1.0f);
-		colour.g = j.value("g", 1.0f);
-		colour.b = j.value("b", 1.0f);
-		colour.a = j.value("a", 1.0f);
+		vector.x = j.value("x", 0.0f);
+		vector.y = j.value("y", 0.0f);
+	}
+
+	////////////////////////////////////////////////////////////
+	void to_json(nlohmann::json& j, const Vector2i& vector)
+	{
+		j = nlohmann::json{ { "x", vector.x },{ "y", vector.y } };
+	}
+
+	////////////////////////////////////////////////////////////
+	void from_json(const nlohmann::json& j, Vector2i& vector)
+	{
+		vector.x = j.value("x", 0);
+		vector.y = j.value("y", 0);
+	}
+
+	////////////////////////////////////////////////////////////
+	void to_json(nlohmann::json& j, const Vector2d& vector)
+	{
+		j = nlohmann::json{ { "x", vector.x },{ "y", vector.y } };
+	}
+
+	////////////////////////////////////////////////////////////
+	void from_json(const nlohmann::json& j, Vector2d& vector)
+	{
+		vector.x = j.value("x", 0.0);
+		vector.y = j.value("y", 0.0);
 	}
 
 } // namespace jackal

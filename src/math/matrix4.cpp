@@ -23,12 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
-// C++ includes
-//====================
-#include <cmath>                   // Trigonometry functions.
-
-//====================
-// Jackal includes
+// Ctor and dtor
 //====================
 #include <jackal/math/matrix4.hpp> // Matrix4 class declaration.
 
@@ -54,16 +49,14 @@ namespace jackal
 	{
 		Matrix4 result = *this;
 
-		for (int i = 0; i < 4; i++)
+		for (unsigned int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; j++)
+			for (unsigned int j = 0; j < 4; j++)
 			{
-				float sum = 0.0f;
-				for (int k = 0; k < 4; k++)
-				{
-					sum = sum + m[i * 4 + k] * matrix.m[k * 4 + j];
-				}
-				result.m[i * 4 + j] = sum;
+				result.m[i][j] = m[i][0] * matrix.m[0][j] +
+					m[i][1] * matrix.m[1][j] +
+					m[i][2] * matrix.m[2][j] +
+					m[i][3] * matrix.m[3][j];
 			}
 		}
 
@@ -73,14 +66,14 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	const Matrix4& Matrix4::operator*=(const Matrix4& matrix)
 	{
-		for (int i = 0; i < 4; i++)
+		for (unsigned int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; j++)
+			for (unsigned int j = 0; j < 4; j++)
 			{
-				for (int k = 0; k < 4; k++)
-				{
-					m[i * 4 + j] = m[i * 4 + j] + m[i * 4 + k] * matrix.m[k * 4 + j];
-				}
+				m[i][j] = m[i][0] * matrix.m[0][j] +
+					m[i][1] * matrix.m[1][j] +
+					m[i][2] * matrix.m[2][j] +
+					m[i][3] * matrix.m[3][j];
 			}
 		}
 
@@ -91,32 +84,18 @@ namespace jackal
 	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	Vector4f Matrix4::getCol(unsigned int index) const
-	{
-		unsigned int pos = index * 4;
-		return Vector4f(m[pos], m[pos + 1], m[pos + 2], m[pos + 3]);
-	}
-
-	////////////////////////////////////////////////////////////
-	void Matrix4::setCol(unsigned int index, const Vector4f& col)
-	{
-		this->setCol(index, col.x, col.y, col.z, col.w);
-	}
-
-	////////////////////////////////////////////////////////////
-	void Matrix4::setCol(unsigned int index, float m1, float m2, float m3, float m4)
-	{
-		unsigned int pos = index * 4;
-		m[pos]     = m1;
-		m[pos + 1] = m2;
-		m[pos + 2] = m3;
-		m[pos + 3] = m4;
-	}
-
-	////////////////////////////////////////////////////////////
 	Vector4f Matrix4::getRow(unsigned int index) const
 	{
-		return Vector4f(m[index], m[index += 4], m[index += 4], m[index += 4]);
+		return index <= 3 ? Vector4f(m[0][index], m[1][index], m[2][index], m[3][index]) : Vector4f::zero();
+	}
+
+	////////////////////////////////////////////////////////////
+	void Matrix4::setRow(unsigned int index, float m1, float m2, float m3, float m4)
+	{
+		m[0][index] = m1;
+		m[1][index] = m2;
+		m[2][index] = m3;
+		m[3][index] = m4;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -126,72 +105,81 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	void Matrix4::setRow(unsigned int index, float m1, float m2, float m3, float m4)
+	Vector4f Matrix4::getColumn(unsigned int index) const
 	{
-		m[index]      = m1;
-		m[index += 4] = m2;
-		m[index += 4] = m3;
-		m[index += 4] = m4;
+		return index <= 3 ? Vector4f(m[index][0], m[index][1], m[index][2], m[index][3]) : Vector4f::zero();
+	}
+
+	////////////////////////////////////////////////////////////
+	void Matrix4::setColumn(unsigned int index, float m1, float m2, float m3, float m4)
+	{
+		m[index][0] = m1;
+		m[index][1] = m2;
+		m[index][2] = m3;
+		m[index][3] = m4;
+	}
+
+	////////////////////////////////////////////////////////////
+	void Matrix4::setColumn(unsigned int index, const Vector4f& column)
+	{
+		this->setColumn(index, column.x, column.y, column.z, column.w);
 	}
 
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	Matrix4 Matrix4::translation(const Vector3f& position)
-	{
-		return Matrix4::translation(position.x, position.y, position.z);
-	}
-
-	////////////////////////////////////////////////////////////
-	Matrix4 Matrix4::translation(float x, float y, float z)
-	{
-		Matrix4 result;
-		result.setCol(3, x, y, z, 1.0f);
-
-		return result;
-	}
-
-	////////////////////////////////////////////////////////////
 	Matrix4 Matrix4::roll(float degrees)
 	{
-		float radians = (3.14f / 180.0f) * degrees;
-		
-		Matrix4 result;
-		result.setRow(1, 0.0f, cosf(radians), -sinf(radians), 0.0f);
-		result.setRow(2, 0.0f, sinf(radians),  cosf(radians), 0.0f);
+		const float theta = (3.14f / 180.0f) * degrees;
+		Matrix4 matrix;
 
-		return result;
+		matrix.setRow(1, 0.0f, cosf(theta), -sinf(theta), 0.0f);
+		matrix.setRow(2, 0.0f, sinf(theta), cosf(theta), 0.0f);
+
+		return matrix;
 	}
-	
+
 	////////////////////////////////////////////////////////////
 	Matrix4 Matrix4::pitch(float degrees)
 	{
-		float radians = (3.14f / 180.0f) * degrees;
+		const float theta = (3.14f / 180.0f) * degrees;
+		Matrix4 matrix;
 
-		Matrix4 result;
-		result.setRow(0,  cosf(radians), 0.0f, sinf(radians), 0.0f);
-		result.setRow(2, -sinf(radians), 0.0f, cosf(radians), 0.0f);
+		matrix.setRow(0,  cosf(theta), 0.0f, sinf(theta), 0.0f);
+		matrix.setRow(2, -sinf(theta), 0.0f, cosf(theta), 0.0f);
 
-		return result;
+		return matrix;
 	}
 
 	////////////////////////////////////////////////////////////
 	Matrix4 Matrix4::yaw(float degrees)
 	{
-		float radians = (3.14f / 180.0f) * degrees;
+		const float theta = (3.14f / 180.0f) * degrees;
+		Matrix4 matrix;
 
-		Matrix4 result;
-		result.setRow(0, cosf(radians), -sinf(radians), 0.0f, 0.0f);
-		result.setRow(1, sinf(radians),  cosf(radians), 0.0f, 0.0f);
+		matrix.setRow(0, cosf(theta), -sinf(theta), 0.0f, 0.0f);
+		matrix.setRow(1, sinf(theta), cosf(theta), 0.0f, 0.0f);
 
-		return result;
+		return matrix;
 	}
 
 	////////////////////////////////////////////////////////////
-	Matrix4 Matrix4::rotation(const Vector3f& rotation)
+	Matrix4 Matrix4::translation(float x, float y, float z)
 	{
-		return Matrix4::rotation(rotation.x, rotation.y, rotation.z);
+		Matrix4 matrix;
+
+		matrix.setRow(0, 1.0f, 0.0f, 0.0f, x);
+		matrix.setRow(1, 0.0f, 1.0f, 0.0f, y);
+		matrix.setRow(2, 0.0f, 0.0f, 1.0f, z);
+
+		return matrix;
+	}
+
+	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::translation(const Vector3f& position)
+	{
+		return Matrix4::translation(position.x, position.y, position.z);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -201,26 +189,80 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::rotation(const Vector3f& rotation)
+	{
+		return Matrix4::rotation(rotation.x, rotation.y, rotation.z);
+	}
+
+	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::scale(float x, float y, float z)
+	{
+		Matrix4 matrix;
+
+		matrix.setRow(0, x,    0.0f, 0.0f, 0.0f);
+		matrix.setRow(1, 0.0f, y,    0.0f, 0.0f);
+		matrix.setRow(2, 0.0f, 0.0f, z,    0.0f);
+
+		return matrix;
+	}
+
+	////////////////////////////////////////////////////////////
 	Matrix4 Matrix4::scale(const Vector3f& scale)
 	{
 		return Matrix4::scale(scale.x, scale.y, scale.z);
 	}
-	
-	////////////////////////////////////////////////////////////
-	Matrix4 Matrix4::scale(float x, float y, float z)
-	{
-		Matrix4 result;
-		result.m[0] = x;
-		result.m[5] = y;
-		result.m[10] = z;
 
-		return result;
+	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::scale(float u)
+	{
+		return Matrix4::scale(u, u, u);
 	}
 
 	////////////////////////////////////////////////////////////
-	Matrix4 Matrix4::scale(float scale)
+	Matrix4 Matrix4::orthographic(float left, float right, float top, float bottom, float near, float far)
 	{
-		return Matrix4::scale(scale, scale, scale);
+		Matrix4 matrix;
+		const float value = 2.0f;
+
+		matrix.setRow(0, value / (right - left), 0.0f, 0.0f, -(right + left) / (right - left));
+		matrix.setRow(1, 0.0f, value / (top - bottom), 0, -(top + bottom) / (top - bottom));
+		matrix.setRow(2, 0.0f, 0.0f, value / (far - near), -(far + near) / (far - near));
+
+		return matrix;
+	}
+
+	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::perspective(float fov, float ratio, float near, float far)
+	{
+		const float halfFov = tanf((fov * (180.0f / 3.14f)) / 2.0f);
+		const float range = near - far;
+
+		Matrix4 matrix;
+
+		matrix.setRow(0, 1.0f / (halfFov * ratio), 0.0f, 0.0f, 0.0f);
+		matrix.setRow(1, 0.0f, 1.0f / halfFov, 0.0f, 0.0f);
+		matrix.setRow(2, 0.0f, 0.0f, (-near - far) / range, 2.0f * far * near / range);
+		matrix.setRow(3, 0.0f, 0.0f, 1.0f, 0.0f);
+
+		return matrix;
+	}
+
+	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::view(const Vector3f& forward, const Vector3f& up)
+	{
+		Vector3f f = forward.normalised();
+		Vector3f u = up.normalised();
+
+		u = Vector3f::cross(u, f);
+		Vector3f v = Vector3f::cross(f, u);
+
+		Matrix4 matrix;
+
+		matrix.setRow(0, u.x, u.y, u.z, 0.0f);
+		matrix.setRow(1, v.x, v.y, v.z, 0.0f);
+		matrix.setRow(2, f.x, f.y, f.z, 0.0f);
+
+		return matrix;
 	}
 
 	//====================
@@ -232,4 +274,16 @@ namespace jackal
 		return Matrix4();
 	}
 
-} // namespace jackal
+	////////////////////////////////////////////////////////////
+	Matrix4 Matrix4::zero()
+	{
+		Matrix4 matrix;
+
+		for (unsigned int i = 0; i < 4; i++)
+		{
+			matrix.setRow(i, 0.0f, 0.0f, 0.0f, 0.0f);
+		}
+
+		return matrix;
+	}
+}

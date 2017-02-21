@@ -113,7 +113,9 @@ namespace jackal
 				}
 				
 				std::string formattedStr = line;
-				formattedStr.erase(std::remove_if(std::begin(formattedStr), std::end(formattedStr), std::isspace));
+				
+				auto f = [](unsigned char const c) { return std::isspace(c); };
+				formattedStr.erase(std::remove_if(std::begin(formattedStr), std::end(formattedStr), f));
 
 				// It's a comment in the properties file, ignore it. 
 				if (formattedStr.at(0) == COMMENT_SYMBOL)

@@ -41,7 +41,15 @@ enable_vsync: boolean = true      # Enables vsync for the window. (Without vsync
 # Context settings
 #====================
 [ContextSettings]
-depth_bits: uint = 24   # Defines the number of depth bits to use within the window.
-stencil_bits: uint = 8  # Defines the number of stencil bits to use within the window.
-major_version: uint = 3 # Major version of OpenGL to use.
-minor_version: uint = 3 # Minor version of OpenGL to use.
+depth_bits: uint    = 24  # Defines the number of depth bits to use within the window.
+stencil_bits: uint  = 8   # Defines the number of stencil bits to use within the window.
+major_version: uint = 3   # Major version of OpenGL to use.
+minor_version: uint = 3   # Minor version of OpenGL to use.
+
+#====================
+# Camera settings
+#====================
+[Camera]
+field_of_view: float = 70.0           # The field of view of the Camera, (how much it can see).
+size: vec2           = (640.0, 480.0) # The intial dimensions of the camera.
+planes: vec2         = (1.0, 1000.0)  # The near and far clipping planes.

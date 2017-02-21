@@ -28,9 +28,14 @@
 //====================
 // C++ includes
 //====================
-#include <cmath>        // Needed for trigonometry functions i.e sin, cos.
-#include <algorithm>    // Finding minimum and maximum.
-#include <iostream>     // operator<< overloading.
+#include <cmath>                      // Needed for trigonometry functions i.e sin, cos.
+#include <algorithm>                  // Finding minimum and maximum.
+#include <iostream>                   // operator<< overloading.
+
+//====================
+// Jackal includes
+//====================
+#include <jackal/utils/json/json.hpp> // Json de-serialization of a Vector2 class.
 
 namespace jackal
 {
@@ -556,6 +561,87 @@ namespace jackal
 	typedef Vector2<unsigned int> Vector2u;    ///< A Vector2 object made of unsigned integers.
 	typedef Vector2<float>        Vector2f;    ///< A Vector2 object made of floats.
     typedef Vector2<double>       Vector2d;    ///< A Vector2 object made of doubles.
+
+	//====================
+	// Functions
+	//====================
+	////////////////////////////////////////////////////////////
+	/// @brief Serializes the Vector2f object to a json object.
+	///
+	/// When the application saves instances for persistence use,
+	/// any objects that utilise the Vector2 object as a member
+	/// variable can be successfully serializes as a json object.
+	///
+	/// @param j       The json object to serialize to.
+	/// @param vector  The vector to serialize from.
+	///
+	////////////////////////////////////////////////////////////
+	void to_json(nlohmann::json& j, const Vector2f& vector);
+
+	////////////////////////////////////////////////////////////
+	/// @brief De-serializes a json object as a Vector2f value.
+	///
+	/// When a Vector2 object is de-serialized, it will use the values
+	/// declared within the json object and create a Vector from each
+	/// member field.
+	///
+	/// @param j      The json object to de-serialize from.
+	/// @param vector The vector to de-serialize into. 
+	///
+	////////////////////////////////////////////////////////////
+	void from_json(const nlohmann::json& j, Vector2f& vector);
+
+	////////////////////////////////////////////////////////////
+	/// @brief Serializes the Vector2i object to a json object.
+	///
+	/// When the application saves instances for persistence use,
+	/// any objects that utilise the Vector2 object as a member
+	/// variable can be successfully serializes as a json object.
+	///
+	/// @param j       The json object to serialize to.
+	/// @param vector  The vector to serialize from.
+	///
+	////////////////////////////////////////////////////////////
+	void to_json(nlohmann::json& j, const Vector2i& vector);
+
+	////////////////////////////////////////////////////////////
+	/// @brief De-serializes a json object as a Vector2i value.
+	///
+	/// When a Vector2 object is de-serialized, it will use the values
+	/// declared within the json object and create a Vector from each
+	/// member field.
+	///
+	/// @param j      The json object to de-serialize from.
+	/// @param vector The vector to de-serialize into. 
+	///
+	////////////////////////////////////////////////////////////
+	void from_json(const nlohmann::json& j, Vector2i& vector);
+
+	////////////////////////////////////////////////////////////
+	/// @brief Serializes the Vector2d object to a json object.
+	///
+	/// When the application saves instances for persistence use,
+	/// any objects that utilise the Vector2 object as a member
+	/// variable can be successfully serializes as a json object.
+	///
+	/// @param j       The json object to serialize to.
+	/// @param vector  The vector to serialize from.
+	///
+	////////////////////////////////////////////////////////////
+	void to_json(nlohmann::json& j, const Vector2d& vector);
+
+	////////////////////////////////////////////////////////////
+	/// @brief De-serializes a json object as a Vector2d value.
+	///
+	/// When a Vector2 object is de-serialized, it will use the values
+	/// declared within the json object and create a Vector from each
+	/// member field.
+	///
+	/// @param j      The json object to de-serialize from.
+	/// @param vector The vector to de-serialize into. 
+	///
+	////////////////////////////////////////////////////////////
+	void from_json(const nlohmann::json& j, Vector2d& vector);
 
 } // namespace jackal
 

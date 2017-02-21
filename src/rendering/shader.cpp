@@ -30,8 +30,8 @@
 #include <jackal/utils/constants.hpp>        // Using the constant log location.
 #include <jackal/utils/json_file_reader.hpp> // Loading and parsing the json file.
 #include <jackal/utils/json/json.hpp>        // De-serializing a shader file.
-#include <jackal/rendering/material.hpp>         // The material to render the shader with.
-#include <jackal/math/matrix4.hpp>
+#include <jackal/rendering/material.hpp>     // The material to render the shader with.
+#include <jackal/core/camera.hpp>            // Rendering from the position of the Camera.
 
 //====================
 // Additional includes
@@ -79,19 +79,19 @@ namespace jackal
 		JSONFileReader reader;
 		if (reader.read(filename))
 		{
-			Json::Value root = reader.getRoot();
-			Json::Value files = root["glsl-files"];
+			nlohmann::json root = reader.getRoot();
+			nlohmann::json files = root["glsl-files"];
 			
 			for (const auto& gf : files)
 			{
-				this->attachShader(gf["glsl-file"].asString());
+				this->attachShader(gf["glsl-file"].get<std::string>());
 			}
 
 			this->compile();
 
 			Shader::bind(*this);
 
-			Json::Value uniforms = root["const-uniforms"];
+			nlohmann::json uniforms = root["const-uniforms"];
 			for (const auto& uniform : uniforms)
 			{
 				m_uniform.setParameter(uniform);
@@ -142,16 +142,17 @@ namespace jackal
 	void Shader::process(const Material& material)
 	{
 		// TODO(BEN): Pass the Material object as a uniform buffer object.
-		m_uniform.setParameter("u_time", static_cast<float>(SDL_GetTicks()));
 		m_uniform.setParameter("u_texture", 0);
 		m_uniform.setParameter("u_colour", material.getColour());
 
-		Matrix4 t = Matrix4::translation(0.0f, 1.0f, 0.0f);
-		Matrix4 s = Matrix4::scale(1.5f, 1.5f, 1.0f);
-		Matrix4 r = Matrix4::yaw(45.0f);
+		Matrix4 translate = Matrix4::translation(0.0f, 0.0f, 0.0f);
+		Matrix4 rotation = Matrix4::rotation(0.0f, 0.0f, 90.0f);
+		Matrix4 scale = Matrix4::scale(1.0f);
 
-		Matrix4 result = s * r * t;
-		m_uniform.setParameter("u_model", result);
+		Matrix4 model = scale * rotation * translate;
+		Matrix4 mvp = model * Camera::getMain().getViewProjection();
+
+		m_uniform.setParameter("u_mvp", mvp);
 	}
 
 	////////////////////////////////////////////////////////////

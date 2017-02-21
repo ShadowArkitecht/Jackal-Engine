@@ -28,8 +28,8 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/vector3.hpp> // Using vectors for setting translations and rotation.
-#include <jackal/math/vector4.hpp> // Setting rows and columns.
+#include <jackal/math/vector3.hpp> // Used for positioning.
+#include <jackal/math/vector4.hpp> // Retrieving and setting rows and columns.
 
 namespace jackal
 {
@@ -39,22 +39,18 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		float m[16]; ///< Individual elements of the matrix object.
+		float m[4][4]; ///< Individual elements of the matrix.
 
 	public:
 		//====================
 		// Ctor and dtor
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Default constructor for the Matrix4 Object.
-		///
-		/// When the default constructor of Matrix4 is used to instantiate
-		/// the object, it is set to the identity matrix.
-		///
-		/// [ 1, 0, 0, 0 ]
-		/// [ 0, 1, 0, 0 ]
-		/// [ 0, 0, 1, 0 ]
-		/// [ 0, 0, 0, 1 ]
+		/// @brief Default constructor for the Matrix4 object.
+		/// 
+		/// The default constructor for the Matrix4 object will initialise
+		/// all of the elements to the identity matrix, which is a default matrix
+		/// that will apply no translations of rotations.
 		///
 		////////////////////////////////////////////////////////////
 		explicit Matrix4();
@@ -63,7 +59,7 @@ namespace jackal
 		/// @brief Default destructor for the Matrix4 object.
 		////////////////////////////////////////////////////////////
 		~Matrix4() = default;
-
+		
 		//====================
 		// Operators
 		//====================
@@ -74,9 +70,9 @@ namespace jackal
 		/// the result being assigned to a new Matrix4 object. It is important
 		/// to remember that matrices are non-communative.
 		///
-		/// @param matrix    The matrix to be multiply against.
+		/// @param matrix The matrix to be multiply the Matrix4 object with.
 		///
-		/// @returns         A Matrix4 result of the multiplication.
+		/// @returns A Matrix4 object with the result of the multiplication.
 		///
 		////////////////////////////////////////////////////////////
 		Matrix4 operator*(const Matrix4& matrix) const;
@@ -86,287 +82,333 @@ namespace jackal
 		///
 		/// Multiplication is applied between two different matrices with
 		/// the result being assigned to this Matrix4. It is important
-		/// to remember that matrices are non-communative. This method will
-		/// return a reference to the current object.
+		/// to remember that matrices are non-communative.
 		///
-		/// @param matrix       The matrix to be multiply against.
+		/// @param matrix The matrix to be multiply the Matrix4 object with.
 		///
-		/// @returns            A reference to this Matrix4 object.
+		/// @returns A reference to this Matrix4 object after multiplication.
 		///
 		////////////////////////////////////////////////////////////
 		const Matrix4& operator*=(const Matrix4& matrix);
-
+		
 		//====================
 		// Getters and setters
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Retrieves the column of the Matrix4 at the specified index.
-		///
-		/// When a column is retrieved from the matrix, it will return the result
-		/// as a 4 dimensional vector object.
-		///
-		/// @param index    The column index.
-		///
-		/// @returns        A Vector4 containing the information of the Matrix4 column.
-		///
-		////////////////////////////////////////////////////////////
-		Vector4f getCol(unsigned int index) const;
-
-		////////////////////////////////////////////////////////////
-		/// @brief Sets the column of the Matrix4 at the specified index.
-		///
-		/// @param index    The column index.
-		/// @param col      The Vector4f to set the column to.
-		///
-		////////////////////////////////////////////////////////////
-		void setCol(unsigned int index, const Vector4f& col);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Sets the column of the Matrix4 at the specified index.
-		///
-		/// @param index    The column index.
-		/// @param m1       The first element of the column.
-		/// @param m2       The second element of the column.
-		/// @param m3       The third element of the column.
-		/// @param m4       The fourth element of the column.
-		///
-		////////////////////////////////////////////////////////////
-		void setCol(unsigned int index, float m1, float m2, float m3, float m4);
-
-		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the row of the Matrix4 at the specified index.
+		/// 
+		/// Each matrix is made up 4x4 elements of floats, this method will retrieve
+		/// a row of elements and construct them into a Vector4f. If the index specified
+		/// is greater than 3, an empty Vector4f will be returned.
 		///
-		/// When a row is retrieved from the matrix, it will return the result
-		/// as a 4 dimensional vector object.
+		/// @param index     The row index.
 		///
-		/// @param index    The row index.
-		///
-		/// @returns        A Vector4 containing the information of the Matrix4 row.
+		/// @retval Vector4f A Vector4 containing the information of the Matrix4 row.
 		///
 		////////////////////////////////////////////////////////////
 		Vector4f getRow(unsigned int index) const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Sets the row of the Matrix4 at the specified index.
+		/// 
+		/// Each element can be changed individually, however this method
+		/// can be used for conveniently altering an entire row.
 		///
-		/// @param index    The row index.
-		/// @param row      The Vector4f to set the row to.
-		///
-		////////////////////////////////////////////////////////////
-		void setRow(unsigned int index, const Vector4f& row);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Sets the row of the Matrix4 at the specified index.
-		///
-		/// @param index    The row index.
-		/// @param m1       The first element of the row.
-		/// @param m2       The second element of the row.
-		/// @param m3       The third element of the row.
-		/// @param m4       The fourth element of the row.
+		/// @param index The row index.
+		/// @param m1    The first new element of the row.
+		/// @param m2    The second new element of the row.
+		/// @param m3    The third new element of the row.
+		/// @param m4    The fourth new element of the row.
 		///
 		////////////////////////////////////////////////////////////
 		void setRow(unsigned int index, float m1, float m2, float m3, float m4);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the row of the Matrix4 at the specified index.
+		/// 
+		/// Each element can be changed individually, however this method
+		/// can be used for conveniently altering an entire row.
+		///
+		/// @param index The row index.
+		/// @param row   The new row to insert.
+		///
+		////////////////////////////////////////////////////////////		
+		void setRow(unsigned int index, const Vector4f& row);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the column of the Matrix4 at the specified index.
+		/// 
+		/// Each matrix is made up 4x4 elements of floats, this method will retrieve
+		/// a column of elements and construct them into a Vector4f. If the index specified
+		/// is greater than 3, an empty Vector4f will be returned.
+		///
+		/// @param index     The column index.
+		///
+		/// @retval Vector4f A Vector4 containing the information of the Matrix4 row.
+		///
+		////////////////////////////////////////////////////////////
+		Vector4f getColumn(unsigned int index) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the column of the Matrix4 at the specified index.
+		/// 
+		/// Each element can be changed individually, however this method
+		/// can be used for conveniently altering an entire column.
+		///
+		/// @param index The column index.
+		/// @param m1    The first new element of the column.
+		/// @param m2    The second new element of the column.
+		/// @param m3    The third new element of the column.
+		/// @param m4    The fourth new element of the column.
+		///
+		////////////////////////////////////////////////////////////
+		void setColumn(unsigned int index, float m1, float m2, float m3, float m4);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the column of the Matrix4 at the specified index.
+		/// 
+		/// Each element can be changed individually, however this method
+		/// can be used for conveniently altering an entire column.
+		///
+		/// @param index  The column index.
+		/// @param column The new column to insert.
+		///
+		////////////////////////////////////////////////////////////		
+		void setColumn(unsigned int index, const Vector4f& column);
 
 		//====================
 		// Methods
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a translation Matrix4 object.
+		/// @brief Retrieves the roll rotation matrix.
 		///
-		/// Constructs an identity matrix and then sets the translation column
-		/// to the position parameter. When a matrix is multiplied by the
-		/// translation matrix, it will alter the object's position in 2D space.
+		/// The roll rotation matrix is used to manipulate and rotate
+		/// matrix on the "x" axis of the matrix. When multiplied against
+		/// another matrix, it will give the appearance of an object rotating.
 		///
-		/// [ 1 0 0 position.x ]
-		/// [ 0 1 0 position.y ]
-		/// [ 0 0 1 position.z ]
-		/// [ 0 0 0 1          ]
+		/// @param degrees   The number of degrees to rotate the matrix by.
 		///
-		/// @param position The position to set the translation matrix to.
-		/// @returns        A translation matrix.
+		/// @returns The roll rotation matrix.
 		///
-		////////////////////////////////////////////////////////////
-		static Matrix4 translation(const Vector3f& position);
+		////////////////////////////////////////////////////////////		
+		static Matrix4 roll(float degrees);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a translation Matrix4 object.
+		/// @brief Retrieves the pitch rotation matrix.
 		///
-		/// Constructs an identity matrix and then sets the translation column
-		/// to the position parameter. When a matrix is multiplied by the
-		/// translation matrix, it will alter the object's position in 2D space.
+		/// The pitch rotation matrix is used to manipulate and rotate
+		/// matrix on the "y" axis of the matrix. When multiplied against
+		/// another matrix, it will give the appearance of an object rotating.
 		///
-		/// [ 1 0 0 x ]
-		/// [ 0 1 0 y ]
-		/// [ 0 0 1 z ]
-		/// [ 0 0 0 1 ]
+		/// @param degrees   The number of degrees to rotate the matrix by.
 		///
-		/// @param x The x position to set the translation matrix to.
-		/// @param y The y position to set the translation matrix to.
-		/// @param z The z position to set the translation matrix to.
+		/// @returns The pitch rotation matrix.
 		///
-		/// @returns A translation matrix.
+		////////////////////////////////////////////////////////////		
+		static Matrix4 pitch(float degrees);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the yaw rotation matrix.
+		///
+		/// The yaw rotation matrix is used to manipulate and rotate
+		/// matrix on the "z" axis of the matrix. When multiplied against
+		/// another matrix, it will give the appearance of an object rotating.
+		///
+		/// @param degrees   The number of degrees to rotate the matrix by.
+		///
+		/// @returns The yaw rotation matrix.
+		///
+		////////////////////////////////////////////////////////////		
+		static Matrix4 yaw(float degrees);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves and constructs a translation matrix.
+		///
+		/// A translation matrix is a simple matrix where the translation
+		/// column of the matrix has been altered with the passed in values.
+		/// When a matrix is multiplied by the translation matrix, it will
+		/// give the illusion of movement.
+		///
+		/// @param x  The new x translation of the matrix.
+		/// @param y  The new y translation of the matrix.
+		/// @param z  The new z translation of the matrix.
+		///
+		/// @returns  The translation matrix.
 		///
 		////////////////////////////////////////////////////////////
 		static Matrix4 translation(float x, float y, float z);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a roll rotation matrix.
+		/// @brief Retrieves and constructs a translation matrix.
 		///
-		/// Constructs a roll rotation matrix with the applied number of degrees.
-		/// When a matrix is multiplied by the roll rotation matrix, it will alter
-		/// the object's rotation on the local x axis.
+		/// A translation matrix is a simple matrix where the translation
+		/// column of the matrix has been altered with the passed in values.
+		/// When a matrix is multiplied by the translation matrix, it will
+		/// give the illusion of movement.
 		///
-		/// [ 1 0          0           0 ]
-		/// [ 0 cos(theta) -sin(theta) 0 ]
-		/// [ 0 sin(theta)  cos(theta) 0 ]
-		/// [ 0 0          0           1 ]
+		/// @param position The new translation of the matrix.
 		///
-		/// \param degrees		The degrees to apply to the rotation matrix.
-		///
-		/// \retval Matrix4		The roll rotation matrix constructed with the degrees.
+		/// @returns  The translation matrix.
 		///
 		////////////////////////////////////////////////////////////
-		static Matrix4 roll(float degrees);
+		static Matrix4 translation(const Vector3f& position);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a pitch rotation matrix
+		/// @brief Rotates a matrix by the specified x, y and z values.
 		///
-		/// Constructs a pitch rotation matrix with the applied number of degrees.
-		/// When a matrix is multiplied by the pitch rotation matrix, it will alter
-		/// the object's rotation on the local y axis.
+		/// This method is a convenience method that combines the yaw, pitch
+		/// and roll rotation matrices and utilises them to rotate the matrix
+		/// by the specified amount on the axis'.
 		///
-		/// [  cos(theta)  0 sin(theta) 0 ]
-		/// [  0           1 0          0 ]
-		/// [ -sin(theta)  0 cos(theta) 0 ]
-		/// [  0           0 0          1 ]
+		/// @param x The x amount to rotate the matrix by.
+		/// @param y The y amount to rotate the matrix by.
+		/// @param z The z amount to rotate the matrix by.
 		///
-		/// @param degrees The degrees to apply to the rotation matrix.
-		/// @returns       The pitch rotation matrix constructed with the degrees.
-		///
-		////////////////////////////////////////////////////////////
-		static Matrix4 pitch(float degrees);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Constructs a yaw rotation matrix.
-		///
-		/// Constructs a yaw rotation matrix with the applied number of degrees.
-		///	When a matrix is multiplied by the yaw rotation matrix, it will alter
-		/// the object's rotation on the local z axis.
-		///
-		/// [ cos(theta) -sinf(theta) 0 0 ]
-		/// [ sin(theta)  cosf(theta) 0 0 ]
-		/// [ 0           0           1 0 ]
-		/// [ 0           0           0 1 ]
-		///
-		/// @param degrees The degrees to apply to the rotation matrix.
-		///
-		/// @returns       The yaw rotation matrix constructed with the degrees.
-		///
-		////////////////////////////////////////////////////////////
-		static Matrix4 yaw(float degrees);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Sets the x, y, and z rotation of a Matrix4 object.
-		///
-		/// Convenience method for quickly setting the x, y and z rotation of a
-		/// Matrix4 object. The corresponding components of the rotation Vector set 
-		/// the roll, yaw and pitch rotational degrees respectively.
-		///
-		/// @param rotation     The rotation to apply to the Matrix4 object.
-		///
-		/// @returns            The rotated matrix.
-		///
-		////////////////////////////////////////////////////////////
-		static Matrix4 rotation(const Vector3f& rotation);
-
-		////////////////////////////////////////////////////////////
-		/// @brief Sets the x, y, and z rotation of a Matrix4 object.
-		///
-		/// Convenience method for quickly setting the x, y and z rotation of a
-		/// Matrix4 object. The corresponding components of the rotation Vector set 
-		/// the roll, yaw and pitch rotational degrees respectively.
-		///
-		/// @param x   The x rotation to apply to the Matrix4 object.
-		/// @param y   The y rotation to apply to the Matrix4 object.
-		/// @param z   The z rotation to apply to the Matrix4 object.
-		///
-		/// @returns   The rotated matrix.
+		/// @returns The rotated matrix.
 		///
 		////////////////////////////////////////////////////////////
 		static Matrix4 rotation(float x, float y, float z);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a scale Matrix4 object.
+		/// @brief Rotates a matrix by the specified rotation vector.
 		///
-		/// Creates a indentity matrix and then scales the matrix on
-		/// the x, y and z axis by using the members from the corresponding
-		/// scale Vector parameter.
+		/// This method is a convenience method that combines the yaw, pitch
+		/// and roll rotation matrices and utilises them to rotate the matrix
+		/// by the specified amount on the axis'.
 		///
-		/// [ scale.x 0       0       0 ]
-		/// [ 0       scale.y 0       0 ]
-		/// [ 0       0       scale.z 0 ]
-		/// [ 0       0       0       1 ]
+		/// @param rotation The vector to rotate the matrix by.
 		///
-		/// @param scale The vector to scale the matrix by.
-		///
-		/// @returns     A Matrix4 scale object.
+		/// @returns The rotated matrix.
 		///
 		////////////////////////////////////////////////////////////
-		static Matrix4 scale(const Vector3f& scale);
+		static Matrix4 rotation(const Vector3f& rotation);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a scale Matrix4 object.
+		/// @brief Scale a matrix by the specified x, y and z values.
 		///
-		/// Creates a indentity matrix and then scales the matrix on
-		/// the x, y and z axis by using the members from the corresponding
-		/// parameters.
+		/// A scale matrix is a simple matrix that when multiplied against,
+		/// will scale a matrix by the amount specified on the different axis'.
+		/// This method is used to scale non-uniformly.
 		///
-		/// [ x 0 0 0 ]
-		/// [ 0 y 0 0 ]
-		/// [ 0 0 z 0 ]
-		/// [ 0 0 0 1 ]
+		/// @param x The amount to scale on the x axis.
+		/// @param y The amount to scale on the y axis.
+		/// @param z The amount to scale on the z axis.
 		///
-		/// @param x    The x value to scale the matrix by.
-		/// @param y    The y value to scale the matrix by.
-		/// @param z    The z value to scale the matrix by.
-		///
-		/// @returns    A Matrix4 scale object.
-		///
+		/// @returns The scale matrix.
+		/// 
 		////////////////////////////////////////////////////////////
 		static Matrix4 scale(float x, float y, float z);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Constructs a scale Matrix4 object.
+		/// @brief Scale a matrix by the specified vector.
 		///
-		/// Creates a indentity matrix and then scales the matrix on
-		/// the x, y and z axis by a uniform scale value.
+		/// A scale matrix is a simple matrix that when multiplied against,
+		/// will scale a matrix by the amount specified on the different axis'.
+		/// This method is used to scale non-uniformly.
 		///
-		/// [ scale 0     0     0 ]
-		/// [ 0     scale 0     0 ]
-		/// [ 0     0     scale 0 ]
-		/// [ 0     0     0     1 ]
+		/// @param The vector to scale the matrix by.
 		///
-		/// @param scale The uniform value to scale the matrix by.
+		/// @returns The scale matrix.
+		/// 
+		////////////////////////////////////////////////////////////
+		static Matrix4 scale(const Vector3f& scale);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Scale a matrix uniformly by the specified amount.
 		///
-		/// @returns     A Matrix4 scale object.
+		/// A scale matrix is a simple matrix that when multiplied against,
+		/// will scale a matrix by the amount specified on the different axis'.
+		/// This method is used to scale all axis by a uniform value.
+		///
+		/// @param The uniform scale value.
+		///
+		/// @returns The uniform scale matrix.
+		/// 
+		////////////////////////////////////////////////////////////
+		static Matrix4 scale(float u);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Constructs an orthographic matrix.
+		///
+		/// An orthographic matrix differs from a perspective matrix
+		/// in that everything projected into a scene appears on the same
+		/// z-plane, objects lack any sense of depth of field. An orthographic
+		/// matrix is useful for projecting elements onto a screen in absolute
+		/// co-ordinates (such as a UI).
+		///
+		/// @param left   The left most section of the projection.
+		/// @param right  The right most section of the projection.
+		/// @param top    The top most section of the projection.
+		/// @param bottom The bottom most section of the projection.
+		/// @param near   Near clipping plane.
+		/// @param far    Far clipping plane.
+		///
+		/// @returns An orthographic matrix.
+		///
+		////////////////////////////////////////////////////////////	
+		static Matrix4 orthographic(float left, float right, float top, float bottom, float near, float far);
+		
+		////////////////////////////////////////////////////////////
+		/// @brief Constructs a perspective matrix.
+		///
+		/// A perspective matrix is a type of projection matrix that
+		/// makes the objects within a scene appear as it they are in local 
+		/// perspective. The perspective can be more commonly described
+		/// as the natural way a world is viewed. With objects further away
+		/// appearing smaller.
+		///
+		/// @param fov   The field of view (how much can be seen at one time).
+		/// @param ratio The aspect ratio of the current window.
+		/// @param near  The near clipping plane.
+		/// @param far   The far clipping plane.
+		///
+		/// @returns The perspective matrix.
+		///
+		//////////////////////////////////////////////////////////// 		
+		static Matrix4 perspective(float fov, float ratio, float near, float far);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Constructs a basic view matrix.
+		///
+		/// The view matrix can be regarded as the "view" or "camera"
+		/// into the game world, combined with a translation matrix it can
+		/// give the appearance of movement around a game world. The view must
+		/// be combined with a perspective or orthographic matrix for
+		/// correct projection.
+		///
+		/// @param forward The direction to point the view in.
+		/// @param up      The current up vector of the view.
+		///
+		/// @returns       The Matrix4 object constructed as a view matrix.
 		///
 		////////////////////////////////////////////////////////////
-		static Matrix4 scale(float scale);
+		static Matrix4 view(const Vector3f& forward, const Vector3f& up);
 
 		//====================
 		// Properties
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Creates and returns an identity matrix.
+		/// @brief Retrieves a Matrix4 object as an identity matrix.
 		///
-		/// An identity matrix is the default state for a Matrix4 object.
-		/// If a matrix is multiplied by an identity matrix, it will remain
-		/// the same.
+		/// The identity matrix is the default state of a Matrix4 object,
+		/// if any translations or rotations are applied to this matrix,
+		/// end result will be unchanged.
 		///
 		/// @returns The identity matrix.
 		///
 		////////////////////////////////////////////////////////////
 		static Matrix4 identity();
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the Matrix4 object as a zero-ed matrix.
+		///
+		/// A zero-ed matrix is a matrix constructed of nothing but
+		/// zero values. It serves no practible purpose.
+		///
+		/// @returns A matrix with all elements set to 0.
+		///
+		////////////////////////////////////////////////////////////
+		static Matrix4 zero();
 	};
 
 } // namespace jackal
@@ -374,46 +416,47 @@ namespace jackal
 #endif//__JACKAL_MATRIX4_HPP__
 
 ////////////////////////////////////////////////////////////
+/// @author Benjamin Carter
+///
 /// @class jackal::Matrix4
 /// @ingroup math
 ///
-/// The jackal::Matrix4 is the underlying rotational matrices that
+/// The jackal::Matrix4 is the underlying rotational matrix that
 /// the Jackal Engine utilises. The matrices are used to rotate
-/// objects within the GLSL shaders and for communication with OpenGL.
+/// objects within GLSL shaders and for communication with OpenGL.
 /// 
 /// The matrices are never directed accessed by the user, instead
 /// all rotation within the application utilises Quaternions, which
-/// are converted into matrices before glsl application.
-///
-/// Although not externally used, its behavior is still exposed
-/// to the lua scripting interface for additional use.
+/// are converted into matrices before shader application. Although the
+/// matrices do not need to be directly used, they are exposed to the
+/// lua scripting interface for additional behaviour.
 ///
 /// C++ Code example:
 /// @code
 /// using namespace jackal;
 ///
 /// // Create a matrix object.
-/// Matrix4 matrix;
+/// jackal::Matrix4 matrix;
 ///
-/// // Set the matrix to equal a random translation, rotation and scale.
+/// // Set the matrix to equal a translation, rotation and scale.
 /// matrix *= Matrix4::scale(Vector3f::one());
 /// // Rotates the matrix 50 degrees on the y axis.
-/// matrix *= Matrix4::rotation(0.0f, 50.0f, 0.0f);
-/// // Translate the matrix.
-/// matrix *= Matrix4f::translation(0.0f, 0.0f, 7.0f);
+/// matrix *= Matrix4::rotation(Vector3f(0.0f, 50.0f, 0.0f));
+///
+/// matrix *= Matrix4::translation(Vector3f(0.0f, 0.0f, 7.0f);
 /// @endcode
 ///
 /// Lua Code example:
-/// @code
-/// -- Create a matrix object
+/// @code 
+/// -- Create a matrix object.
 /// local matrix = Matrix4()
 ///
-///  -- Set the matrix to equal a random translaction, rotation and scale.
-/// matrix = matrix * Matrix4.scale(Vector3.one())
+/// -- Set the matrix to equal a translation, rotation and scale.
+/// matrix = matrix * Matrix4::scale(Vector3.one())
 /// -- Rotates the matrix 50 degrees on the y axis.
-/// matrix = matrix * Matrix4.rotation(0.0, 50.0, 0.0)
-/// -- Translate the matrix.
-/// matrix = matrix * Matrix4.translation(0.0, 0.0, 7.0)
+/// matrix = matrix * Matrix4.rotation(Vector3(0.0, 50.0, 0.0))
+///
+/// matrix = matrix * Matrix4.translation(Vector3(0.0, 0.0, 7.0))
 /// @endcode
 ///
 ////////////////////////////////////////////////////////////

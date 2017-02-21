@@ -31,6 +31,7 @@
 #include <jackal/core/config_file.hpp>         // Load the main configuration file. 
 #include <jackal/utils/properties.hpp>         // Load the locale for the current application.
 #include <jackal/core/window.hpp>              // Creating test window instance.
+#include <jackal/core/camera.hpp>              // Creating the global camera.
 #include <jackal/rendering/buffer.hpp>         // Binding different buffers.
 #include <jackal/rendering/vertex.hpp>         // Creating vertices for the buffers.
 #include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
@@ -72,6 +73,9 @@ int main(int argc, char** argv)
 	Window window;
 	window.create(config);
 
+	Camera camera;
+	camera.create(config);
+	
 	Buffer vao(eBufferType::ARRAY);
 	vao.create();
 
@@ -80,21 +84,22 @@ int main(int argc, char** argv)
 	Buffer vbo(eBufferType::VERTEX);
 	vbo.create();
 
-	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, -1.0f);
+	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, 1.0f);
 	v1.uv = Vector2f::zero();
 
-	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, -1.0f);
+	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, 1.0f);
 	v2.uv = Vector2f(1.0f, 0.0f);
 
-	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, -1.0f);
+	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, 1.0f);
 	v3.uv = Vector2f(1.0f, 1.0f);
 
-	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, -1.0f);
+	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, 1.0f);
 	v4.uv = Vector2f(0.0f, 1.0f);
 
 	std::vector<Vertex_t> verts;
 	verts.push_back(v1);
 	verts.push_back(v2);
+
 	verts.push_back(v3);
 	verts.push_back(v4);
 	
@@ -133,8 +138,7 @@ int main(int argc, char** argv)
 	
 	GUITexture* pTexture = (GUITexture*)pView->surface();
 
-	Material material;
-	material.load("~assets/materials/basic-material.json");
+	Material material = ResourceManager::getInstance().get<Material>("~assets/materials/basic-material.json");
 
 	while (window.isRunning())
 	{

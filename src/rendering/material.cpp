@@ -88,13 +88,13 @@ namespace jackal
 		JSONFileReader reader;
 		if (reader.read(filename))
 		{
-			Json::Value root = reader.getRoot();
+			nlohmann::json root = reader.getRoot();
 
-			m_shader = ResourceManager::getInstance().get<Shader>(root["shader"].asString());
-			m_texture = ResourceManager::getInstance().get<Texture>(root["texture"].asString());
+			m_shader = ResourceManager::getInstance().get<Shader>(root["shader"].get<std::string>());
+			m_texture = ResourceManager::getInstance().get<Texture>(root["texture"].get<std::string>());
 
-			Json::Value colour = root["colour"];
-			m_colour = Colour(colour["r"].asFloat(), colour["g"].asFloat(), colour["b"].asFloat(), colour["a"].asFloat());
+			nlohmann::json colour = root["colour"];
+			m_colour = Colour(colour["r"].get<float>(), colour["g"].get<float>(), colour["b"].get<float>(), colour["a"].get<float>());
 
 			m_ID |= m_shader.getID() << 24;
 			m_ID |= m_texture.getID() << 16;

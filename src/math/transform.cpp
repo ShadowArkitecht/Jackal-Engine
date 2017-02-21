@@ -25,7 +25,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/colour.hpp> // Colour class declaration.
+#include <jackal/math/transform.hpp> // Transform class declaration.
 
 namespace jackal
 {
@@ -33,39 +33,49 @@ namespace jackal
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Colour::Colour()
-		: r(0.0f), g(0.0f), b(0.0f), a(1.0f)
-	{
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b)
-		: r(r), g(g), b(b)
-	{
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b, float a)
-		: r(r), g(g), b(b), a(a)
+	Transform::Transform()
+		: m_position()
 	{
 	}
 
 	//====================
-	// Functions
+	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	void to_json(nlohmann::json& j, const Colour& colour)
+	Vector3f Transform::getPosition() const
 	{
-		j = nlohmann::json{ { "r", colour.r }, { "g", colour.g }, { "b", colour.b }, { "a", colour.a } };
+		return m_position;
 	}
 
 	////////////////////////////////////////////////////////////
-	void from_json(const nlohmann::json& j, Colour& colour)
+	void Transform::setPosition(float x, float y, float z)
 	{
-		colour.r = j.value("r", 1.0f);
-		colour.g = j.value("g", 1.0f);
-		colour.b = j.value("b", 1.0f);
-		colour.a = j.value("a", 1.0f);
+		m_position.x = x;
+		m_position.y = y;
+		m_position.z = z;
+	}
+
+	////////////////////////////////////////////////////////////
+	void Transform::setPosition(const Vector3f& position)
+	{
+		m_position = position;
+	}
+
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	void Transform::translate(float x, float y, float z)
+	{
+		m_position.x += x;
+		m_position.y += y;
+		m_position.z += z;
+	}
+
+	////////////////////////////////////////////////////////////
+	void Transform::translate(const Vector3f& translation)
+	{
+		m_position += translation;
 	}
 
 } // namespace jackal

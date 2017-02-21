@@ -38,8 +38,7 @@
 //====================
 #include <jackal/utils/singleton.hpp>      // ResourceManager is a singleton object.
 #include <jackal/utils/resource_cache.hpp> // Different caches for the all the resources. 
-#include <jackal/rendering/shader.hpp>     // Storing the Shader objects within the manager.
-#include <jackal/rendering/texture.hpp>    // Storing the Texture objects within the manager.
+#include <jackal/rendering/material.hpp>   // Storing materials, shaders and textures within the manager.
 
 namespace jackal
 {
@@ -53,6 +52,7 @@ namespace jackal
 		//====================
 		using TimeArray = std::array<int64_t, static_cast<int>(eShaderType::MAX)>;
 
+		ResourceCache<Material>                    m_materials;      ///< The resource cache for all the materials.
 		ResourceCache<Shader>                      m_shaders;        ///< The resource cache for all the shaders.
 		ResourceCache<Texture>                     m_textures;       ///< The resource cache for all the textures.
 
@@ -140,6 +140,21 @@ namespace jackal
 	//====================
 	// Getters and setters
 	//====================
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Material object from the resource cache.
+	///
+	/// When this method is invoked, it will use one of the resource cache
+	/// of materials to retrieve a value without constantly having to allocate
+	/// new materials.
+	///
+	/// @param filename    The filename of the material to retrieve.
+	///
+	/// @returns           The material to retrieve from the caches.
+	///
+	////////////////////////////////////////////////////////////
+	template <>
+	const Material& ResourceManager::get(const std::string& filename);
+	
 	////////////////////////////////////////////////////////////
 	/// @brief Retrieves a Shader object from the resource cache.
 	///

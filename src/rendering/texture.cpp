@@ -161,11 +161,11 @@ namespace jackal
 		JSONFileReader reader;
 		if (reader.read(filename))
 		{
-			Json::Value root = reader.getRoot();
-			Json::Value desc = root["description"];
+			nlohmann::json root = reader.getRoot();
+			nlohmann::json desc = root["description"];
 
-			std::string wrapMode = desc["wrap-mode"].asString();
-			std::string filtering = desc["filter"].asString();
+			std::string wrapMode = desc["wrap-mode"].get<std::string>();
+			std::string filtering = desc["filter"].get<std::string>();
 
 			eWrapMode mode;
 			if (wrapMode == "clamp")
@@ -197,7 +197,7 @@ namespace jackal
 				log.warning(log.function(__FUNCTION__, filename), "Unknown filtering declared. Defaulting to LINEAR");
 			}
 
-			if (!this->loadFromFile(root["image"].asString(), mode, filter))
+			if (!this->loadFromFile(root["image"].get<std::string>(), mode, filter))
 			{
 				return false;
 			}

@@ -52,7 +52,7 @@ namespace jackal
 	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	Json::Value JSONFileReader::getRoot() const
+	nlohmann::json JSONFileReader::getRoot() const
 	{
 		return m_root;
 	}
@@ -90,20 +90,7 @@ namespace jackal
 			return false;
 		}
 
-		Json::Reader reader;
-		if (reader.parse(file, m_root))
-		{
-			file.close();
-			return true;
-		}
-		else
-		{
-			log.error(log.function(__FUNCTION__, filename), "Failed to find or parse json shader.");
-			file.close();
-
-			return false;
-		}
-
+		file >> m_root;
 		return true;
 	}
 	

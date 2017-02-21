@@ -36,9 +36,10 @@
 //====================
 #include <jackal/math/vector2.hpp>             // Passing Vector2 objects as uniforms.
 #include <jackal/math/vector3.hpp>             // Passing Vector3 objects as uniforms.
+#include <jackal/math/vector4.hpp>             // Passing Vector4 objects as uniforms.
 #include <jackal/math/matrix4.hpp>             // Passing Matrix4 objects as uniforms.
 #include <jackal/math/colour.hpp>              // Passing Colour objects as uniforms.
-#include <jackal/utils/json/json-forwards.hpp> // Setting uniforms by the value of Json values.
+#include <jackal/utils/json/json.hpp>          // Setting uniforms by the value of Json values.
 
 //====================
 // Additional includes
@@ -198,6 +199,42 @@ namespace jackal
 		/// @brief Sets the value of a uniform variable.
 		///
 		/// This method is used to set a uniform variable to the value
+		/// of a Vector4i object.
+		///
+		/// @param location The location of the uniform within the shader.
+		/// @param vector   The Vector4i object to send to the shader.
+		///
+		////////////////////////////////////////////////////////////
+		void set(GLint location, const Vector4i& vector) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the value of a uniform variable.
+		///
+		/// This method is used to set a uniform variable to the value
+		/// of a Vector4f object.
+		///
+		/// @param location The location of the uniform within the shader.
+		/// @param vector   The Vector4f object to send to the shader.
+		///
+		////////////////////////////////////////////////////////////
+		void set(GLint location, const Vector4f& vector) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the value of a uniform variable.
+		///
+		/// This method is used to set a uniform variable to the value
+		/// of a Vector4d object.
+		///
+		/// @param location The location of the uniform within the shader.
+		/// @param vector   The Vector4d object to send to the shader.
+		///
+		////////////////////////////////////////////////////////////
+		void set(GLint location, const Vector4d& vector) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the value of a uniform variable.
+		///
+		/// This method is used to set a uniform variable to the value
 		/// of a Colour object.
 		///
 		/// @param location The location of the uniform within the shader.
@@ -269,7 +306,7 @@ namespace jackal
 		/// @param uniform   The JSON value that contains the uniform.
 		///
 		////////////////////////////////////////////////////////////
-		void setParameter(const Json::Value& uniform);
+		void setParameter(const nlohmann::json& uniform);
 	};
 
 	//====================

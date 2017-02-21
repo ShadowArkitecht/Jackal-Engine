@@ -27,7 +27,6 @@
 //====================
 #include <jackal/rendering/uniform.hpp> // Uniform class declaration.
 #include <jackal/utils/log.hpp>         // Logging any json parsing errors.
-#include <jackal/utils/constants.hpp>   // Constant log location.
 #include <jackal/rendering/program.hpp> // Getting the unique ID of the Program.
 #include <jackal/utils/json/json.hpp>   // Setting uniforms by a value in a json file.
 
@@ -111,6 +110,24 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
+	void Uniform::set(GLint location, const Vector4i& vector) const
+	{
+		glUniform4i(location, vector.x, vector.y, vector.z, vector.w);
+	}
+
+	////////////////////////////////////////////////////////////
+	void Uniform::set(GLint location, const Vector4f& vector) const
+	{
+		glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+	}
+
+	////////////////////////////////////////////////////////////
+	void Uniform::set(GLint location, const Vector4d& vector) const
+	{
+		glUniform4d(location, vector.x, vector.y, vector.z, vector.w);
+	}
+
+	////////////////////////////////////////////////////////////
 	void Uniform::set(GLint location, const Colour& colour) const
 	{
 		glUniform4f(location, colour.r, colour.g, colour.b, colour.a);
@@ -119,46 +136,72 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	void Uniform::set(GLint location, const Matrix4& matrix) const
 	{
-		glUniformMatrix4fv(location, 1, GL_FALSE, &matrix.m[0]);
+		glUniformMatrix4fv(location, 1, GL_FALSE, &matrix.m[0][0]);
 	}
 	
 	////////////////////////////////////////////////////////////
-	void Uniform::setParameter(const Json::Value& uniform)
+	void Uniform::setParameter(const nlohmann::json& uniform)
 	{
-		std::string type = uniform["type"].asString();
-		if (type.substr(0, 4) == "vec3") // The uniform is a type of vec3
+		std::string type = uniform["type"].get<std::string>();
+		nlohmann::json values = uniform["values"];
+
+		if (type.substr(0, 4) == "vec2") // The uniform is a type of vec2
 		{
-			Json::Value values = uniform["values"];
 			if (type.length() == 4)
 			{
-				Vector3f vec3 = Vector3f(values["x"].asFloat(), values["y"].asFloat(), values["z"].asFloat());
-				this->setParameter(uniform["name"].asString(), vec3);				
+				this->setParameter(uniform["name"].get<std::string>(), values.get<Vector2f>());
 			}
 			else if (type.length() == 5)
 			{
 				switch (type[5])
 				{
 				case 'i':
-					{
-						Vector3i vec3i = Vector3i(values["x"].asInt(), values["y"].asInt(), values["z"].asInt());
-						this->setParameter(uniform["name"].asString(), vec3i);
-						break;					
-					}
+					this->setParameter(uniform["name"].get<std::string>(), values.get<Vector2i>());
+					break;					
 
 				case 'd':
-					{
-						Vector3d vec3d = Vector3d(values["x"].asDouble(), values["y"].asDouble(), values["z"].asDouble());
-						this->setParameter(uniform["name"].asString(), vec3d);
-						break;					
-					}
+					this->setParameter(uniform["name"].get<std::string>(), values.get<Vector2d>());
+					break;					
 				}
 			}
 			else
 			{
-				log.warning(log.function(__FUNCTION__, uniform["name"].asString()), "Failed to parse vec3 value.");
+				log.warning(log.function(__FUNCTION__, uniform["name"].get<std::string>()), "Failed to parse vec2 value.");
 				return;
 			}
 		}
+		//else if (type.substr(0, 4) == "vec3") // The uniform is a type of vec3
+		//{
+		//	if (type.length() == 4)
+		//	{
+		//		Vector3f vec3 = Vector3f(values["x"].get<float>(), values["y"].get<float>(), values["z"].get<float>());
+		//		this->setParameter(uniform["name"].get<std::string>(), vec3);				
+		//	}
+		//	else if (type.length() == 5)
+		//	{
+		//		switch (type[5])
+		//		{
+		//		case 'i':
+		//			{
+		//				Vector3i vec3i = Vector3i(values["x"].get<int>(), values["y"].get<int>(), values["z"].get<int>());
+		//				this->setParameter(uniform["name"].get<std::string>(), vec3i);
+		//				break;					
+		//			}
+
+		//		case 'd':
+		//			{
+		//				Vector3d vec3d = Vector3d(values["x"].get<double>(), values["y"].get<double>(), values["z"].get<double>());
+		//				this->setParameter(uniform["name"].get<std::string>(), vec3d);
+		//				break;					
+		//			}
+		//		}
+		//	}
+		//	else
+		//	{
+		//		log.warning(log.function(__FUNCTION__, uniform["name"].get<std::string>()), "Failed to parse vec3 value.");
+		//		return;
+		//	}
+		//}
 	}
 
 } // namespace jackal

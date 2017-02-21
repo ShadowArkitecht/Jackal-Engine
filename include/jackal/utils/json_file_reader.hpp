@@ -39,7 +39,7 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		Json::Value m_root;
+		nlohmann::json m_root;
 
 	public:
 		//====================
@@ -74,7 +74,7 @@ namespace jackal
 		/// @returns The root object of the json file.
 		///
 		////////////////////////////////////////////////////////////
-		Json::Value getRoot() const;
+		nlohmann::json getRoot() const;
 
 		//====================
 		// Methods
