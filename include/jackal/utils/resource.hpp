@@ -34,6 +34,12 @@ namespace jackal
 {
 	class Resource
 	{
+	private:
+		//====================
+		// Member variables
+		//====================
+		unsigned int m_references; ///< The number of objects currently referring to this resource.
+
 	public:
 		//====================
 		// Ctor and dtor
@@ -41,7 +47,7 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		/// @brief Default constructor for the Resource object.
 		////////////////////////////////////////////////////////////
-		explicit Resource() = default;
+		explicit Resource();
 
 		////////////////////////////////////////////////////////////
 		/// @brief Default destructor of the Resource object.
@@ -49,8 +55,54 @@ namespace jackal
 		virtual ~Resource() = default;
 
 		//====================
+		// Getters and setters
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the current reference count of the Resource.
+		///
+		/// The reference count refers to the number of objects that are
+		/// currently referencing this resource, the resource will not be
+		/// destroyed whilst it is still retained.
+		///
+		/// @returns The reference count of the Resource object.
+		///
+		////////////////////////////////////////////////////////////
+		unsigned int getRefCount() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Checks if the current Resource is being referenced.
+		///
+		/// A Resource is counted as referenced if its' reference count
+		/// is greater than zero.
+		///
+		////////////////////////////////////////////////////////////
+		bool isReferenced() const;
+
+		//====================
 		// Methods
 		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Retains the Resource, preventing deletion.
+		///
+		/// When a object is retained, it will prevent the object from
+		/// being de-allocated. Therefore this resource can be shared between
+		/// different objects without having to worry about manual memory
+		/// management.
+		///
+		////////////////////////////////////////////////////////////
+		void retain();
+
+		////////////////////////////////////////////////////////////
+		/// @brief Releases a Resource, allowing for potential deletion.
+		///
+		/// When a Resource is released, it will eventually be checked to see
+		/// if the object is still referenced, if the object is no longer referenced,
+		/// it is cleared from the ResourceManager class. The Resource will have to be
+		/// reloaded for continued use.
+		///
+		////////////////////////////////////////////////////////////
+		void release();
+
 		////////////////////////////////////////////////////////////
 		/// @brief Loads a json resource from a file location.
 		///

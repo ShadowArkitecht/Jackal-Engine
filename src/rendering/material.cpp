@@ -42,7 +42,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Material::Material()
-		: m_ID(0), m_shader(), m_texture(), m_colour()
+		: m_ID(0), m_shader(nullptr), m_texture(nullptr), m_colour()
 	{
 	}
 
@@ -53,18 +53,6 @@ namespace jackal
 	int64_t Material::getID() const
 	{
 		return m_ID;
-	}
-
-	////////////////////////////////////////////////////////////
-	const Shader& Material::getShader() const
-	{
-		return m_shader;
-	}
-
-	////////////////////////////////////////////////////////////
-	const Texture& Material::getTexture() const
-	{
-		return m_texture;
 	}
 
 	////////////////////////////////////////////////////////////
@@ -96,8 +84,8 @@ namespace jackal
 			nlohmann::json colour = root["colour"];
 			m_colour = Colour(colour["r"].get<float>(), colour["g"].get<float>(), colour["b"].get<float>(), colour["a"].get<float>());
 
-			m_ID |= m_shader.getID() << 24;
-			m_ID |= m_texture.getID() << 16;
+			m_ID |= m_shader->getID() << 24;
+			m_ID |= m_texture->getID() << 16;
 
 			return true;
 		}
@@ -113,14 +101,14 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	void Material::process()
 	{
-		m_shader.process(*this);
+		m_shader->process(*this);
 	}
 
 	////////////////////////////////////////////////////////////
 	void Material::bind(const Material& material)
 	{
-		Shader::bind(material.m_shader);
-		Texture::bind(material.m_texture);
+		Shader::bind(*material.m_shader.get());
+		Texture::bind(*material.m_texture.get());
 	}
 
 	////////////////////////////////////////////////////////////

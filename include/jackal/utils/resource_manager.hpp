@@ -28,17 +28,19 @@
 //====================
 // C++ includes
 //====================
-#include <array>                           // Storing the time stamps for each Shader object.
-#include <unordered_map>                   // Hash-Table for the shaders and their time-stamps.
-#include <mutex>                           // Locking when the Shader are being re-loaded.
-#include <thread>                          // File reading and time-stamping is passed to a seperate thread.
+#include <array>                            // Storing the time stamps for each Shader object.
+#include <unordered_map>                    // Hash-Table for the shaders and their time-stamps.
+#include <mutex>                            // Locking when the Shader are being re-loaded.
+#include <thread>                           // File reading and time-stamping is passed to a seperate thread.
 
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/singleton.hpp>      // ResourceManager is a singleton object.
-#include <jackal/utils/resource_cache.hpp> // Different caches for the all the resources. 
-#include <jackal/rendering/material.hpp>   // Storing materials, shaders and textures within the manager.
+#include <jackal/utils/singleton.hpp>       // ResourceManager is a singleton object.
+#include <jackal/utils/resource_cache.hpp>  // Different caches for the all the resources. 
+#include <jackal/utils/resource_handle.hpp> // A RAII is a handle to the resource object.
+#include <jackal/rendering/material.hpp>    // Storing materials, shaders and textures within the manager.
+#include <jackal/rendering/model.hpp>       // Storing models.
 
 namespace jackal
 {
@@ -55,6 +57,7 @@ namespace jackal
 		ResourceCache<Material>                    m_materials;      ///< The resource cache for all the materials.
 		ResourceCache<Shader>                      m_shaders;        ///< The resource cache for all the shaders.
 		ResourceCache<Texture>                     m_textures;       ///< The resource cache for all the textures.
+		ResourceCache<Model>                       m_models;
 
 		std::unordered_map<std::string, TimeArray> m_timeStamps;     ///< The time stamps for all of the different shaders.
 		std::vector<Shader*>                       m_changedShaders; ///< A list of all the changed shaders.
@@ -121,7 +124,7 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		template <typename T>
-		const T& get(const std::string& filename);
+		ResourceHandle<T> get(const std::string& filename);
 
 		//====================
 		// Methods
@@ -153,7 +156,7 @@ namespace jackal
 	///
 	////////////////////////////////////////////////////////////
 	template <>
-	const Material& ResourceManager::get(const std::string& filename);
+	ResourceHandle<Material> ResourceManager::get(const std::string& filename);
 	
 	////////////////////////////////////////////////////////////
 	/// @brief Retrieves a Shader object from the resource cache.
@@ -168,7 +171,7 @@ namespace jackal
 	///
 	////////////////////////////////////////////////////////////
 	template <>
-	const Shader& ResourceManager::get(const std::string& filename);
+	ResourceHandle<Shader> ResourceManager::get(const std::string& filename);
 	
 	////////////////////////////////////////////////////////////
 	/// @brief Retrieves a Texture object from the resource cache.
@@ -183,7 +186,22 @@ namespace jackal
 	///
 	////////////////////////////////////////////////////////////
 	template <>
-	const Texture& ResourceManager::get(const std::string& filename);
+	ResourceHandle<Texture> ResourceManager::get(const std::string& filename);
+
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Model object from the resource cache.
+	///
+	/// When this method is invoked, it will use one of the resource cache
+	/// of models to retrieve a value without constantly having to allocate
+	/// new models.
+	///
+	/// @param filename    The filename of the model to retrieve.
+	///
+	/// @returns           The model to retrieve from the caches.
+	///
+	////////////////////////////////////////////////////////////
+	template <>
+	ResourceHandle<Model> ResourceManager::get(const std::string& filename);
 
 } // namespace jackal
 

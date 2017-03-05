@@ -46,6 +46,7 @@ set(HEADER_FILES "${INCLUDE_DIR}/constants.hpp"
                  "${INCLUDE_DIR}/resource.hpp"
                  "${INCLUDE_DIR}/resource_cache.hpp"
                  "${INCLUDE_DIR}/resource_cache.inl"
+                 "${INCLUDE_DIR}/resource_handle.hpp"
                  "${INCLUDE_DIR}/resource_manager.hpp"
                  "${INCLUDE_DIR}/singleton.hpp")
 
@@ -57,6 +58,7 @@ set(SOURCE_FILES "${SOURCE_DIR}/constants.cpp"
                  "${SOURCE_DIR}/file_system.cpp" 
                  "${SOURCE_DIR}/json_file_reader.cpp"
                  "${SOURCE_DIR}/properties.cpp"
+		 "${SOURCE_DIR}/resource.cpp"
                  "${SOURCE_DIR}/resource_manager.cpp")
 
 #====================

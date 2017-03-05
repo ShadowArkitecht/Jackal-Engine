@@ -32,10 +32,9 @@
 #include <jackal/utils/properties.hpp>         // Load the locale for the current application.
 #include <jackal/core/window.hpp>              // Creating test window instance.
 #include <jackal/core/camera.hpp>              // Creating the global camera.
-#include <jackal/rendering/buffer.hpp>         // Binding different buffers.
-#include <jackal/rendering/vertex.hpp>         // Creating vertices for the buffers.
 #include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
 #include <jackal/rendering/material.hpp>       // Binding and utilising a material.   
+#include <jackal/rendering/model.hpp>
 
 #include <jackal/rendering/gui_texture.hpp>
 #include <jackal/rendering/gui_texture_factory.hpp>
@@ -75,53 +74,9 @@ int main(int argc, char** argv)
 
 	Camera camera;
 	camera.create(config);
-	
-	Buffer vao(eBufferType::ARRAY);
-	vao.create();
 
-	Buffer::bind(vao);
+	auto model = ResourceManager::getInstance().get<Model>("data/models/box.obj");
 
-	Buffer vbo(eBufferType::VERTEX);
-	vbo.create();
-
-	Vertex_t v1; v1.position = Vector3f(-0.5f, -0.5f, 1.0f);
-	v1.uv = Vector2f::zero();
-
-	Vertex_t v2; v2.position = Vector3f( 0.5f, -0.5f, 1.0f);
-	v2.uv = Vector2f(1.0f, 0.0f);
-
-	Vertex_t v3; v3.position = Vector3f( 0.5f,  0.5f, 1.0f);
-	v3.uv = Vector2f(1.0f, 1.0f);
-
-	Vertex_t v4; v4.position = Vector3f(-0.5f,  0.5f, 1.0f);
-	v4.uv = Vector2f(0.0f, 1.0f);
-
-	std::vector<Vertex_t> verts;
-	verts.push_back(v1);
-	verts.push_back(v2);
-
-	verts.push_back(v3);
-	verts.push_back(v4);
-	
-	Buffer::bind(vbo);
-	vbo.allocate(verts.data(), verts.size());
-
-	Buffer ibo(eBufferType::INDEX);
-	ibo.create();
-
-	std::vector<GLuint> indices;
-	indices.push_back(0);
-	indices.push_back(1);
-	indices.push_back(2);
-	indices.push_back(0);
-	indices.push_back(2);
-	indices.push_back(3);
-
-	Buffer::bind(ibo);
-	ibo.allocate(indices.data(), indices.size());
-
-	Buffer::unbind(vao);
-	
 	// Test Awesomium initialization.
 	WebCore* pCore = WebCore::Initialize(WebConfig());
 	WebView* pView = pCore->CreateWebView(300, 300);
@@ -138,7 +93,7 @@ int main(int argc, char** argv)
 	
 	GUITexture* pTexture = (GUITexture*)pView->surface();
 
-	Material material = ResourceManager::getInstance().get<Material>("~assets/materials/basic-material.json");
+	auto material = ResourceManager::getInstance().get<Material>("~assets/materials/basic-material.json");
 
 	while (window.isRunning())
 	{
@@ -146,13 +101,11 @@ int main(int argc, char** argv)
 
 		window.clear();
 
-		Material::bind(material);
+		Material::bind(*material.get());
 
-		material.process();
-		
-		Buffer::bind(vao);
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-		Buffer::unbind(vao);
+		material->process();
+
+		model->render();
 
 		Material::unbind();
 		window.swap();

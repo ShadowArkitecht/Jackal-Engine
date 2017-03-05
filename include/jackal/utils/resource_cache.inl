@@ -50,25 +50,25 @@ ResourceCache<T>::~ResourceCache()
 //====================
 ////////////////////////////////////////////////////////////
 template <typename T>
-const T& ResourceCache<T>::get(const std::string& name)
+T* ResourceCache<T>::get(const std::string& name)
 {
 	auto itr = m_resources.find(name);
 	// The resource has been found, retrieve it.
 	if (itr != std::end(m_resources))
 	{	
-		return *itr->second;
+		return itr->second;
 	}
 	// The resource wasn't found, create a new one.
 	T* pResource = new T();
 	if (!pResource->load(name))
 	{
 		m_log.warning(m_log.function(__FUNCTION__, name), "Failed to load resource, returning default object.");
-		return *m_default;
+		return m_default;
 	}
 
 	// Add it to the map and return it.
 	m_resources.insert(std::make_pair(name, pResource));
-	return *pResource;
+	return pResource;
 }
 
 ////////////////////////////////////////////////////////////

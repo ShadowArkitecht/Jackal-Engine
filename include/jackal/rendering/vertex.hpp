@@ -30,6 +30,7 @@
 //====================
 #include <jackal/math/vector3.hpp> // The position of the vertex.
 #include <jackal/math/vector2.hpp> // The uv co-ordinates of the vertex.
+
 namespace jackal
 {
 	struct Vertex_t final
@@ -40,6 +41,53 @@ namespace jackal
 		Vector3f position;  ///< The position of the vertex in 3D space. 
 		Vector3f normal;    ///< The vertex normal.
 		Vector2f uv;        ///< The uv co-ordinate of the vertex.
+
+		//====================
+		// Ctor and dtor
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Default constructor for the Vertex_t object.
+		///
+		/// The default constructor will set the position, normals and
+		/// uv's to blank vectors, with elements equalling 0.
+		///
+		////////////////////////////////////////////////////////////
+		explicit Vertex_t()
+			: position(), normal(), uv()
+		{
+		}
+
+		////////////////////////////////////////////////////////////
+		/// @brief Constructor for specifying the vertex position and uv.
+		///
+		/// This constructor can be used for explicitly setting the position
+		/// and the uv co-ordinate of the vertex. The vertex normal is set to
+		/// ( 0, 0, 0 ).
+		///
+		/// @param position  The position of the vertex.
+		/// @param uv        The uv co-ordinate of the vertex.
+		///
+		////////////////////////////////////////////////////////////
+		explicit Vertex_t(const Vector3f& position, const Vector2f& uv)
+			: position(position), normal(), uv(uv)
+		{
+		}
+
+		////////////////////////////////////////////////////////////
+		/// @brief Constructor for specifying the vertex position, uv and vertex normal.
+		///
+		/// This constructor can be used for explicitly setting the position,
+		/// vertex normal and the uv co-ordinate of the vertex.
+		///
+		/// @param position  The position of the vertex.
+		/// @param normal    The vertex normal.
+		/// @param uv        The uv co-ordinate of the vertex.
+		///
+		////////////////////////////////////////////////////////////
+		explicit Vertex_t(const Vector3f& position, const Vector3f& normal, const Vector2f& uv)
+			: position(position), normal(normal), uv(uv)
+		{
+		}
 	};
 
 } // namespace jackal

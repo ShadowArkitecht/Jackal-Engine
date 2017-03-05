@@ -56,23 +56,30 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	template <>
-	const Material& ResourceManager::get(const std::string& filename)
+	ResourceHandle<Material> ResourceManager::get(const std::string& filename)
 	{
-		return m_materials.get(filename);
+		return ResourceHandle<Material>(m_materials.get(filename));
 	}
 
 	////////////////////////////////////////////////////////////
 	template <>
-	const Shader& ResourceManager::get(const std::string& filename)
+	ResourceHandle<Shader> ResourceManager::get(const std::string& filename)
 	{
-		return m_shaders.get(filename);
+		return ResourceHandle<Shader>(m_shaders.get(filename));
 	}
 
 	////////////////////////////////////////////////////////////
 	template <>
-	const Texture& ResourceManager::get(const std::string& filename)
+	ResourceHandle<Texture> ResourceManager::get(const std::string& filename)
 	{
-		return m_textures.get(filename);
+		return ResourceHandle<Texture>(m_textures.get(filename));
+	}
+
+	////////////////////////////////////////////////////////////
+	template <>
+	ResourceHandle<Model> ResourceManager::get(const std::string& filename)
+	{
+		return ResourceHandle<Model>(m_models.get(filename));
 	}
 
 	//====================

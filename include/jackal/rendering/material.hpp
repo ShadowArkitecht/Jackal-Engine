@@ -28,10 +28,10 @@
 //====================
 // Jackal methods
 //====================
-#include <jackal/utils/resource.hpp>     // Material is a type of resource.
-#include <jackal/rendering/shader.hpp>   // Load in and retain a shader.
-#include <jackal/rendering/texture.hpp>  // Load in and retain a texture.
-#include <jackal/math/colour.hpp>        // Default colour applied to the Material.
+#include <jackal/utils/resource_handle.hpp> // A handle to the resource.
+#include <jackal/rendering/shader.hpp>      // Load in and retain a shader.
+#include <jackal/rendering/texture.hpp>     // Load in and retain a texture.
+#include <jackal/math/colour.hpp>           // Default colour applied to the Material.
 
 namespace jackal
 {
@@ -41,10 +41,10 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		int64_t m_ID;      ///< The unique ID of the material, generated from shader and textures.
-		Shader  m_shader;  ///< The shader attached to the material.
-		Texture m_texture; ///< The texture attached to the material.
-		Colour  m_colour;  ///< Overlay colour applied to the material.
+		int64_t                 m_ID;      ///< The unique ID of the material, generated from shader and textures.
+		ResourceHandle<Shader>  m_shader;  ///< The shader attached to the material.
+		ResourceHandle<Texture> m_texture; ///< The texture attached to the material.
+		Colour                  m_colour;  ///< Overlay colour applied to the material.
 
 	public:
 		//====================
@@ -84,29 +84,6 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		int64_t getID() const;
-
-		////////////////////////////////////////////////////////////
-		/// @brief Retrieves the shader attached to this material.
-		///
-		/// The material contains definitions for one shader and textures.
-		/// A material can only contain one shader. This method will retrieve
-		/// the shader attached to the material.
-		///
-		/// @returns The shader attached to this material.
-		///
-		////////////////////////////////////////////////////////////
-		const Shader& getShader() const;
-
-		////////////////////////////////////////////////////////////
-		/// @brief Retrieves the texture associated with this material.
-		///
-		/// Currently the material only supports single textures. This
-		/// method will retrieve the texture associated with the material.
-		///
-		/// @returns The texture attached to this material.
-		///
-		////////////////////////////////////////////////////////////
-		const Texture& getTexture() const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the colour associated wtih this material

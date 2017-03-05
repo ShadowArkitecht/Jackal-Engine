@@ -84,6 +84,15 @@ else()
 	message(FATAL_ERROR "CMake build failed. Awesomium could not be found.")
 endif()
 
+find_package(ASSIMP REQUIRED)
+if (ASSIMP_FOUND)
+	message(STATUS "Assimp found. Linking to Jackal Engine.")
+	include_directories(${ASSIMP_INCLUDE_DIR})
+	link_libraries(${ASSIMP_LIBRARY})
+else()
+	messages(FATAL_ERROR "CMake build failed. Assimp could not be found.")
+endif()
+
 #====================
 # Source directories
 #====================
