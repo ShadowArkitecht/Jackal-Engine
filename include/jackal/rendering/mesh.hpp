@@ -82,3 +82,74 @@ namespace jackal
 } // namespace jackal
 
 #endif//__JACKAL_MESH_HPP__
+
+////////////////////////////////////////////////////////////
+/// @author Benjamin Carter
+///
+/// @class jackal::Mesh
+/// @ingroup rendering
+///
+/// The jackal::Mesh is a simple class that can be used to explicitly
+/// defining renderable shapes within the application with explicit
+/// vertices and indices. The Mesh class can be used for defining custom
+/// shapes that convenience methods are not declared for.
+///
+/// The Mesh class is used commonly by the chunk generation methods
+/// for creating procedurally generated terrain. Due to the open use
+/// of the class, it is exposed to the lua scripting interface.
+///
+/// C++ Code example:
+/// @code
+/// using namespace jackal;
+///
+/// // Create a mesh class and define vertices
+/// Mesh mesh;
+/// mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f, 1.0f), Vector2f::zero()));
+/// mesh.addVertex(Vertex_t(Vector3f( 0.5f, -0.5f, 1.0f), Vector2f(1.0f, 0.0f)));
+/// mesh.addVertex(Vertex_t(Vector3f( 0.5f,  0.5f, 1.0f), Vector2f(1.0f, 1.0f)));
+/// mesh.addVertex(Vertex_t(Vector3f(-0.5f,  0.5f, 1.0f), Vector2f(0.0f, 1.0f)));
+///
+/// // Add the indices.
+/// mesh.addIndex(0);
+/// mesh.addIndex(1);
+/// mesh.addIndex(2);
+/// mesh.addIndex(0);
+/// mesh.addIndex(2);
+/// mesh.addIndex(3);
+///
+/// // Create a mesh renderer to attach and render to an entity.
+/// MeshRenderer* renderer = MeshRenderer::create(mesh);
+///
+/// // Create the entity
+/// GameObject* go = GameObject::create();
+/// go->addComponent(renderer);
+///
+/// @endcode
+///
+/// Lua Code example:
+/// @code
+/// -- Create a mesh class and define vertices
+/// local mesh = Mesh()
+/// mesh:addVertex(Vertex(Vector3(-0.5, -0.5, 1.0), Vector2::zero()))
+/// mesh:addVertex(Vertex(Vector3( 0.5, -0.5, 1.0), Vector2(1.0, 0.0)))
+/// mesh:addVertex(Vertex(Vector3( 0.5,  0.5, 1.0), Vector2(1.0, 1.0)))
+/// mesh:addVertex(Vertex(Vector3(-0.5,  0.5, 1.0), Vector2(0.0, 1.0)))
+///
+/// -- Add the indices.
+/// mesh:addIndex(0)
+/// mesh:addIndex(1)
+/// mesh:addIndex(2)
+/// mesh:addIndex(0)
+/// mesh:addIndex(2)
+/// mesh:addIndex(3)
+///
+/// -- Create a mesh renderer to attach and render to an entity.
+/// local renderer = MeshRenderer.create(mesh);
+///
+/// -- Create the entity
+/// local go = GameObject.create();
+/// go:addComponent(renderer);
+///
+/// @endcode
+///
+////////////////////////////////////////////////////////////

@@ -32,14 +32,18 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/core")            # Source files.
 # Variables
 #====================
 set(HEADER_FILES "${INCLUDE_DIR}/camera.hpp"
-	             "${INCLUDE_DIR}/config_file.hpp"
-	             "${INCLUDE_DIR}/virtual_file_system.hpp"
-	             "${INCLUDE_DIR}/window.hpp")
+                 "${INCLUDE_DIR}/component_type.hpp"
+                 "${INCLUDE_DIR}/component_type_controller.hpp"
+                 "${INCLUDE_DIR}/config_file.hpp"
+                 "${INCLUDE_DIR}/virtual_file_system.hpp"
+                 "${INCLUDE_DIR}/window.hpp")
 
 set(SOURCE_FILES "${SOURCE_DIR}/camera.cpp"
-	             "${SOURCE_DIR}/config_file.cpp" 
-	             "${SOURCE_DIR}/virtual_file_system.cpp"
-	             "${SOURCE_DIR}/window.cpp")
+                 "${SOURCE_DIR}/component_type.cpp"
+                 "${SOURCE_DIR}/component_type_controller.cpp"
+                 "${SOURCE_DIR}/config_file.cpp" 
+                 "${SOURCE_DIR}/virtual_file_system.cpp"
+                 "${SOURCE_DIR}/window.cpp")
 
 #====================
 # Library
