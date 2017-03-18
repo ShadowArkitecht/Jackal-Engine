@@ -42,7 +42,7 @@ namespace jackal
 	IRenderable::IRenderable(const std::vector<Vertex_t>& vertices, const std::vector<GLuint>& indices)
 		: m_vao(eBufferType::ARRAY), m_vbo(eBufferType::VERTEX), m_ibo(eBufferType::INDEX), m_vertices(vertices), m_indices(indices)
 	{
-		this->bind();
+		this->create();
 	}
 
 	//====================
@@ -73,7 +73,7 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	void IRenderable::bind()
+	void IRenderable::create()
 	{
 		m_vao.create();
 		Buffer::bind(m_vao);

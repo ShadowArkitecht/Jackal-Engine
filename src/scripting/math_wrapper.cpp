@@ -23,26 +23,47 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
+// C++ includes
+//====================
+#include <string>                             // Overriding the lua to_string operator.
+
+//====================
 // Jackal includes
 //====================
-#include <jackal/utils/constants.hpp> // Constants class declaration.
+#include <jackal/scripting/math_wrapper.hpp> // MathWrapper class declaration.
+#include <jackal/math/colour.hpp>            // Wrapping Colour class.
 
-namespace jackal 
+namespace jackal
 {
 	//====================
-	// Static variables
+	// Private methods
 	//====================
-	// Common extensions
-	const std::string Constants::Extensions::PROPERTIES    = "properties";
-	const std::string Constants::Extensions::CONFIGURATION = "jcfg";
-	const std::string Constants::Extensions::CSV           = "csv";
-	const std::string Constants::Extensions::JSON          = "json";
-	const std::string Constants::Extensions::LUA           = "lua";
-	// Graphics-specific
-	const std::string Constants::Extensions::VERTEX_SHADER   = "vertex.glsl";
-	const std::string Constants::Extensions::FRAGMENT_SHADER = "fragment.glsl";
-	// Components
-	const std::string Constants::Components::MESH_RENDERER = "MeshRenderer";
-	const int Constants::Components::MAX_COMPONENTS        = 32;
-	
+	////////////////////////////////////////////////////////////
+	void MathWrapper::bindColour(sol::state& state)
+	{
+		state.new_usertype<Colour>("Colour",
+			// Constructors
+			sol::constructors<sol::types<>, sol::types<float, float, float>, sol::types<float, float, float, float>>(),
+			// Variables
+			"r", &Colour::r,
+			"g", &Colour::g,
+			"b", &Colour::b, 
+			"a", &Colour::a,
+			// Operators
+			sol::meta_function::to_string, [](const Colour& c) {
+				return c.lua_toString();
+			},
+			"white", &Colour::white,
+			"black", &Colour::black);
+	}
+
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	void MathWrapper::bind(sol::state& state)
+	{
+		this->bindColour(state);
+	}
+
 } // namespace jackal

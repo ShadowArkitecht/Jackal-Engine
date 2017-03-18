@@ -41,6 +41,6 @@ in vec2 uv_coords;
 //====================
 void main()
 {
-	vec4 result = texture2D(u_texture, uv_coords) * u_colour;
+	vec4 result = texture2D(u_texture, uv_coords);
 	gl_FragColor = result;
 }

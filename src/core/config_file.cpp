@@ -351,7 +351,7 @@ namespace jackal
 		} 
 		else if (datatype == "boolean")
 		{
-			if (value != "true" || value != "false")
+			if (value != "true" && value != "false")
 			{
 				log.warning(log.function(__FUNCTION__, variable, datatype, value), "Failed to parse. It is not a boolean value");
 				return false;

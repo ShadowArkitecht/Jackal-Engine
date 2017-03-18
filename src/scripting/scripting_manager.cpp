@@ -25,24 +25,41 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/constants.hpp> // Constants class declaration.
+#include <jackal/scripting/scripting_manager.hpp> // ScriptingManager class declaration.
+#include <jackal/scripting/core_wrapper.hpp>      // Wrapping classes within the jackal_core library.
+#include <jackal/scripting/math_wrapper.hpp>      // Wrapping classes within the jackal_math library.
 
-namespace jackal 
+namespace jackal
 {
 	//====================
-	// Static variables
+	// Private ctor
 	//====================
-	// Common extensions
-	const std::string Constants::Extensions::PROPERTIES    = "properties";
-	const std::string Constants::Extensions::CONFIGURATION = "jcfg";
-	const std::string Constants::Extensions::CSV           = "csv";
-	const std::string Constants::Extensions::JSON          = "json";
-	const std::string Constants::Extensions::LUA           = "lua";
-	// Graphics-specific
-	const std::string Constants::Extensions::VERTEX_SHADER   = "vertex.glsl";
-	const std::string Constants::Extensions::FRAGMENT_SHADER = "fragment.glsl";
-	// Components
-	const std::string Constants::Components::MESH_RENDERER = "MeshRenderer";
-	const int Constants::Components::MAX_COMPONENTS        = 32;
-	
+	////////////////////////////////////////////////////////////
+	ScriptingManager::ScriptingManager()
+		: Singleton<ScriptingManager>(), m_state()
+	{
+		m_state.open_libraries(sol::lib::base, sol::lib::package, sol::lib::table, sol::lib::debug);
+	}
+
+	//====================
+	// Getters and setters
+	//====================
+	////////////////////////////////////////////////////////////
+	sol::state& ScriptingManager::getState()
+	{
+		return m_state;
+	}
+
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	void ScriptingManager::bind()
+	{
+		// Creating the Core lua library and binding all of the necessary classes.
+		CoreWrapper core; core.bind(m_state);
+		// Creating the Math lua library and binding all of the necessary classes.
+		MathWrapper math; math.bind(m_state);
+	}
+
 } // namespace jackal

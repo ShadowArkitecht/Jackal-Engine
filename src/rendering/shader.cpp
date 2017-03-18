@@ -29,7 +29,7 @@
 #include <jackal/utils/log.hpp>              // Logging warnings and errors.
 #include <jackal/utils/constants.hpp>        // Using the constant log location.
 #include <jackal/utils/json_file_reader.hpp> // Loading and parsing the json file.
-#include <jackal/utils/json/json.hpp>        // De-serializing a shader file.
+#include <jackal/utils/ext/json.hpp>         // De-serializing a shader file.
 #include <jackal/rendering/material.hpp>     // The material to render the shader with.
 #include <jackal/core/camera.hpp>            // Rendering from the position of the Camera.
 
@@ -146,7 +146,7 @@ namespace jackal
 		m_uniform.setParameter("u_colour", material.getColour());
 
 		Matrix4 translate = Matrix4::translation(0.0f, 0.0f, 0.0f);
-		Matrix4 rotation = Matrix4::rotation(0.0f, 0.0f, 90.0f);
+		Matrix4 rotation = Matrix4::rotation(0.0f, 0.0f, 45.0f);
 		Matrix4 scale = Matrix4::scale(1.0f);
 
 		Matrix4 model = scale * rotation * translate;

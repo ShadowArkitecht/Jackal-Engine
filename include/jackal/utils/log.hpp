@@ -52,7 +52,6 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		unsigned int       m_line;             ///< The current line of the log file.
 		T                  m_policy;           ///< The writing policy the log will use.
 		std::ostringstream m_stream;           ///< Streaming the log information into the external log.
 		std::mutex         m_mutex;            ///< Locking the logging to prevent unformatted messages.

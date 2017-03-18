@@ -39,7 +39,7 @@
 #include <jackal/math/vector4.hpp>             // Passing Vector4 objects as uniforms.
 #include <jackal/math/matrix4.hpp>             // Passing Matrix4 objects as uniforms.
 #include <jackal/math/colour.hpp>              // Passing Colour objects as uniforms.
-#include <jackal/utils/json/json.hpp>          // Setting uniforms by the value of Json values.
+#include <jackal/utils/ext/json.hpp>          // Setting uniforms by the value of Json values.
 
 //====================
 // Additional includes

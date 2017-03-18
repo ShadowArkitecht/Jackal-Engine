@@ -25,7 +25,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/colour.hpp> // Colour class declaration.
+#include <jackal/core/object.hpp> // Object class declaration.
 
 namespace jackal
 {
@@ -33,73 +33,54 @@ namespace jackal
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Colour::Colour()
-		: r(0.0f), g(0.0f), b(0.0f), a(1.0f)
+	Object::Object()
+		: m_name(), m_active(true), m_flags(eHideFlags::NONE)
 	{
+	}
+	
+	////////////////////////////////////////////////////////////
+	Object::Object(const std::string& name)
+		: m_name(name), m_active(true), m_flags(eHideFlags::NONE)
+	{
+	}
+	
+	//====================
+	// Getters and setters
+	//====================
+	////////////////////////////////////////////////////////////
+	std::string Object::getName() const
+	{
+		return m_name;
+	}
+	
+	////////////////////////////////////////////////////////////
+	void Object::setName(const std::string& name)
+	{
+		m_name = name;
+	}
+	
+	////////////////////////////////////////////////////////////
+	bool Object::isActive() const
+	{
+		return m_active;
+	}
+	
+	////////////////////////////////////////////////////////////
+	void Object::setActive(bool active)
+	{
+		m_active = active;	
 	}
 
 	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b)
-		: r(r), g(g), b(b)
+	bool Object::flagSet(eHideFlags flag) const
 	{
+		return m_flags.test(flag);
 	}
-
+	
 	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b, float a)
-		: r(r), g(g), b(b), a(a)
+	void Object::setFlag(eHideFlags flag, bool state)
 	{
+		m_flags.set(flag, state);
 	}
-
-	//====================
-	// Operators
-	//====================
-	////////////////////////////////////////////////////////////
-	std::ostream& operator<<(std::ostream& os, const Colour& colour)
-	{
-		return os << "(" << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << ")";
-	}
-
-	//====================
-	// Methods
-	//====================
-	////////////////////////////////////////////////////////////
-	std::string Colour::lua_toString() const
-	{
-		return "(" + std::to_string(this->r) + ", " + std::to_string(this->g) + ", " + 
-				std::to_string(this->b) + ", " + std::to_string(this->a) + ")";
-	}
-
-	//====================
-	// Properties
-	//====================
-	////////////////////////////////////////////////////////////
-	Colour Colour::white()
-	{
-		return Colour(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour Colour::black()
-	{
-		return Colour(0.0f, 0.0f, 0.0f, 1.0f);
-	}
-
-	//====================
-	// Functions
-	//====================
-	////////////////////////////////////////////////////////////
-	void to_json(nlohmann::json& j, const Colour& colour)
-	{
-		j = nlohmann::json{ { "r", colour.r }, { "g", colour.g }, { "b", colour.b }, { "a", colour.a } };
-	}
-
-	////////////////////////////////////////////////////////////
-	void from_json(const nlohmann::json& j, Colour& colour)
-	{
-		colour.r = j.value("r", 1.0f);
-		colour.g = j.value("g", 1.0f);
-		colour.b = j.value("b", 1.0f);
-		colour.a = j.value("a", 1.0f);
-	}
-
+	
 } // namespace jackal

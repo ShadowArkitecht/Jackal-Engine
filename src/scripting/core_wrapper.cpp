@@ -25,24 +25,51 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/constants.hpp> // Constants class declaration.
+#include <jackal/scripting/core_wrapper.hpp> // CoreWrapper class declaration.
 
-namespace jackal 
+namespace jackal
 {
 	//====================
-	// Static variables
+	// Private methods
 	//====================
-	// Common extensions
-	const std::string Constants::Extensions::PROPERTIES    = "properties";
-	const std::string Constants::Extensions::CONFIGURATION = "jcfg";
-	const std::string Constants::Extensions::CSV           = "csv";
-	const std::string Constants::Extensions::JSON          = "json";
-	const std::string Constants::Extensions::LUA           = "lua";
-	// Graphics-specific
-	const std::string Constants::Extensions::VERTEX_SHADER   = "vertex.glsl";
-	const std::string Constants::Extensions::FRAGMENT_SHADER = "fragment.glsl";
-	// Components
-	const std::string Constants::Components::MESH_RENDERER = "MeshRenderer";
-	const int Constants::Components::MAX_COMPONENTS        = 32;
+	////////////////////////////////////////////////////////////
+	void CoreWrapper::bindHideFlags(sol::state& state)
+	{
+		state.new_enum("HideFlags",
+			"NONE", eHideFlags::NONE,
+			"DONT_SAVE", eHideFlags::DONT_SAVE,
+			"DONT_UNLOAD", eHideFlags::DONT_UNLOAD
+		);
+	}
 	
+	////////////////////////////////////////////////////////////
+	void CoreWrapper::bindObject(sol::state& state) 
+	{
+		state.new_usertype<Object>("Object",
+			// Properties
+			"name", sol::property(&Object::getName, &Object::setName),
+			"active", sol::property(&Object::isActive, &Object::setActive),
+			// Methods
+			"flag_set", &Object::flagSet,
+			"set_flag", &Object::setActive
+		);
+	}
+
+	////////////////////////////////////////////////////////////
+	void CoreWrapper::bindComponent(sol::state& state)
+	{
+		state.new_usertype<IComponent>("Component");
+	}
+	
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	void CoreWrapper::bind(sol::state& state)
+	{
+		this->bindHideFlags(state);
+		this->bindObject(state);
+		this->bindComponent(state);
+	}	
+
 } // namespace jackal

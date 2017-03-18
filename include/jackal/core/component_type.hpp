@@ -26,7 +26,7 @@
 #define __JACKAL_COMPONENT_TYPE_HPP__
 
 //====================
-// Jackal includes
+// C++ includes
 //====================
 #include <bitset> // The unique bit of the component type.
 

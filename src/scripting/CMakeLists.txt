@@ -25,34 +25,24 @@
 #====================
 # Directories
 #====================
-set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include/jackal/core") # Headers and inline files.
-set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/core")            # Source files.
+set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include/jackal/scripting") # Headers and inline files.
+set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/scripting")            # Source files.
 
 #====================
 # Variables
 #====================
-set(HEADER_FILES "${INCLUDE_DIR}/camera.hpp"
-                 "${INCLUDE_DIR}/component_type.hpp"
-                 "${INCLUDE_DIR}/component_type_controller.hpp"
-                 "${INCLUDE_DIR}/config_file.hpp"
-                 "${INCLUDE_DIR}/game_object.hpp"
-                 "${INCLUDE_DIR}/icomponent.hpp"
-                 "${INCLUDE_DIR}/object.hpp"
-                 "${INCLUDE_DIR}/virtual_file_system.hpp"
-                 "${INCLUDE_DIR}/window.hpp")
+set(HEADER_FILES "${INCLUDE_DIR}/core_wrapper.hpp"
+                 "${INCLUDE_DIR}/math_wrapper.hpp"
+                 "${INCLUDE_DIR}/script.hpp"
+                 "${INCLUDE_DIR}/scripting_manager.hpp")
 
-set(SOURCE_FILES "${SOURCE_DIR}/camera.cpp"
-                 "${SOURCE_DIR}/component_type.cpp"
-                 "${SOURCE_DIR}/component_type_controller.cpp"
-                 "${SOURCE_DIR}/config_file.cpp"
-                 "${SOURCE_DIR}/game_object.cpp" 
-                 "${SOURCE_DIR}/icomponent.cpp" 
-                 "${SOURCE_DIR}/object.cpp" 
-                 "${SOURCE_DIR}/virtual_file_system.cpp"
-                 "${SOURCE_DIR}/window.cpp")
+set(SOURCE_FILES "${SOURCE_DIR}/core_wrapper.cpp"
+	             "${SOURCE_DIR}/math_wrapper.cpp"
+	             "${SOURCE_DIR}/script.cpp"
+                 "${SOURCE_DIR}/scripting_manager.cpp")
 
 #====================
 # Library
 #====================
-add_library(jackal_core ${HEADER_FILES} ${SOURCE_FILES})
-set_target_properties(jackal_core PROPERTIES LINKER_LANGUAGE CXX)
+add_library(jackal_scripting ${HEADER_FILES} ${SOURCE_FILES})
+set_target_properties(jackal_scripting PROPERTIES LINKER_LANGUAGE CXX)

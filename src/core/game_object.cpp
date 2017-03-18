@@ -25,7 +25,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/colour.hpp> // Colour class declaration.
+#include <jackal/core/game_object.hpp> // GameObject class declaration.
 
 namespace jackal
 {
@@ -33,73 +33,87 @@ namespace jackal
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Colour::Colour()
-		: r(0.0f), g(0.0f), b(0.0f), a(1.0f)
-	{
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b)
-		: r(r), g(g), b(b)
-	{
-	}
-
-	////////////////////////////////////////////////////////////
-	Colour::Colour(float r, float g, float b, float a)
-		: r(r), g(g), b(b), a(a)
+	GameObject::GameObject()
+		: m_transform(), m_ID(0), m_typeBits(), m_systemBits()
 	{
 	}
 
 	//====================
-	// Operators
+	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	std::ostream& operator<<(std::ostream& os, const Colour& colour)
+	Transform& GameObject::getTransform()
 	{
-		return os << "(" << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << ")";
+		return m_transform;
+	}
+
+	////////////////////////////////////////////////////////////
+	unsigned int GameObject::getID() const
+	{
+		return m_ID;
+	}
+
+	////////////////////////////////////////////////////////////
+	const std::bitset<32>& GameObject::getTypeBits() const
+	{
+		return m_typeBits;
+	}
+
+	////////////////////////////////////////////////////////////
+	void GameObject::setTypeBits(const std::bitset<32>& bits)
+	{
+		m_typeBits = bits;
+	}
+
+	////////////////////////////////////////////////////////////
+	const std::bitset<32>& GameObject::getSystemBits() const
+	{
+		return m_systemBits;
+	}
+
+	////////////////////////////////////////////////////////////
+	void GameObject::setSystemBits(const std::bitset<32>& bits)
+	{
+		m_systemBits = bits;
+	}
+
+	////////////////////////////////////////////////////////////
+	sol::table GameObject::lua_getComponent(const std::string& name) const
+	{
+		return sol::table();
 	}
 
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	std::string Colour::lua_toString() const
+	void GameObject::addTypeBit(const std::bitset<32>& bit)
 	{
-		return "(" + std::to_string(this->r) + ", " + std::to_string(this->g) + ", " + 
-				std::to_string(this->b) + ", " + std::to_string(this->a) + ")";
-	}
-
-	//====================
-	// Properties
-	//====================
-	////////////////////////////////////////////////////////////
-	Colour Colour::white()
-	{
-		return Colour(1.0f, 1.0f, 1.0f, 1.0f);
+		m_typeBits |= bit;
 	}
 
 	////////////////////////////////////////////////////////////
-	Colour Colour::black()
+	void GameObject::removeTypeBit(const std::bitset<32>& bit)
 	{
-		return Colour(0.0f, 0.0f, 0.0f, 1.0f);
-	}
-
-	//====================
-	// Functions
-	//====================
-	////////////////////////////////////////////////////////////
-	void to_json(nlohmann::json& j, const Colour& colour)
-	{
-		j = nlohmann::json{ { "r", colour.r }, { "g", colour.g }, { "b", colour.b }, { "a", colour.a } };
+		m_typeBits &= ~bit;
 	}
 
 	////////////////////////////////////////////////////////////
-	void from_json(const nlohmann::json& j, Colour& colour)
+	void GameObject::addSystemBit(const std::bitset<32>& bit)
 	{
-		colour.r = j.value("r", 1.0f);
-		colour.g = j.value("g", 1.0f);
-		colour.b = j.value("b", 1.0f);
-		colour.a = j.value("a", 1.0f);
+		m_systemBits |= bit;
+	}
+
+	////////////////////////////////////////////////////////////
+	void GameObject::removeSystemBit(const std::bitset<32>& bit)
+	{
+		m_systemBits &= ~bit;
+	}
+
+	////////////////////////////////////////////////////////////
+	void GameObject::addComponent(IComponent* pComponent)
+	{
+		// TODO:
 	}
 
 } // namespace jackal

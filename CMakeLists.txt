@@ -27,7 +27,7 @@
 #====================
 cmake_minimum_required(VERSION 3.1.0)
 
-project(Jackal-Editor)
+project(Jackal-Engine)
 set(CMAKE_CXX_STANDARD 17)	# C++17 standard. 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -93,6 +93,15 @@ else()
 	messages(FATAL_ERROR "CMake build failed. Assimp could not be found.")
 endif()
 
+if (NOT LUA_FOUND AND NOT LUA51_FOUND)
+	find_package(Lua51 REQUIRED)
+	include_directories("${LUA_INCLUDE_DIR}")
+	link_libraries(${LUA_LIBRARIES})
+	message(STATUS "Lua found. Linking to Jackal Engine.")
+else()
+	message(FATAL_ERROR "CMake build failed. Lua could not be found.")
+endif()
+
 #====================
 # Source directories
 #====================
@@ -109,4 +118,4 @@ set(SOURCE_FILES ${CMAKE_SOURCE_DIR}/main.cpp)
 add_executable(jackal ${SOURCE_FILES})
 
 set_target_properties(jackal PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(jackal jackal_core jackal_utils jackal_rendering jackal_math)
+target_link_libraries(jackal jackal_core jackal_utils jackal_rendering jackal_math jackal_scripting)

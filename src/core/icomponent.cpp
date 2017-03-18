@@ -25,24 +25,17 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/constants.hpp> // Constants class declaration.
+#include <jackal/core/icomponent.hpp> // IComponent class declaration.
 
-namespace jackal 
+namespace jackal
 {
 	//====================
-	// Static variables
+	// Ctor and dtor
 	//====================
-	// Common extensions
-	const std::string Constants::Extensions::PROPERTIES    = "properties";
-	const std::string Constants::Extensions::CONFIGURATION = "jcfg";
-	const std::string Constants::Extensions::CSV           = "csv";
-	const std::string Constants::Extensions::JSON          = "json";
-	const std::string Constants::Extensions::LUA           = "lua";
-	// Graphics-specific
-	const std::string Constants::Extensions::VERTEX_SHADER   = "vertex.glsl";
-	const std::string Constants::Extensions::FRAGMENT_SHADER = "fragment.glsl";
-	// Components
-	const std::string Constants::Components::MESH_RENDERER = "MeshRenderer";
-	const int Constants::Components::MAX_COMPONENTS        = 32;
-	
+	////////////////////////////////////////////////////////////
+	IComponent::IComponent(const std::string& name)
+		: Object(name)
+	{
+	}
+
 } // namespace jackal

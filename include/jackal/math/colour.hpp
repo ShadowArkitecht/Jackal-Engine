@@ -26,9 +26,14 @@
 #define __JACKAL_COLOUR_HPP__
 
 //====================
+// C++ includes
+//====================
+#include <iosfwd>                    // Forward declaration for C++ I/O classes.
+
+//====================
 // Member variables
 //====================
-#include <jackal/utils/json/json.hpp> // Serializing and de-serializing json objects.
+#include <jackal/utils/ext/json.hpp> // Serializing and de-serializing json objects.
 
 namespace jackal
 {
@@ -84,6 +89,64 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		explicit Colour(float r, float g, float b, float a);
+
+		//====================
+		// Operators
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Passes the Colour object as a string for I/O.
+		///
+		/// This method is commonly used for debugging purposes. It converts
+		/// the Colour object to a string literal representation and returns
+		/// the object as a stream object, for further I/O use.
+		///
+		/// @param os     A reference to the I/O operation.
+		/// @param colour The Colour object to convert to a stream.
+		///
+		/// @returns A reference to the converted stream.
+		///
+		////////////////////////////////////////////////////////////
+		friend std::ostream& operator<<(std::ostream& os, const Colour& colour);
+
+		//====================
+		// Methods
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Lua specific method for returning a string literal of the Colour object.
+		///
+		/// This method is only invoked from the lua side of the application,
+		/// whenever a Colour objects to_string method is invoked, this method
+		/// will be called.
+		///
+		/// @returns The Colour object as a string.
+		///
+		////////////////////////////////////////////////////////////
+		std::string lua_toString() const;
+
+		//====================
+		// Properties
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves a Colour object that represents the colour white.
+		///
+		/// This method is a convenience property for returning a new Colour
+		/// object that is defined as white. (1.0, 1.0, 1.0, 1.0).
+		///
+		/// @returns The colour white as a Colour object.
+		///
+		////////////////////////////////////////////////////////////
+		static Colour white();
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves a Colour object that represents the colour black.
+		///
+		/// This method is a convenience property for returning a new Colour
+		/// object that is defined as black. (0.0, 0.0, 0.0, 1.0).
+		///
+		/// @returns The colour black as a Colour object.
+		///
+		////////////////////////////////////////////////////////////
+		static Colour black();
 	};
 
 	//====================

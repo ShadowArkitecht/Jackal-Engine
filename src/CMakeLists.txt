@@ -28,4 +28,5 @@
 add_subdirectory(core)
 add_subdirectory(math)
 add_subdirectory(rendering)
+add_subdirectory(scripting)
 add_subdirectory(utils)

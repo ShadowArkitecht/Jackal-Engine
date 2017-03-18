@@ -35,6 +35,7 @@
 // C++ includes
 //====================
 #include <jackal/core/component_type.hpp> // Inserting ComponentType objects into the map.
+#include <jackal/core/icomponent.hpp>     // Each component is mapped to a specific type.
 
 namespace jackal
 {
@@ -78,7 +79,72 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		const ComponentType& getType(const std::type_info& type) const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the ComponentType object by the class type.
+		///
+		/// Each type of the ComponentType is unique, if it does not
+		/// currently exist within the type map, it is created and 
+		/// inserted. This method will insert a entry by the component.
+		///
+		/// @returns Retrieves the unique ComponentType object of the component class.
+		////////////////////////////////////////////////////////////
+		template <typename T>
+		const ComponentType& getType() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the component bitset mapped to a component.
+		///
+		/// Each component within the engine is mapped to a corresponding
+		/// component type id object. This method will return the bit 
+		/// assigned the component interface.
+		///
+		/// @returns    The component bit mapped to the component.
+		///
+		////////////////////////////////////////////////////////////
+		template <typename T>
+		const std::bitset<32>& getBit() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the component ID mapped to a component.
+		///
+		/// Each component within the engine is mapped to a corresponding
+		/// component type id object. This method will return the ID 
+		/// assigned the component interface.
+		///
+		/// @returns    The component ID mapped to the component.
+		///
+		////////////////////////////////////////////////////////////
+		template <typename T>
+		unsigned int getID() const;
 	};
+
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	template <typename T>
+	const ComponentType& ComponentTypeController::getType() const
+	{
+		static_assert(std::is_base_of<IComponent, T>::value, "The template does not inherit from the IComponent class.");
+		return this->getType(typeid(T));
+	}
+
+	////////////////////////////////////////////////////////////
+	template <typename T>
+	const std::bitset<32>& ComponentTypeController::getBit() const
+	{
+		static_assert(std::is_base_of<IComponent, T>::value, "The template does not inherit from the IComponent class.");
+		return this->getType(typeid(T)).getBit();
+	}
+
+	////////////////////////////////////////////////////////////
+	template <typename T>
+	unsigned int ComponentTypeController::getID() const
+	{
+		static_assert(std::is_base_of<IComponent, T>::value, "The template does not inherit from the IComponent class.");
+		return this->getType(typeid(T)).getID();
+	}
 
 } // namespace jackal
 

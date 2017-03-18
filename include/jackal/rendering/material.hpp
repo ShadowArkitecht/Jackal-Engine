@@ -50,6 +50,7 @@ namespace jackal
 		//====================
 		// Ctor and dtor
 		//====================
+		////////////////////////////////////////////////////////////
 		/// @brief Default constructor for the Material object.
 		///
 		/// The default constructor initialises all of the member

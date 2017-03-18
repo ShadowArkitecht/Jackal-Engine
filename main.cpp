@@ -23,6 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define SDL_MAIN_HANDLED // Handle main for SDL, otherwise it will cause issues with Assimp.
+#define NOMINMAX         // An error is caused in luabind if this is not defined (undefs min and max macros).
 
 //====================
 // Jackal includes
@@ -34,17 +35,10 @@
 #include <jackal/core/camera.hpp>              // Creating the global camera.
 #include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
 #include <jackal/rendering/material.hpp>       // Binding and utilising a material.   
-#include <jackal/rendering/model.hpp>
-
-#include <jackal/rendering/gui_texture.hpp>
-#include <jackal/rendering/gui_texture_factory.hpp>
-
-#include <Awesomium/WebCore.h>
-#include <Awesomium/BitmapSurface.h>
-#include <Awesomium/STLHelpers.h>
+#include <jackal/scripting/scripting_manager.hpp>
+#include <jackal/scripting/script.hpp>
 
 using namespace jackal;
-using namespace Awesomium;
 
 int main(int argc, char** argv)
 {
@@ -75,37 +69,37 @@ int main(int argc, char** argv)
 	Camera camera;
 	camera.create(config);
 
-	auto model = ResourceManager::getInstance().get<Model>("data/models/box.obj");
-
-	// Test Awesomium initialization.
-	WebCore* pCore = WebCore::Initialize(WebConfig());
-	WebView* pView = pCore->CreateWebView(300, 300);
-
-	pCore->set_surface_factory(new GUITextureFactory());
-
-	WebURL url(WSLit("file:///C:/Users/Benjamin/Documents/ui/index.html"));
-	pView->LoadURL(url);
+	Mesh mesh;
+	mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f, 1.0f), Vector2f::zero()));
+	mesh.addVertex(Vertex_t(Vector3f( 0.5f, -0.5f, 1.0f), Vector2f(1.0f, 0.0f)));
+	mesh.addVertex(Vertex_t(Vector3f( 0.5f,  0.5f, 1.0f), Vector2f(1.0f, 1.0f)));
+	mesh.addVertex(Vertex_t(Vector3f(-0.5f,  0.5f, 1.0f), Vector2f(0.0f, 1.0f)));
 	
-	while (pView->IsLoading())
-	{
-	 	pCore->Update();
-	}
-	
-	GUITexture* pTexture = (GUITexture*)pView->surface();
+	// Add the indices.
+	mesh.addIndex(0);
+	mesh.addIndex(1);
+	mesh.addIndex(2);
+	mesh.addIndex(0);
+	mesh.addIndex(2);
+	mesh.addIndex(3);
+
+	mesh.create();
 
 	auto material = ResourceManager::getInstance().get<Material>("~assets/materials/basic-material.json");
+	ScriptingManager::getInstance().bind();
+
+	Script script("test_class.lua");
+	script.create();
 
 	while (window.isRunning())
 	{
-		pCore->Update();
-
 		window.clear();
 
 		Material::bind(*material.get());
 
 		material->process();
 
-		model->render();
+		mesh.render();
 
 		Material::unbind();
 		window.swap();
@@ -116,9 +110,6 @@ int main(int argc, char** argv)
 	}
 
 	SDL_Quit();
-
-	pView->Destroy();
-	Awesomium::WebCore::Shutdown();
 
 	return 0;
 }

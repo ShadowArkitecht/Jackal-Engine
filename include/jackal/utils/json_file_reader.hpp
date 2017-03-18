@@ -29,7 +29,7 @@
 // Jackal includes
 //====================
 #include <jackal/utils/file_reader.hpp> // Inherits from the FileReader object.
-#include <jackal/utils/json/json.hpp>   // Storing the root json value of the reader.
+#include <jackal/utils/ext/json.hpp>    // Storing the root json value of the reader.
 
 namespace jackal
 {

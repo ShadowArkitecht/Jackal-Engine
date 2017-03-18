@@ -142,14 +142,14 @@ namespace jackal
 		void addIndices(const std::vector<GLuint>& indices);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Binds the IRenderable object, ready for rendering.
+		/// @brief Creates the IRenderable object, ready for rendering.
 		///
-		/// The bind method simply encapsulates all of the behaviour needed
+		/// The create method simply encapsulates all of the behaviour needed
 		/// to bind the buffers and allocate their memory, once the IRenderable
 		/// object is bound, it can utilised to render objects the context.
 		///
 		////////////////////////////////////////////////////////////
-		void bind();
+		void create();
 
 		////////////////////////////////////////////////////////////
 		/// @brief Pure virtual method for rendering the IRenderable object.

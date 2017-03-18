@@ -35,7 +35,7 @@ template <typename T> bool Log<T>::m_errorEnabled = true;
 ////////////////////////////////////////////////////////////
 template <typename T>
 Log<T>::Log(const std::string& filename)
-	: NonCopyable(), m_line(1), m_policy(), m_stream(), m_mutex()
+	: NonCopyable(), m_policy(), m_stream(), m_mutex()
 {
 	if (!m_policy.open(filename))
 	{
@@ -65,10 +65,7 @@ std::string Log<T>::formatStamp()
 	std::ostringstream ss;
 	ss.str(std::string());
 
-	ss.fill('0');
-	ss.width(7);
-
-	ss << m_line++ << " < " << this->getTimeStamp() << " - ";
+	ss << "< " << this->getTimeStamp() << " - ";
 
 	ss.fill('0');
 	ss.width(7);

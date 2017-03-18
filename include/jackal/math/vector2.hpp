@@ -35,7 +35,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/json/json.hpp> // Json de-serialization of a Vector2 class.
+#include <jackal/utils/ext/json.hpp>  // Json de-serialization of a Vector2 class.
 
 namespace jackal
 {

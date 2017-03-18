@@ -28,7 +28,7 @@
 #include <jackal/rendering/uniform.hpp> // Uniform class declaration.
 #include <jackal/utils/log.hpp>         // Logging any json parsing errors.
 #include <jackal/rendering/program.hpp> // Getting the unique ID of the Program.
-#include <jackal/utils/json/json.hpp>   // Setting uniforms by a value in a json file.
+#include <jackal/utils/ext/json.hpp>    // Setting uniforms by a value in a json file.
 
 namespace jackal
 {
