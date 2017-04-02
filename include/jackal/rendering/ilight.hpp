@@ -39,8 +39,9 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		Colour m_colour;    ///< The base colour of the ILight interface.
-		float  m_intensity; ///< The intensity of the ILight.
+		Colour m_colour;      ///< The base colour of the ILight interface.
+		Colour m_specularity; ///< The specular effect of the ILight.
+		float  m_intensity;   ///< The intensity of the ILight.
 
 	protected:
 		//====================
@@ -106,6 +107,30 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		void setColour(const Colour& colour);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the specularity of the ILight interface.
+		///
+		/// The specularity of the light controls how reflective a surface
+		/// is when being hit by this light source. The higher the specularity,
+		/// the more relfective a surface will be.
+		///
+		/// @returns The specularity effect of the ILight interface.
+		///
+		////////////////////////////////////////////////////////////
+		const Colour& getSpecularity() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the specularity of the ILight interface.
+		///
+		/// The specularity of the light controls how reflective a surface
+		/// is when being hit by this light source. The higher the specularity,
+		/// the more relfective a surface will be.
+		///
+		/// @param specularity  The new specularity effect of the ILight interface.
+		///
+		////////////////////////////////////////////////////////////
+		void setSpecularity(const Colour& specularity);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Sets the colour of the ILight interface.

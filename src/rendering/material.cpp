@@ -42,7 +42,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Material::Material()
-		: m_ID(0), m_shader(nullptr), m_textures(), m_colour(), m_lighting(true)
+		: m_ID(0), m_shader(nullptr), m_textures(), m_colour(), m_lighting(true), m_shininess(0.0f)
 	{
 	}
 
@@ -68,6 +68,18 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
+	float Material::getShininess() const
+	{
+		return m_shininess;
+	}
+
+	////////////////////////////////////////////////////////////
+	void Material::setShininess(float shininess)
+	{
+		m_shininess = shininess;
+	}
+
+	////////////////////////////////////////////////////////////
 	bool Material::isLightingEnabled() const
 	{
 		return m_lighting;
@@ -87,8 +99,10 @@ namespace jackal
 			json root = reader.getRoot();
 
 			this->setName(root.value("name", filename));
-			m_lighting = root.value("lighting-enabled", true);
-			m_colour = root.value("diffuse-colour", Colour::white());
+
+			m_lighting  = root.value("lighting-enabled", true);
+			m_colour    = root.value("diffuse-colour", Colour::white());
+			m_shininess = root.value("shininess", 0.0f);
 
 			json textures = root["textures"];
 			m_textures.at(eTextureType::DIFFUSE) = Texture::find(textures["diffuse"].get<std::string>());

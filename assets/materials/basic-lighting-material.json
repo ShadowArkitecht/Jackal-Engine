@@ -7,6 +7,7 @@
 		"b": 1.0,
 		"a": 1.0
 	},
+	"shininess": 1.0,
 	"textures": {
 		"diffuse": "~assets/textures/box-diffuse-texture.json",
 		"specular": "~assets/textures/box-specular-texture.json" 

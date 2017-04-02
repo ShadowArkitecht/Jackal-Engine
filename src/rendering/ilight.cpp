@@ -34,7 +34,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	ILight::ILight(const std::string& name)
-		: IComponent(name), m_colour(), m_intensity(1.0f)
+		: IComponent(name), m_colour(), m_specularity(), m_intensity(1.0f)
 	{
 	}
 
@@ -57,6 +57,18 @@ namespace jackal
 	void ILight::setColour(float r, float g, float b, float a/*= 1.0f*/)
 	{
 		m_colour.set(r, g, b, a);
+	}
+
+	////////////////////////////////////////////////////////////
+	const Colour& ILight::getSpecularity() const
+	{
+		return m_specularity;
+	}
+
+	////////////////////////////////////////////////////////////
+	void ILight::setSpecularity(const Colour& specularity)
+	{
+		m_specularity = specularity;
 	}
 
 	////////////////////////////////////////////////////////////

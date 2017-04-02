@@ -61,13 +61,15 @@ namespace jackal
 		static const std::string MODEL_VIEW_PERSPECTIVE;   ///< The model-view-perspective uniform name.
 		static const std::string MODEL;                    ///< The model matrix uniform name.
 		// Material uniforms
-		static const std::string MATERIAL_DIFFUSE_COLOUR;  ///< The material colour uniform name.
 		static const std::string MATERIAL_DIFFUSE_TEXTURE; ///< The material diffuse texture uniform name. 
 		static const std::string MATERIAL_SPECULAR_TEXTURE;///< The material specular texture uniform name.
+		static const std::string MATERIAL_DIFFUSE_COLOUR;  ///< The material colour uniform name.
+		static const std::string MATERIAL_SHININESS;       ///< The material shininess uniform name.
 		// DirectionalLight uniforms
-		static const std::string DIRECTIONAL_LIGHT_COLOUR;    ///< The directional light colour uniform name.
-		static const std::string DIRECTIONAL_LIGHT_INTENSITY; ///< The directional light intensity uniform name.
-		static const std::string DIRECTIONAL_LIGHT_DIRECTION; ///< The directional light direction uniform name.
+		static const std::string DIRECTIONAL_LIGHT_COLOUR;      ///< The directional light colour uniform name.
+		static const std::string DIRECTIONAL_LIGHT_SPECULARITY; ///< The directional light specularity uniform name.
+		static const std::string DIRECTIONAL_LIGHT_INTENSITY;   ///< The directional light intensity uniform name.
+		static const std::string DIRECTIONAL_LIGHT_DIRECTION;   ///< The directional light direction uniform name.
 	};
 
 	class Uniform final

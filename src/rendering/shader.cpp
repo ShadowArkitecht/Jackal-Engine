@@ -39,7 +39,7 @@
 //====================
 // Additional includes
 //====================
-#include <SDL2/SDL.h>                        // Used to retrieve the ticks of the application.
+#include <SDL2/SDL.h>                             // Used to retrieve the ticks of the application.
 
 namespace jackal
 {	
@@ -159,10 +159,12 @@ namespace jackal
 
 			DirectionalLight light;
 			light.setColour(Colour::white());
+			light.setSpecularity(Colour(1.0f, 0.0f, 0.0f, 1.0f));
 			light.setIntensity(1.5f);
-			light.setDirection(Vector3f::one());
+			light.setDirection(Vector3f::forward());
 
 			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_COLOUR, light.getColour());
+			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_SPECULARITY, light.getSpecularity());
 			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_INTENSITY, light.getIntensity());
 			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_DIRECTION, light.getDirection());
 		}
@@ -170,6 +172,7 @@ namespace jackal
 		m_uniform.setParameter(Uniforms::MATERIAL_DIFFUSE_TEXTURE, eTextureType::DIFFUSE);
 		m_uniform.setParameter(Uniforms::MATERIAL_SPECULAR_TEXTURE, eTextureType::SPECULAR);
 		m_uniform.setParameter(Uniforms::MATERIAL_DIFFUSE_COLOUR, material.getColour());
+		m_uniform.setParameter(Uniforms::MATERIAL_SHININESS, material.getShininess());
 
 		Matrix4 mvp = transform.getTransformation() * Camera::getMain().getViewProjection();
 

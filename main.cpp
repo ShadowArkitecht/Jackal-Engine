@@ -25,13 +25,13 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/core/virtual_file_system.hpp>   // Register the common virtual paths.
-#include <jackal/core/config_file.hpp>           // Load the main configuration file. 
-#include <jackal/utils/properties.hpp>           // Load the locale for the current application.
-#include <jackal/core/window.hpp>                // Creating test window instance.
-#include <jackal/core/camera.hpp>                // Creating the global camera.
-#include <jackal/utils/resource_manager.hpp>     // Retrieve a shader object. 
-#include <jackal/rendering/material.hpp>         // Binding and utilising a material.   
+#include <jackal/core/virtual_file_system.hpp>    // Register the common virtual paths.
+#include <jackal/core/config_file.hpp>            // Load the main configuration file. 
+#include <jackal/utils/properties.hpp>            // Load the locale for the current application.
+#include <jackal/core/window.hpp>                 // Creating test window instance.
+#include <jackal/core/camera.hpp>                 // Creating the global camera.
+#include <jackal/utils/resource_manager.hpp>      // Retrieve a shader object. 
+#include <jackal/rendering/material.hpp>          // Binding and utilising a material.   
 #include <jackal/scripting/scripting_manager.hpp>
 #include <jackal/scripting/scriptable.hpp>
 
@@ -108,8 +108,6 @@ int main(int argc, char** argv)
 	ScriptingManager::getInstance().bind();
 
 	Transform t1;
-	Transform t2;
-	t2.setPosition(70.0f, 0.0f, 0.0f);
 
 	Scriptable* s = Scriptable::create("test_class.lua");
 	s->onCreate();

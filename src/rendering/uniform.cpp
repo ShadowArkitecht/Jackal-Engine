@@ -43,10 +43,12 @@ namespace jackal
 	const std::string Uniforms::MATERIAL_DIFFUSE_TEXTURE  = "u_material.diffuse";
 	const std::string Uniforms::MATERIAL_SPECULAR_TEXTURE = "u_material.specular";
 	const std::string Uniforms::MATERIAL_DIFFUSE_COLOUR   = "u_material.diffuse_colour";
+	const std::string Uniforms::MATERIAL_SHININESS        = "u_material.shininess";
 	// DirectionalLight
-	const std::string Uniforms::DIRECTIONAL_LIGHT_COLOUR    = "u_dir_light.light.colour";
-	const std::string Uniforms::DIRECTIONAL_LIGHT_INTENSITY = "u_dir_light.light.intensity";
-	const std::string Uniforms::DIRECTIONAL_LIGHT_DIRECTION = "u_dir_light.direction";
+	const std::string Uniforms::DIRECTIONAL_LIGHT_COLOUR      = "u_dir_light.light.colour";
+	const std::string Uniforms::DIRECTIONAL_LIGHT_SPECULARITY = "u_dir_light.light.specularity";
+	const std::string Uniforms::DIRECTIONAL_LIGHT_INTENSITY   = "u_dir_light.light.intensity";
+	const std::string Uniforms::DIRECTIONAL_LIGHT_DIRECTION   = "u_dir_light.direction";
 
 	//====================
 	// Ctor and dtor

@@ -66,6 +66,7 @@ namespace jackal
 		std::array<ResourceHandle<Texture>, MAX_TEXTURES> m_textures; ///< The diffuse texture attached to the material.
 		bool                    m_lighting;                           ///< Whether this Material uses the lighting calculations.
 		Colour                  m_colour;                             ///< Overlay colour applied to the material.
+		float                   m_shininess;                          ///< How shiny the specular effects are on this mesh.
 
 	public:
 		//====================
@@ -132,6 +133,32 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		void setColour(const Colour& colour);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the shininess of the Material object.
+		///
+		/// The shininess controls how strong the specular effect of this
+		/// Material will be. The higher the value, the more strong the 
+		/// light reflection. The shininess only effects the Material object
+		/// if a specular texture has been defined.
+		///
+		/// @returns The shininess of the Material object.
+		///
+		////////////////////////////////////////////////////////////
+		float getShininess() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the shininess of the Material object.
+		///
+		/// The shininess controls how strong the specular effect of this
+		/// Material will be. The higher the value, the more strong the 
+		/// light reflection. The shininess only effects the Material object
+		/// if a specular texture has been defined.
+		///
+		/// @param shininess The new shininess of the Material object.
+		///
+		////////////////////////////////////////////////////////////
+		void setShininess(float shininess);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Checks whether this Material uses the lighting calculations.
