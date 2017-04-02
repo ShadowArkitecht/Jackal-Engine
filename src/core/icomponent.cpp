@@ -25,7 +25,8 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/core/icomponent.hpp> // IComponent class declaration.
+#include <jackal/core/icomponent.hpp>  // IComponent class declaration.
+#include <jackal/core/game_object.hpp> // Comparing the tags of a GameObject and retrieving transform.
 
 namespace jackal
 {
@@ -34,8 +35,48 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	IComponent::IComponent(const std::string& name)
-		: Object(name)
+		: Object(name), m_pParent(nullptr)
 	{
+	}
+
+	//====================
+	// Protected methods
+	//====================
+	////////////////////////////////////////////////////////////
+	bool IComponent::init()
+	{
+		// Defines no behavior.
+		return true;
+	}
+
+	//====================
+	// Getters and setters
+	//====================
+	////////////////////////////////////////////////////////////
+	GameObject* IComponent::getParent() const
+	{
+		return m_pParent;
+	}
+
+	////////////////////////////////////////////////////////////
+	void IComponent::setParent(GameObject* pParent)
+	{
+		m_pParent = pParent;
+	}
+
+	////////////////////////////////////////////////////////////
+	Transform& IComponent::getTransform()
+	{
+		return m_pParent->getTransform();
+	}
+
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	bool IComponent::compareTag(const std::string& tag) const
+	{
+		return m_pParent->getTag() == tag;
 	}
 
 } // namespace jackal

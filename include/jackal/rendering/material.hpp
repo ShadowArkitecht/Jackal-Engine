@@ -26,7 +26,12 @@
 #define __JACKAL_MATERIAL_HPP__ 
 
 //====================
-// Jackal methods
+// C++ includes
+//====================
+#include <array>                            // The textures of the material are stored in an array.
+
+//====================
+// Jackal includes
 //====================
 #include <jackal/utils/resource_handle.hpp> // A handle to the resource.
 #include <jackal/rendering/shader.hpp>      // Load in and retain a shader.
@@ -35,16 +40,32 @@
 
 namespace jackal
 {
-	class Material : public Resource
+	//====================
+	// Jackal forward declarations
+	//====================
+	class Transform;
+
+	//====================
+	// Enumerations
+	//====================
+	enum eTextureType
+	{
+		DIFFUSE,     ///< The location of the diffuse texture.
+		SPECULAR,
+		MAX_TEXTURES ///< The max texture locations supported.
+	};
+
+	class Material final : public Resource
 	{
 	private:
 		//====================
 		// Member variables
 		//====================
-		int64_t                 m_ID;      ///< The unique ID of the material, generated from shader and textures.
-		ResourceHandle<Shader>  m_shader;  ///< The shader attached to the material.
-		ResourceHandle<Texture> m_texture; ///< The texture attached to the material.
-		Colour                  m_colour;  ///< Overlay colour applied to the material.
+		int64_t                 m_ID;                                 ///< The unique ID of the material, generated from shader and textures.
+		ResourceHandle<Shader>  m_shader;                             ///< The shader attached to the material.
+		std::array<ResourceHandle<Texture>, MAX_TEXTURES> m_textures; ///< The diffuse texture attached to the material.
+		bool                    m_lighting;                           ///< Whether this Material uses the lighting calculations.
+		Colour                  m_colour;                             ///< Overlay colour applied to the material.
 
 	public:
 		//====================
@@ -112,6 +133,19 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		void setColour(const Colour& colour);
 
+		////////////////////////////////////////////////////////////
+		/// @brief Checks whether this Material uses the lighting calculations.
+		///
+		/// Some of the materials within the engine utilises lights within
+		/// a scene and lighting calculations. This method will check whether
+		/// this material will utilise the lighting. This can be used as a optimisation
+		/// step to reduce calculations per frame.
+		///
+		/// @returns True if this material utilises lighting calculations.
+		///
+		////////////////////////////////////////////////////////////
+		bool isLightingEnabled() const;
+
 		//====================
 		// Methods
 		//====================
@@ -134,14 +168,30 @@ namespace jackal
 		bool load(const std::string& filename) override;
 
 		////////////////////////////////////////////////////////////
+		/// @brief Retrieves a handle to a Material resource.
+		///
+		/// When this method is invoked, it will return a handle to the
+		/// specified Material instance. The material is returned from the
+		/// resource manager to prevent duplicate resources.
+		///
+		/// @param name  The name of the material to retrieve.
+		///
+		/// @returns The handle to the specified Material object.
+		///
+		////////////////////////////////////////////////////////////
+		static ResourceHandle<Material> find(const std::string& name);
+
+		////////////////////////////////////////////////////////////
 		/// @brief Processes the material and updates the shader.
 		///
 		/// The process method is just a simple wrapper method around the
 		/// Shader::process method, which will be invoked with a reference
 		/// to this material.
 		///
+		/// @param transform The transform of the GameObject currently being processed.
+		///
 		////////////////////////////////////////////////////////////
-		void process();
+		void process(const Transform& transform);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Binds a material for use.

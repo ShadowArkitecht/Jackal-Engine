@@ -26,6 +26,9 @@
 // Jackal includes
 //====================
 #include <jackal/scripting/core_wrapper.hpp> // CoreWrapper class declaration.
+#include <jackal/core/object.hpp>            // Binding Object and eHideFlag.
+#include <jackal/core/icomponent.hpp>        // Binding the base component class.
+#include <jackal/core/camera.hpp>            // Binding the Camera object.
 
 namespace jackal
 {
@@ -58,7 +61,24 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	void CoreWrapper::bindComponent(sol::state& state)
 	{
-		state.new_usertype<IComponent>("Component");
+		state.new_usertype<IComponent>("Component",
+			// Inheritance
+			sol::base_classes, sol::bases<Object>());
+	}
+
+	////////////////////////////////////////////////////////////
+	void CoreWrapper::bindCamera(sol::state& state)
+	{
+		state.new_usertype<Camera>("Camera",
+			// Constructors
+			sol::constructors<sol::types<>>(),
+			// Properties
+			"field_of_view", sol::property(&Camera::getFieldOfView, &Camera::setFieldOfView),
+			"near_plane", sol::property(&Camera::getNearPlane),
+			"far_plane", sol::property(&Camera::getFarPlane),
+			// Methods
+			"get_main", &Camera::getMain
+		);
 	}
 	
 	//====================
@@ -70,6 +90,7 @@ namespace jackal
 		this->bindHideFlags(state);
 		this->bindObject(state);
 		this->bindComponent(state);
+		this->bindCamera(state);
 	}	
 
 } // namespace jackal

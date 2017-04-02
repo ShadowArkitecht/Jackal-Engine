@@ -1,8 +1,0 @@
-{
-	"glsl-files": [{
-		"glsl-file": "~data/shaders/basic.vertex.glsl"
-	}, {
-		"glsl-file": "~data/shaders/basic.fragment.glsl"
-	}],
-	"const-uniforms": []
-}

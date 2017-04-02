@@ -234,7 +234,8 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	Matrix4 Matrix4::perspective(float fov, float ratio, float near, float far)
 	{
-		const float halfFov = tanf((fov * (180.0f / 3.14f)) / 2.0f);
+		const float hf = fov / 2.0f;
+		const float halfFov = tanf(fov * 180.0f / 3.14f);
 		const float range = near - far;
 
 		Matrix4 matrix;
@@ -258,9 +259,10 @@ namespace jackal
 
 		Matrix4 matrix;
 
-		matrix.setRow(0, u.x, u.y, u.z, 0.0f);
-		matrix.setRow(1, v.x, v.y, v.z, 0.0f);
-		matrix.setRow(2, f.x, f.y, f.z, 0.0f);
+		matrix.setRow(0, u.x,  u.y,  u.z,  0.0f);
+		matrix.setRow(1, v.x,  v.y,  v.z,  0.0f);
+		matrix.setRow(2, f.x,  f.y,  f.z,  0.0f);
+		matrix.setRow(3, 0.0f, 0.0f, 0.0f, 1.0f);
 
 		return matrix;
 	}

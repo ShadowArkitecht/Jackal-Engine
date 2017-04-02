@@ -198,6 +198,8 @@ namespace jackal
 			m_pMain = this;
 		}
 
+		glEnable(GL_DEPTH_TEST);
+
 		log.debug(log.function(__FUNCTION__, title, position, size), "Created successfully.");
 		return true;
 	}

@@ -22,28 +22,25 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define SDL_MAIN_HANDLED // Handle main for SDL, otherwise it will cause issues with Assimp.
-#define NOMINMAX         // An error is caused in luabind if this is not defined (undefs min and max macros).
-
 //====================
 // Jackal includes
 //====================
-#include <jackal/core/virtual_file_system.hpp> // Register the common virtual paths.
-#include <jackal/core/config_file.hpp>         // Load the main configuration file. 
-#include <jackal/utils/properties.hpp>         // Load the locale for the current application.
-#include <jackal/core/window.hpp>              // Creating test window instance.
-#include <jackal/core/camera.hpp>              // Creating the global camera.
-#include <jackal/utils/resource_manager.hpp>   // Retrieve a shader object. 
-#include <jackal/rendering/material.hpp>       // Binding and utilising a material.   
+#include <jackal/core/virtual_file_system.hpp>   // Register the common virtual paths.
+#include <jackal/core/config_file.hpp>           // Load the main configuration file. 
+#include <jackal/utils/properties.hpp>           // Load the locale for the current application.
+#include <jackal/core/window.hpp>                // Creating test window instance.
+#include <jackal/core/camera.hpp>                // Creating the global camera.
+#include <jackal/utils/resource_manager.hpp>     // Retrieve a shader object. 
+#include <jackal/rendering/material.hpp>         // Binding and utilising a material.   
 #include <jackal/scripting/scripting_manager.hpp>
-#include <jackal/scripting/script.hpp>
+#include <jackal/scripting/scriptable.hpp>
+
+#include <jackal/rendering/model.hpp>
 
 using namespace jackal;
 
 int main(int argc, char** argv)
 {
-	SDL_SetMainReady();
-
 	auto& vfs = VirtualFileSystem::getInstance();
 	// utils
 	vfs.mount("locale", "data/locale");
@@ -52,6 +49,7 @@ int main(int argc, char** argv)
 	// Raw files (glsl, images etc.).
 	vfs.mount("data/shaders", "data/shaders");
 	vfs.mount("data/textures", "data/textures");
+	vfs.mount("data/models", "models");
 	// JSON files.
 	vfs.mount("assets/textures", "assets/textures");
 	vfs.mount("assets/shaders", "assets/shaders");
@@ -70,26 +68,55 @@ int main(int argc, char** argv)
 	camera.create(config);
 
 	Mesh mesh;
-	mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f, 1.0f), Vector2f::zero()));
-	mesh.addVertex(Vertex_t(Vector3f( 0.5f, -0.5f, 1.0f), Vector2f(1.0f, 0.0f)));
-	mesh.addVertex(Vertex_t(Vector3f( 0.5f,  0.5f, 1.0f), Vector2f(1.0f, 1.0f)));
-	mesh.addVertex(Vertex_t(Vector3f(-0.5f,  0.5f, 1.0f), Vector2f(0.0f, 1.0f)));
-	
-	// Add the indices.
-	mesh.addIndex(0);
-	mesh.addIndex(1);
-	mesh.addIndex(2);
-	mesh.addIndex(0);
-	mesh.addIndex(2);
-	mesh.addIndex(3);
+	// Back.
+	mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f, -0.5f), Vector3f( 0.0f,  0.0f, -1.0f),  Vector2f(0.0f,  0.0f)));
+    mesh.addVertex(Vertex_t(Vector3f( 0.5f, -0.5f, -0.5f), Vector3f( 0.0f,  0.0f, -1.0f),  Vector2f(1.0f,  0.0f)));
+    mesh.addVertex(Vertex_t(Vector3f( 0.5f,  0.5f, -0.5f), Vector3f( 0.0f,  0.0f, -1.0f),  Vector2f(1.0f,  1.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(-0.5f,  0.5f, -0.5f), Vector3f( 0.0f,  0.0f, -1.0f),  Vector2f(0.0f,  1.0f)));
+	// Front.
+	mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f, -0.5f), Vector3f(0.0f, 0.0f, -1.0f), Vector2f(0.0f, 0.0f)));
+	mesh.addVertex(Vertex_t(Vector3f( 0.5f, -0.5f, -0.5f), Vector3f(0.0f, 0.0f, -1.0f), Vector2f(1.0f, 0.0f)));
+	mesh.addVertex(Vertex_t(Vector3f( 0.5f, 0.5f, -0.5f),  Vector3f(0.0f, 0.0f, -1.0f), Vector2f(1.0f, 1.0f)));
+	mesh.addVertex(Vertex_t(Vector3f(-0.5f, 0.5f, -0.5f),  Vector3f(0.0f, 0.0f, -1.0f), Vector2f(0.0f, 1.0f)));
+	// Left.
+    mesh.addVertex(Vertex_t(Vector3f(-0.5f,  0.5f,  0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(1.0f,  0.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(-0.5f,  0.5f, -0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(1.0f,  1.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f, -0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(0.0f,  1.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(-0.5f, -0.5f,  0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(1.0f,  0.0f)));
+	// Right
+	mesh.addVertex(Vertex_t(Vector3f(0.5f,  0.5f,  0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(1.0f,  0.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(0.5f,  0.5f, -0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(1.0f,  1.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(0.5f, -0.5f, -0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(0.0f,  1.0f)));
+    mesh.addVertex(Vertex_t(Vector3f(0.5f, -0.5f,  0.5f), Vector3f(-1.0f,  0.0f,  0.0f),  Vector2f(1.0f,  0.0f)));
+
+	for (int i = 0; i < 2; i++)
+	{
+		int offset = i * 6;
+		mesh.addIndex(0 + offset);
+		mesh.addIndex(1 + offset);
+		mesh.addIndex(2 + offset);
+		mesh.addIndex(0 + offset);
+		mesh.addIndex(2 + offset);
+		mesh.addIndex(3 + offset);
+	}
 
 	mesh.create();
 
-	auto material = ResourceManager::getInstance().get<Material>("~assets/materials/basic-material.json");
+	auto model = Model::find("data/models/box.obj");
+	auto material = Material::find("~assets/materials/basic-lighting-material.json");
+	
 	ScriptingManager::getInstance().bind();
 
-	Script script("test_class.lua");
-	script.create();
+	Transform t1;
+	Transform t2;
+	t2.setPosition(70.0f, 0.0f, 0.0f);
+
+	Scriptable* s = Scriptable::create("test_class.lua");
+	s->onCreate();
+
+	delete s;
+
+	Camera::getMain().getTransform().setPosition(0.0f, 0.0f, -2.0f);
 
 	while (window.isRunning())
 	{
@@ -97,8 +124,7 @@ int main(int argc, char** argv)
 
 		Material::bind(*material.get());
 
-		material->process();
-
+		material->process(t1);
 		mesh.render();
 
 		Material::unbind();
@@ -109,6 +135,7 @@ int main(int argc, char** argv)
 		ResourceManager::getInstance().reload();
 	}
 
+	ResourceManager::getInstance().destroy();
 	SDL_Quit();
 
 	return 0;

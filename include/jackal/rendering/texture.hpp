@@ -28,13 +28,14 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/resource.hpp> // Texture loads data from disk.
-#include <jackal/math/vector2.hpp>   // Storing the size of the texture as a vector.
+#include <jackal/utils/resource.hpp>        // Texture loads data from disk.
+#include <jackal/math/vector2.hpp>          // Storing the size of the texture as a vector.
+#include <jackal/utils/resource_handle.hpp> // A handle to the Texture resource.
 
 //====================
 // Additional includes
 //====================
-#include <GL/glew.h>                 // Loading textures from memory.
+#include <GL/glew.h>                        // Loading textures from memory.
 
 namespace jackal
 {
@@ -200,6 +201,20 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		bool load(const std::string& filename) override;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves a handle to a Texture resource.
+		///
+		/// When this method is invoked, it will return a handle to the
+		/// specified Texture instance. The texture is returned from the
+		/// resource manager to prevent duplicate resources.
+		///
+		/// @param name  The name of the texture to retrieve.
+		///
+		/// @returns The handle to the specified Texture object.
+		///
+		////////////////////////////////////////////////////////////
+		static ResourceHandle<Texture> find(const std::string& name);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Binds a Texture object for use.

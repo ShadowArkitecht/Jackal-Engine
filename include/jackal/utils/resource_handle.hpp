@@ -48,19 +48,20 @@ namespace jackal
 		//====================
 		T* m_pResource; ///< The base resource object this handle wraps around. 
 
-	private:
-		//====================
-		// Ctor and dtor
-		//====================
-		////////////////////////////////////////////////////////////
-		/// @brief Deleted ResourceHandle default constructor.
-		////////////////////////////////////////////////////////////
-		explicit ResourceHandle() = delete;
-
 	public:
 		//====================
 		// Ctor and dtor
 		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Default constructor for the ResourceHandle.
+		///
+		/// The default ResourceHandle will initialise the resource
+		/// to a null value which will have to be implicitly set before
+		/// the handle can be used.
+		///
+		////////////////////////////////////////////////////////////
+		explicit ResourceHandle();
+
 		////////////////////////////////////////////////////////////
 		/// @brief Constructor for the ResourceHandle object.
 		///
@@ -72,6 +73,18 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		explicit ResourceHandle(T* pResource);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Copy constructor for the ResourceHandle object.
+		///
+		/// When the ResourceHandle is copy constructed, it will release
+		/// any previous resources that it may be maintaining and retain
+		/// the resource passed in from the other handle. 
+		///
+		/// @param handle The handle object to retain the data from.
+		///
+		////////////////////////////////////////////////////////////
+		ResourceHandle(const ResourceHandle<T>& handle);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Destructor for the ResourceHandle.
@@ -108,6 +121,21 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		const T* operator->() const;
 
+		////////////////////////////////////////////////////////////
+		/// @brief Overloading the assignment operator.
+		///
+		/// When the ResourceHandle is assigned to a different object,
+		/// it will first release any resources that the current handle
+		/// is maintaining. It will then use the same resource as the assigned
+		/// handle and retain the memory for additional use.
+		///
+		/// @param handle The handle to assign the data from.
+		///
+		/// @returns A reference to the current handle object.
+		///
+		////////////////////////////////////////////////////////////
+		ResourceHandle<T>& operator=(const ResourceHandle<T>& handle);
+
 		//====================
 		// Getters and setters
 		//====================
@@ -132,8 +160,26 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	template <typename T>
+	ResourceHandle<T>::ResourceHandle()
+		: m_pResource(nullptr)
+	{
+	}
+
+	////////////////////////////////////////////////////////////
+	template <typename T>
 	ResourceHandle<T>::ResourceHandle(T* pResource)
 		: m_pResource(pResource)
+	{
+		if (m_pResource)
+		{
+			m_pResource->retain();
+		}
+	}
+
+	////////////////////////////////////////////////////////////
+	template <typename T>
+	ResourceHandle<T>::ResourceHandle(const ResourceHandle<T>& handle)
+		: m_pResource(handle.m_pResource)
 	{
 		if (m_pResource)
 		{
@@ -148,6 +194,12 @@ namespace jackal
 		if (m_pResource)
 		{
 			m_pResource->release();
+
+			if (!m_pResource->isReferenced())
+			{
+				delete m_pResource;
+				m_pResource = nullptr;
+			}
 		}
 	}	
 
@@ -166,6 +218,32 @@ namespace jackal
 	const T* ResourceHandle<T>::operator->() const
 	{
 		return m_pResource;
+	}
+
+	////////////////////////////////////////////////////////////
+	template <typename T>
+	ResourceHandle<T>& ResourceHandle<T>::operator=(const ResourceHandle<T>& handle)
+	{
+		if (this != &handle)
+		{
+			if (m_pResource)
+			{
+				m_pResource->release();
+				if (!m_pResource->isReferenced())
+				{
+					delete m_pResource;
+					m_pResource = nullptr;
+				}
+			}
+
+			m_pResource = handle.m_pResource;
+			if (m_pResource)
+			{
+				m_pResource->retain();
+			}
+		}
+
+		return *this;
 	}
 
 	//====================

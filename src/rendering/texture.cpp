@@ -30,6 +30,7 @@
 #include <jackal/utils/constants.hpp>            // Using the constant log location.
 #include <jackal/core/virtual_file_system.hpp>   // Searching paths with the virtual file system.
 #include <jackal/utils/json_file_reader.hpp>     // Parsing the json file and utilising the result.
+#include <jackal/utils/resource_manager.hpp>     // Retrieving a handle to a Texture from the resource manager.
 
 //====================
 // Additional includes
@@ -212,9 +213,16 @@ namespace jackal
 	}
 	
 	////////////////////////////////////////////////////////////
+	ResourceHandle<Texture> Texture::find(const std::string& name)
+	{
+		return ResourceManager::getInstance().get<Texture>(name);
+	}
+
+	////////////////////////////////////////////////////////////
 	void Texture::bind(const Texture& texture, GLint location/*= 0*/)
 	{
-		glBindTexture(GL_TEXTURE_2D + location, texture.getID());
+		glActiveTexture(GL_TEXTURE0 + location);
+		glBindTexture(GL_TEXTURE_2D, texture.getID());
 	}
 
 	////////////////////////////////////////////////////////////

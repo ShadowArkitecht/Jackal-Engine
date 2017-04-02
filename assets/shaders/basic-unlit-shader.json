@@ -1,0 +1,7 @@
+{
+	"glsl-files": [
+		"~data/shaders/basic-unlit.vertex.glsl",
+		"~data/shaders/basic-unlit.fragment.glsl"
+	],
+	"constant-uniforms": []
+}

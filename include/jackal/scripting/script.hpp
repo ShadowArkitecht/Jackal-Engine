@@ -28,54 +28,71 @@
 //====================
 // C++ includes
 //====================
-#include <bitset>                     // Storing which methods are active within the script.
+#include <bitset>                           // Containing which functions are active within a script.
 
 //====================
 // Jackal includes
 //====================
-#include <jackal/core/icomponent.hpp> // Script is a type of component that can be added to game objects.
+#include <jackal/utils/resource.hpp>        // Script is a type of resource.
+#include <jackal/utils/ext/sol.hpp>         // Storing the state and references to the lua table.
+#include <jackal/utils/resource_handle.hpp> // A handle to the Script resource.
 
-namespace jackal 
+namespace jackal
 {
+	//====================
+	// Enumerations
+	//====================
 	enum eScriptMethods
 	{
-		CREATE,      // The create method within the lua script.
-		UPDATE,      // The update method within the lua script.
-		MAX_METHODS  // The max amount of methods within the script.
+		ON_CREATE,    // The create method within the lua script.
+		UPDATE,       // The update method within the lua script.
+		ON_DESTROY,   // The destroy method within the lua script.
+		MAX_FUNCTIONS // The max amount of methods within the script.
 	};
 
-	class Script final : public IComponent
+	class Script final : public Resource
 	{
 	private:
 		//====================
 		// Member variables
 		//====================
-		sol::table                               m_self;    ///< A reference to the class contained within the lua script.
-		std::string                              m_table;   ///< The name of the table within the lua script.
-		std::bitset<eScriptMethods::MAX_METHODS> m_methods; ///< Which methods are active within the script.
-		bool                                     m_created; ///< Whether the object's create method has been invoked.
+		sol::state&                                m_state;      ///< A reference to the global lua state.
+		std::string                                m_tableName;  ///< The name of the table within the lua script.
+		std::bitset<eScriptMethods::MAX_FUNCTIONS> m_functions;  ///< Which functions are active within the script.
 
 	private:
 		//====================
 		// Private methods
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Checks whether the specified method is contained within the script.
+		/// @brief Checks whether the specified function is contained within the script.
 		///
-		/// When this method is invoked, it will search the class within the lua
-		/// script to see if the specified method has been declared. If the method
+		/// When this method is invoked, it will search the table within the lua
+		/// script to see if the specified function has been declared. If the function
 		/// has been declared, it will return a true result.
 		///
-		/// @returns True if the method exists within the lua script.
+		/// @param table The table to check for the existence of the function.
+		/// @param name  The name of the function to check for.
+		///
+		/// @returns True if the function exists within the lua script.
 		///
 		////////////////////////////////////////////////////////////
-		bool isMethod(const std::string& name) const;
+		bool isFunction(const sol::table& table, const std::string& name) const;
 
 	public:
 		//====================
 		// Ctor and dtor
 		//====================
-		explicit Script(const std::string& filename);
+		////////////////////////////////////////////////////////////
+		/// @brief Default constructor for the Script object.
+		///
+		/// When this constructor is invoked, it will set all of the member
+		/// variables to default values. If the script is not added to the
+		/// ResourceManager, it is not useable in this state until Script::load
+		/// is invoked.
+		///
+		////////////////////////////////////////////////////////////
+		explicit Script();
 
 		////////////////////////////////////////////////////////////
 		/// @brief Default destructor for the Script object.
@@ -86,65 +103,106 @@ namespace jackal
 		// Getters and setters
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Retrieves the creation state of the current lua script.
+		/// @brief Retrieves the name of the table.
 		///
-		/// Each lua script typically contains a "create" method, this method
-		/// is invoked when the script is first processed by the jackal::ScriptSystem.
-		/// Create will only be invoked once, on the first frame after the script has
-		/// been added as a component.
+		/// The name of the table refers to the name of both the lua
+		/// script file and the name of the table within the script itself.
+		/// This function is used to retrieve the table from the script
+		/// itself.
 		///
-		/// @returns The created state of the lua object.
+		/// @returns The name of the script file/table.
 		///
 		////////////////////////////////////////////////////////////
-		bool isCreated() const;
+		std::string getTableName() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves which funnctions are active within the script.
+		///
+		/// Each special named function within the lua scripts are assigned
+		/// a specific flag, if the function has been declared within the script
+		/// the corresponding flag is set to true. Refer to the lua documentation
+		/// to see a full list of named functions.
+		///
+		/// @returns A list of flags with the corresponding active functions.
+		///
+		////////////////////////////////////////////////////////////
+		std::bitset<eScriptMethods::MAX_FUNCTIONS> getFunctions() const;
 
 		//====================
 		// Methods
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Invokes the create method within the lua script.
+		/// @brief Overrides the load method and loads the external script.
 		///
-		/// The create method is typically used to store variables
-		/// that will persist throughout the lifetime of the object.
-		/// The create method is invoked on the frame after the script
-		/// component has been attached to a game object and is only
-		/// called once. The "create" method is an optional method within
-		/// the script.
+		/// This method is invoked when a script is first retrieved from
+		/// the ResourceManager. When the script is loaded, it will parse
+		/// the external file and only successfully parse if no syntax errors
+		/// were found. If the load is successful, it is retained by the ResourceManager
+		/// and returned as handles.
+		///
+		/// @param filename The file location of the script. (Can be a virtual path).
+		///
+		/// @returns True if the script was loaded and parsed successfully.
 		///
 		////////////////////////////////////////////////////////////
-		void create();
+		bool load(const std::string& filename) override;
 
 		////////////////////////////////////////////////////////////
-		/// @brief Invokes the update method within the lua script.
+		/// @brief Retrieves a Script from the list of resources.
 		///
-		/// The update method is invoked every frame of the application.
-		/// It will call the subsequent "update" method within the lua 
-		/// script and pass in the current delta-time. The method usually
-		/// includes behaviour that the script should execute each tick.
+		/// This method is a simple short-hand method for retrieving a 
+		/// handle to the Script resource from the ResourceManager class.
+		/// If the resource was not found, a default resource is returned
+		/// and a warning is logged.
 		///
-		/// Similar to the "create" method, it is an optional method within
-		/// the script.
+		/// @param name The name of the Script object to retrieve.
 		///
-		/// @param dt The current delta-time of the application.
+		/// @returns A handle to the Script resoure.
 		///
 		////////////////////////////////////////////////////////////
-		void update(float dt);
+		static ResourceHandle<Script> find(const std::string& name);
 
 		////////////////////////////////////////////////////////////
-		/// @brief Retrieves a reference to the script as a lua object.
+		/// @brief Creates a table instance to the lua table within the script.
 		///
-		/// This method operates slightly differently to other components. 
-		/// Other components will typically return an instance of the component
-		/// itself, however with the script object, it will return the lua
-		/// object of the class within the lua script, so that it can be 
-		/// accessed and manipulated by other lua scripts and objects.
+		/// When the Script resource is utilised by the Scriptable
+		/// components, it creates an instance of the lua table which is 
+		/// retained and utilised by the Scriptable component when manipulating
+		/// behaviour.
 		///
-		/// @returns The lua class object.
+		/// @returns A instance to the table within the lua script.
 		///
 		////////////////////////////////////////////////////////////
-		sol::table lua_asObject() const override;
+		sol::table createTable() const;
 	};
 
 } // namespace jackal
 
 #endif//__JACKAL_SCRIPT_HPP__
+
+////////////////////////////////////////////////////////////
+/// @author Benjamin Carter
+///
+/// @class jackal::Script
+/// @grouping scripting
+///
+/// The jackal::Script class is a Resource class that is used
+/// to retain the behaviour defined within an external lua script.
+/// Each script within the application must contain a table, which
+/// is used to communicate information between lua scripts and C++
+/// objects. One of the caveats of the implementation, is that the
+/// table within the script must match the name of the script. For example:
+///
+/// @code
+/// test_script = {
+/// 	entity = nil	
+/// }
+/// @endcode 
+///
+/// Therefore the filename must be ../test_script.lua. The Script
+/// objects are retained and their lifetime managed by the ResourceManager, to
+/// prevent duplicate objects and constant re-compilation of scripts.
+/// Script loading is typically handled internally so no examples
+/// are provided.
+///
+////////////////////////////////////////////////////////////

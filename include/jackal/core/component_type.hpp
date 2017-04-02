@@ -28,7 +28,12 @@
 //====================
 // C++ includes
 //====================
-#include <bitset> // The unique bit of the component type.
+#include <bitset>                     // The unique bit of the component type.
+
+//====================
+// Jackal includes
+//====================
+#include <jackal/utils/constants.hpp> // The constants of the application.
 
 namespace jackal
 {
@@ -39,9 +44,9 @@ namespace jackal
 		// Member variables
 		//====================
 		unsigned int           m_ID;      ///< The unique ID of the ComponentType.
-		std::bitset<32>        m_bit;     ///< The unique bit of the ComponentType.
 		static unsigned int    m_nextID;  ///< The next unique ID in the sequence.
-		static std::bitset<32> m_nextBit; ///< The next unique bit in the sequence.
+		std::bitset<Constants::Components::MAX_COMPONENTS>        m_bit;     ///< The unique bit of the ComponentType.
+		static std::bitset<Constants::Components::MAX_COMPONENTS> m_nextBit; ///< The next unique bit in the sequence.
 
 	public:
 		//====================
@@ -89,7 +94,7 @@ namespace jackal
 		/// @returns The unique bit of the ComponentType.
 		///
 		////////////////////////////////////////////////////////////
-		const std::bitset<32>& getBit() const;
+		const std::bitset<Constants::Components::MAX_COMPONENTS>& getBit() const;
 	};
 
 } // namespace jackal

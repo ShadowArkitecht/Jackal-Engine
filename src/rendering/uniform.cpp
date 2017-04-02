@@ -33,9 +33,20 @@
 namespace jackal
 {
 	//====================
-	// Ctor and dtor
+	// Local variables
 	//====================
 	static DebugLog log("logs/engine_log.txt"); // Logging warnings and errors.
+
+	const std::string Uniforms::MODEL_VIEW_PERSPECTIVE = "u_mvp";
+	const std::string Uniforms::MODEL                  = "u_model";
+	// Material
+	const std::string Uniforms::MATERIAL_DIFFUSE_TEXTURE  = "u_material.diffuse";
+	const std::string Uniforms::MATERIAL_SPECULAR_TEXTURE = "u_material.specular";
+	const std::string Uniforms::MATERIAL_DIFFUSE_COLOUR   = "u_material.diffuse_colour";
+	// DirectionalLight
+	const std::string Uniforms::DIRECTIONAL_LIGHT_COLOUR    = "u_dir_light.light.colour";
+	const std::string Uniforms::DIRECTIONAL_LIGHT_INTENSITY = "u_dir_light.light.intensity";
+	const std::string Uniforms::DIRECTIONAL_LIGHT_DIRECTION = "u_dir_light.direction";
 
 	//====================
 	// Ctor and dtor
@@ -170,38 +181,6 @@ namespace jackal
 				return;
 			}
 		}
-		//else if (type.substr(0, 4) == "vec3") // The uniform is a type of vec3
-		//{
-		//	if (type.length() == 4)
-		//	{
-		//		Vector3f vec3 = Vector3f(values["x"].get<float>(), values["y"].get<float>(), values["z"].get<float>());
-		//		this->setParameter(uniform["name"].get<std::string>(), vec3);				
-		//	}
-		//	else if (type.length() == 5)
-		//	{
-		//		switch (type[5])
-		//		{
-		//		case 'i':
-		//			{
-		//				Vector3i vec3i = Vector3i(values["x"].get<int>(), values["y"].get<int>(), values["z"].get<int>());
-		//				this->setParameter(uniform["name"].get<std::string>(), vec3i);
-		//				break;					
-		//			}
-
-		//		case 'd':
-		//			{
-		//				Vector3d vec3d = Vector3d(values["x"].get<double>(), values["y"].get<double>(), values["z"].get<double>());
-		//				this->setParameter(uniform["name"].get<std::string>(), vec3d);
-		//				break;					
-		//			}
-		//		}
-		//	}
-		//	else
-		//	{
-		//		log.warning(log.function(__FUNCTION__, uniform["name"].get<std::string>()), "Failed to parse vec3 value.");
-		//		return;
-		//	}
-		//}
 	}
 
 } // namespace jackal

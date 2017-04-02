@@ -25,7 +25,7 @@
 //====================
 // C++ includes
 //====================
-#include <filesystem>                         // Experimental C++17 file system reading.
+#include <filesystem>                         // C++17 file system reading.
 
 //====================
 // Jackal includes
@@ -38,18 +38,19 @@ namespace jackal
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
+#if _DEBUG
 	ResourceManager::ResourceManager()
-		: Singleton<ResourceManager>(), m_materials(), m_shaders(), m_textures(), m_timeStamps(), m_changedShaders(),
-			m_listening(true), m_mutex(), m_listener(&ResourceManager::fileChangeListener, this)
+		: Singleton<ResourceManager>(), m_materials(), m_shaders(), m_textures(), m_models(), m_scripts(),
+			m_timeStamps(), m_changedShaders(), m_listening(true), m_mutex(), 
+				m_listener(&ResourceManager::fileChangeListener, this)
 	{
 	}
-
-	////////////////////////////////////////////////////////////
-	ResourceManager::~ResourceManager()
+#else
+	ResourceManager::ResourceManager()
+		: Singleton<ResourceManager>(), m_materials(), m_shaders(), m_textures(), m_models(), m_scripts()
 	{
-		m_listening = false;
-		m_listener.join();
 	}
+#endif
 
 	//====================
 	// Getters and setters
@@ -82,10 +83,18 @@ namespace jackal
 		return ResourceHandle<Model>(m_models.get(filename));
 	}
 
+	////////////////////////////////////////////////////////////
+	template <>
+	ResourceHandle<Script> ResourceManager::get(const std::string& filename)
+	{
+		return ResourceHandle<Script>(m_scripts.get(filename));
+	}
+
 	//====================
 	// Private methods
 	//====================
 	////////////////////////////////////////////////////////////
+#if _DEBUG
 	void ResourceManager::fileChangeListener()
 	{
 		namespace fs = std::experimental::filesystem;
@@ -130,5 +139,21 @@ namespace jackal
 		}
 
 		m_changedShaders.clear();
+	}
+#endif
+
+	////////////////////////////////////////////////////////////
+	void ResourceManager::destroy()
+	{
+		m_materials.empty();
+		m_shaders.empty();
+		m_textures.empty();
+		m_models.empty();
+		m_scripts.empty();
+
+#if _DEBUG
+		m_listening = false;
+		m_listener.join();
+#endif
 	}
 }

@@ -103,7 +103,7 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		template <typename T>
-		const std::bitset<32>& getBit() const;
+		const std::bitset<Constants::Components::MAX_COMPONENTS>& getBit() const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the component ID mapped to a component.
@@ -132,7 +132,7 @@ namespace jackal
 
 	////////////////////////////////////////////////////////////
 	template <typename T>
-	const std::bitset<32>& ComponentTypeController::getBit() const
+	const std::bitset<Constants::Components::MAX_COMPONENTS>& ComponentTypeController::getBit() const
 	{
 		static_assert(std::is_base_of<IComponent, T>::value, "The template does not inherit from the IComponent class.");
 		return this->getType(typeid(T)).getBit();

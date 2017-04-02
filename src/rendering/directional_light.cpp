@@ -25,7 +25,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/transform.hpp> // Transform class declaration.
+#include <jackal/rendering/directional_light.hpp> // DirectionalLight class declaration.
 
 namespace jackal
 {
@@ -33,8 +33,8 @@ namespace jackal
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Transform::Transform()
-		: m_position()
+	DirectionalLight::DirectionalLight()
+		: ILight("DirectionalLight"), m_direction()
 	{
 	}
 
@@ -42,50 +42,53 @@ namespace jackal
 	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	Vector3f Transform::getPosition() const
+	Vector3f DirectionalLight::getDirection() const
 	{
-		return m_position;
+		return m_direction;
 	}
 
 	////////////////////////////////////////////////////////////
-	void Transform::setPosition(float x, float y, float z)
+	void DirectionalLight::setDirection(const Vector3f& direction)
 	{
-		m_position.x = x;
-		m_position.y = y;
-		m_position.z = z;
+		m_direction = direction;
 	}
 
+	//====================
+	// Private methods
+	//====================
 	////////////////////////////////////////////////////////////
-	void Transform::setPosition(const Vector3f& position)
+	bool DirectionalLight::init(const Colour& colour, float intensity, const Vector3f& direction)
 	{
-		m_position = position;
-	}
+		if (!ILight::init(colour, intensity))
+		{
+			return false;
+		}
 
-	////////////////////////////////////////////////////////////
-	Matrix4 Transform::getTransformation() const
-	{
-		Matrix4 t = Matrix4::translation(m_position);
-		Matrix4 r = Matrix4::identity();
-		Matrix4 s = Matrix4::scale(Vector3f::one());
+		m_direction = direction;
 
-		return s * r * t;
+		return true;
 	}
 
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	void Transform::translate(float x, float y, float z)
+	sol::table DirectionalLight::lua_asObject() const // override
 	{
-		m_position.x += x;
-		m_position.y += y;
-		m_position.z += z;
+		return sol::table();
 	}
 
 	////////////////////////////////////////////////////////////
-	void Transform::translate(const Vector3f& translation)
+	DirectionalLight* DirectionalLight::create(const Colour& colour, float intensity, const Vector3f& direction)
 	{
-		m_position += translation;
+		// TODO(BEN): Return the object from a object pool.
+		DirectionalLight* pLight = new DirectionalLight();
+		if (pLight && pLight->init(colour, intensity, direction))
+		{
+			return pLight;
+		}
+
+		return nullptr;
 	}
 
 } // namespace jackal

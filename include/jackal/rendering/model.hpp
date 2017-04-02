@@ -36,6 +36,7 @@
 #include <jackal/utils/resource.hpp>          // Model is a type of resource.
 #include <jackal/rendering/irenderable.hpp>   // Model is a renderable object.
 #include <jackal/rendering/mesh.hpp>          // Each model can be constructed of several meshes.
+#include <jackal/utils/resource_handle.hpp>   // Retrieving a handle to the Model object.
 
 //====================
 // Forward declarations
@@ -123,6 +124,20 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		bool load(const std::string& filename) override;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Finds a handle to the specified Model object.
+		///
+		/// This method is a simple wrapper method for retrieving a handle
+		/// to a specified Model resource from the resource manager. If the
+		/// model is not found, a handle with a null resource is returned.
+		///
+		/// @param name  The file name of the Model resource to retrieve.
+		///
+		/// @returns A handle to the specified Model resource.
+		///
+		////////////////////////////////////////////////////////////
+		static ResourceHandle<Model> find(const std::string& name);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Renders the model to the OpenGL context.

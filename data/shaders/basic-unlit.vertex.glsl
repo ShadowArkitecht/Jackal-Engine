@@ -22,50 +22,34 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//====================
-// Jackal includes
-//====================
-#include <jackal/utils/resource.hpp> // Resource class declaration.
+#version 330 core
 
-namespace jackal
+//====================
+// Layout variables
+//====================
+layout (location = 0) in vec3 position; // The world position of the vertices. 
+layout (location = 1) in vec3 normal;   // Vertex normals of the mesh.
+layout (location = 2) in vec2 uv;       // UV co-ordinate of the mesh.
+
+//====================
+// Uniforms
+//====================
+uniform mat4 u_mvp;
+
+//====================
+// Interfaces
+//====================
+out VS_OUT
 {
-	//====================
-	// Ctor and dtor
-	//====================
-	////////////////////////////////////////////////////////////
-	Resource::Resource() 
-		: Object(""), m_references(0)
-	{
-	}
+	vec2 uv_coords;
 
-	//====================
-	// Getters and setters
-	//====================
-	////////////////////////////////////////////////////////////
-	unsigned int Resource::getRefCount() const
-	{
-		return m_references;
-	}
+} vs_out;
 
-	////////////////////////////////////////////////////////////
-	bool Resource::isReferenced() const
-	{
-		return m_references > 0;
-	}
-
-	//====================
-	// Methods
-	//====================
-	////////////////////////////////////////////////////////////
-	void Resource::retain()
-	{
-		++m_references;
-	}
-
-	////////////////////////////////////////////////////////////
-	void Resource::release()
-	{
-		--m_references;
-	}
-
-} // namespace jackal
+//====================
+// Functions
+//====================
+void main()
+{
+	vs_out.uv_coords = uv;	 
+	gl_Position = u_mvp * vec4(position, 1.0);
+}

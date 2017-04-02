@@ -1,5 +1,5 @@
 {
-	"image": "~data/textures/image.png",
+	"image": "~data/textures/box_diffuse.png",
 	"description": {
 		"wrap-mode": "clamp",
 		"filter": "nearest"

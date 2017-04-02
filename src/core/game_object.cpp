@@ -34,8 +34,27 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	GameObject::GameObject()
-		: m_transform(), m_ID(0), m_typeBits(), m_systemBits()
+		: m_transform(), m_tag(), m_ID(0), m_typeBits(), m_systemBits()
 	{
+	}
+
+	//====================
+	// Private getters and setters
+	//====================
+	////////////////////////////////////////////////////////////
+	IComponent* GameObject::getComponent(const ComponentType& type) const
+	{
+		// TODO(Ben): After controller.
+		return nullptr;
+	}
+
+	//====================
+	// Methods
+	//====================
+	////////////////////////////////////////////////////////////
+	void GameObject::removeComponent(const ComponentType& type)
+	{
+		// TODO(Ben): After controller.
 	}
 
 	//====================
@@ -48,31 +67,43 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
+	std::string GameObject::getTag() const
+	{
+		return m_tag;
+	}
+
+	////////////////////////////////////////////////////////////
+	void GameObject::setTag(const std::string& tag)
+	{
+		m_tag = tag;
+	}
+
+	////////////////////////////////////////////////////////////
 	unsigned int GameObject::getID() const
 	{
 		return m_ID;
 	}
 
 	////////////////////////////////////////////////////////////
-	const std::bitset<32>& GameObject::getTypeBits() const
+	TypeSet GameObject::getTypeBits() const
 	{
 		return m_typeBits;
 	}
 
 	////////////////////////////////////////////////////////////
-	void GameObject::setTypeBits(const std::bitset<32>& bits)
+	void GameObject::setTypeBits(const TypeSet& bits)
 	{
 		m_typeBits = bits;
 	}
 
 	////////////////////////////////////////////////////////////
-	const std::bitset<32>& GameObject::getSystemBits() const
+	TypeSet GameObject::getSystemBits() const
 	{
 		return m_systemBits;
 	}
 
 	////////////////////////////////////////////////////////////
-	void GameObject::setSystemBits(const std::bitset<32>& bits)
+	void GameObject::setSystemBits(const TypeSet& bits)
 	{
 		m_systemBits = bits;
 	}
@@ -87,25 +118,25 @@ namespace jackal
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	void GameObject::addTypeBit(const std::bitset<32>& bit)
+	void GameObject::addTypeBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit)
 	{
 		m_typeBits |= bit;
 	}
 
 	////////////////////////////////////////////////////////////
-	void GameObject::removeTypeBit(const std::bitset<32>& bit)
+	void GameObject::removeTypeBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit)
 	{
 		m_typeBits &= ~bit;
 	}
 
 	////////////////////////////////////////////////////////////
-	void GameObject::addSystemBit(const std::bitset<32>& bit)
+	void GameObject::addSystemBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit)
 	{
 		m_systemBits |= bit;
 	}
 
 	////////////////////////////////////////////////////////////
-	void GameObject::removeSystemBit(const std::bitset<32>& bit)
+	void GameObject::removeSystemBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit)
 	{
 		m_systemBits &= ~bit;
 	}

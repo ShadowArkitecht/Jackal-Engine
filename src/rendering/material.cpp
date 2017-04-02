@@ -25,10 +25,10 @@
 //====================
 // Jackal methods
 //====================
-#include <jackal/rendering/material.hpp>     // Material class declaration.
-#include <jackal/utils/log.hpp>              // Logging warnings and errors.
-#include <jackal/utils/json_file_reader.hpp> // Loading json file from directory.
-#include <jackal/utils/resource_manager.hpp> // Loading textures and shaders from the resource manager.
+#include <jackal/rendering/material.hpp>          // Material class declaration.
+#include <jackal/utils/log.hpp>                   // Logging warnings and errors.
+#include <jackal/utils/json_file_reader.hpp>      // Loading json file from directory.
+#include <jackal/utils/resource_manager.hpp>      // Loading textures and shaders from the resource manager.
 
 namespace jackal
 {
@@ -42,7 +42,7 @@ namespace jackal
 	//====================
 	////////////////////////////////////////////////////////////
 	Material::Material()
-		: m_ID(0), m_shader(nullptr), m_texture(nullptr), m_colour()
+		: m_ID(0), m_shader(nullptr), m_textures(), m_colour(), m_lighting(true)
 	{
 	}
 
@@ -67,25 +67,38 @@ namespace jackal
 		m_colour = colour;
 	}
 
+	////////////////////////////////////////////////////////////
+	bool Material::isLightingEnabled() const
+	{
+		return m_lighting;
+	}
+
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
 	bool Material::load(const std::string& filename)//override
 	{
+		using namespace nlohmann;
+
 		JSONFileReader reader;
 		if (reader.read(filename))
 		{
-			nlohmann::json root = reader.getRoot();
+			json root = reader.getRoot();
 
-			m_shader = ResourceManager::getInstance().get<Shader>(root["shader"].get<std::string>());
-			m_texture = ResourceManager::getInstance().get<Texture>(root["texture"].get<std::string>());
+			this->setName(root.value("name", filename));
+			m_lighting = root.value("lighting-enabled", true);
+			m_colour = root.value("diffuse-colour", Colour::white());
 
-			nlohmann::json colour = root["colour"];
-			m_colour = Colour(colour["r"].get<float>(), colour["g"].get<float>(), colour["b"].get<float>(), colour["a"].get<float>());
+			json textures = root["textures"];
+			m_textures.at(eTextureType::DIFFUSE) = Texture::find(textures["diffuse"].get<std::string>());
+			m_textures.at(eTextureType::SPECULAR) = Texture::find(textures["specular"].get<std::string>());
+	
+			m_shader = Shader::find(root["shader"].get<std::string>());
 
 			m_ID |= m_shader->getID() << 24;
-			m_ID |= m_texture->getID() << 16;
+			m_ID |= m_textures.at(eTextureType::DIFFUSE)->getID() << 16;
+			m_ID |= m_textures.at(eTextureType::SPECULAR)->getID() << 8;
 
 			return true;
 		}
@@ -99,16 +112,29 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	void Material::process()
+	ResourceHandle<Material> Material::find(const std::string& name)
 	{
-		m_shader->process(*this);
+		return ResourceManager::getInstance().get<Material>(name);
+	}
+
+	////////////////////////////////////////////////////////////
+	void Material::process(const Transform& transform)
+	{
+		m_shader->process(transform, *this);
 	}
 
 	////////////////////////////////////////////////////////////
 	void Material::bind(const Material& material)
 	{
 		Shader::bind(*material.m_shader.get());
-		Texture::bind(*material.m_texture.get());
+		for (std::size_t i = 0; i < material.m_textures.size(); i++)
+		{
+			Texture* pTex = material.m_textures.at(i).get();
+			if (pTex)
+			{
+				Texture::bind(*pTex, i);
+			}
+		}
 	}
 
 	////////////////////////////////////////////////////////////

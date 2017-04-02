@@ -1,0 +1,7 @@
+{
+	"image": "~data/textures/box_specular.png",
+	"description": {
+		"wrap-mode": "clamp",
+		"filter": "nearest"
+	}
+}

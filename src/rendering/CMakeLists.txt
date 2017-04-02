@@ -32,9 +32,11 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/rendering")            # Source files
 # Variables
 #====================
 set(HEADER_FILES "${INCLUDE_DIR}/buffer.hpp"
+                 "${INCLUDE_DIR}/directional_light.hpp"
 	             "${INCLUDE_DIR}/glsl_object.hpp"
 	             "${INCLUDE_DIR}/gui_texture.hpp"
 	             "${INCLUDE_DIR}/gui_texture_factory.hpp"
+				 "${INCLUDE_DIR}/ilight.hpp"
 	             "${INCLUDE_DIR}/irenderable.hpp"
 	             "${INCLUDE_DIR}/material.hpp"	
 	             "${INCLUDE_DIR}/mesh.hpp"	
@@ -46,9 +48,11 @@ set(HEADER_FILES "${INCLUDE_DIR}/buffer.hpp"
                  "${INCLUDE_DIR}/vertex.hpp")
 
 set(SOURCE_FILES "${SOURCE_DIR}/buffer.cpp"
+	             "${SOURCE_DIR}/directional_light.cpp"
 	             "${SOURCE_DIR}/glsl_object.cpp"
 	             "${SOURCE_DIR}/gui_texture.cpp"
 	             "${SOURCE_DIR}/gui_texture_factory.cpp"
+				 "${SOURCE_DIR}/ilight.cpp"
 	             "${SOURCE_DIR}/irenderable.cpp"
 	             "${SOURCE_DIR}/material.cpp"
 	             "${SOURCE_DIR}/mesh.cpp"

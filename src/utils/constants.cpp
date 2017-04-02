@@ -43,6 +43,9 @@ namespace jackal
 	const std::string Constants::Extensions::FRAGMENT_SHADER = "fragment.glsl";
 	// Components
 	const std::string Constants::Components::MESH_RENDERER = "MeshRenderer";
-	const int Constants::Components::MAX_COMPONENTS        = 32;
+	// Lua functions
+	const char* Constants::ScriptFunctions::ON_CREATE = "on_create";
+	const char* Constants::ScriptFunctions::UPDATE = "update";
+	const char* Constants::ScriptFunctions::ON_DESTROY = "on_destroy";
 	
 } // namespace jackal

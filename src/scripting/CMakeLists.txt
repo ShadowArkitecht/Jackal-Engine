@@ -34,11 +34,13 @@ set(SOURCE_DIR  "${PROJECT_SOURCE_DIR}/src/scripting")            # Source files
 set(HEADER_FILES "${INCLUDE_DIR}/core_wrapper.hpp"
                  "${INCLUDE_DIR}/math_wrapper.hpp"
                  "${INCLUDE_DIR}/script.hpp"
+                 "${INCLUDE_DIR}/scriptable.hpp"
                  "${INCLUDE_DIR}/scripting_manager.hpp")
 
 set(SOURCE_FILES "${SOURCE_DIR}/core_wrapper.cpp"
 	             "${SOURCE_DIR}/math_wrapper.cpp"
 	             "${SOURCE_DIR}/script.cpp"
+	             "${SOURCE_DIR}/scriptable.cpp"
                  "${SOURCE_DIR}/scripting_manager.cpp")
 
 #====================

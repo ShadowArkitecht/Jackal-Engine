@@ -25,13 +25,16 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/rendering/shader.hpp>       // Shader class declaration.
-#include <jackal/utils/log.hpp>              // Logging warnings and errors.
-#include <jackal/utils/constants.hpp>        // Using the constant log location.
-#include <jackal/utils/json_file_reader.hpp> // Loading and parsing the json file.
-#include <jackal/utils/ext/json.hpp>         // De-serializing a shader file.
-#include <jackal/rendering/material.hpp>     // The material to render the shader with.
-#include <jackal/core/camera.hpp>            // Rendering from the position of the Camera.
+#include <jackal/rendering/shader.hpp>            // Shader class declaration.
+#include <jackal/utils/log.hpp>                   // Logging warnings and errors.
+#include <jackal/utils/constants.hpp>             // Using the constant log location.
+#include <jackal/utils/json_file_reader.hpp>      // Loading and parsing the json file.
+#include <jackal/utils/ext/json.hpp>              // De-serializing a shader file.
+#include <jackal/rendering/material.hpp>          // The material to render the shader with.
+#include <jackal/core/camera.hpp>                 // Rendering from the position of the Camera.
+#include <jackal/utils/resource_manager.hpp>      // Used for retrieving a shader from the resource manager.
+#include <jackal/math/transform.hpp>              // Used to retrieve the position, rotation and scale of an object.
+#include <jackal/rendering/directional_light.hpp> // Test DirectionalLight behavior.
 
 //====================
 // Additional includes
@@ -82,22 +85,25 @@ namespace jackal
 			nlohmann::json root = reader.getRoot();
 			nlohmann::json files = root["glsl-files"];
 			
-			for (const auto& gf : files)
+			for (const auto& file : files)
 			{
-				this->attachShader(gf["glsl-file"].get<std::string>());
+				this->attachShader(file.get<std::string>());
 			}
 
 			this->compile();
 
-			Shader::bind(*this);
-
-			nlohmann::json uniforms = root["const-uniforms"];
-			for (const auto& uniform : uniforms)
+			nlohmann::json uniforms = root["constant-uniforms"];
+			if (!uniforms.empty())
 			{
-				m_uniform.setParameter(uniform);
-			}
+				Shader::bind(*this);
 
-			Shader::unbind();
+				for (const auto& uniform : uniforms)
+				{
+					m_uniform.setParameter(uniform);
+				}
+
+				Shader::unbind();
+			}
 		}
 		else
 		{
@@ -106,6 +112,12 @@ namespace jackal
 		}
 
 		return true;
+	}
+
+	////////////////////////////////////////////////////////////
+	ResourceHandle<Shader> Shader::find(const std::string& name)
+	{
+		return ResourceManager::getInstance().get<Shader>(name);
 	}
 
 	////////////////////////////////////////////////////////////
@@ -139,20 +151,29 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	void Shader::process(const Material& material)
+	void Shader::process(const Transform& transform, const Material& material)
 	{
-		// TODO(BEN): Pass the Material object as a uniform buffer object.
-		m_uniform.setParameter("u_texture", 0);
-		m_uniform.setParameter("u_colour", material.getColour());
+		if (material.isLightingEnabled())
+		{
+			m_uniform.setParameter(Uniforms::MODEL, transform.getTransformation());
 
-		Matrix4 translate = Matrix4::translation(0.0f, 0.0f, 0.0f);
-		Matrix4 rotation = Matrix4::rotation(0.0f, 0.0f, 45.0f);
-		Matrix4 scale = Matrix4::scale(1.0f);
+			DirectionalLight light;
+			light.setColour(Colour::white());
+			light.setIntensity(1.5f);
+			light.setDirection(Vector3f::one());
 
-		Matrix4 model = scale * rotation * translate;
-		Matrix4 mvp = model * Camera::getMain().getViewProjection();
+			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_COLOUR, light.getColour());
+			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_INTENSITY, light.getIntensity());
+			m_uniform.setParameter(Uniforms::DIRECTIONAL_LIGHT_DIRECTION, light.getDirection());
+		}
 
-		m_uniform.setParameter("u_mvp", mvp);
+		m_uniform.setParameter(Uniforms::MATERIAL_DIFFUSE_TEXTURE, eTextureType::DIFFUSE);
+		m_uniform.setParameter(Uniforms::MATERIAL_SPECULAR_TEXTURE, eTextureType::SPECULAR);
+		m_uniform.setParameter(Uniforms::MATERIAL_DIFFUSE_COLOUR, material.getColour());
+
+		Matrix4 mvp = transform.getTransformation() * Camera::getMain().getViewProjection();
+
+		m_uniform.setParameter(Uniforms::MODEL_VIEW_PERSPECTIVE, mvp);
 	}
 
 	////////////////////////////////////////////////////////////

@@ -23,49 +23,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
-// Jackal includes
+// C++ includes
 //====================
-#include <jackal/utils/resource.hpp> // Resource class declaration.
+#include <jackal/core/entity_component_system.hpp> // EntityComponentSystem class declaration.
 
 namespace jackal
 {
 	//====================
 	// Ctor and dtor
 	//====================
-	////////////////////////////////////////////////////////////
-	Resource::Resource() 
-		: Object(""), m_references(0)
+	EntityComponentSystem::EntityComponentSystem()
 	{
-	}
-
-	//====================
-	// Getters and setters
-	//====================
-	////////////////////////////////////////////////////////////
-	unsigned int Resource::getRefCount() const
-	{
-		return m_references;
-	}
-
-	////////////////////////////////////////////////////////////
-	bool Resource::isReferenced() const
-	{
-		return m_references > 0;
-	}
-
-	//====================
-	// Methods
-	//====================
-	////////////////////////////////////////////////////////////
-	void Resource::retain()
-	{
-		++m_references;
-	}
-
-	////////////////////////////////////////////////////////////
-	void Resource::release()
-	{
-		--m_references;
 	}
 
 } // namespace jackal

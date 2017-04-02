@@ -35,17 +35,27 @@ layout (location = 2) in vec2 uv;       // UV co-ordinate of the mesh.
 // Uniforms
 //====================
 uniform mat4 u_mvp;
+uniform mat4 u_model;
 
 //====================
 // Interfaces
 //====================
-out vec2 uv_coords;
+out VS_OUT
+{
+	vec2 uv_coords;
+	vec3 normals;
+	vec3 frag_position;
+
+} vs_out;
 
 //====================
 // Functions
 //====================
 void main()
 {
-	uv_coords = uv;	 
+	vs_out.uv_coords = uv;	 
+	vs_out.normals = mat3(transpose(inverse(u_model))) * normal;
+	vs_out.frag_position = vec3(u_model * vec4(position, 1.0));
+	
 	gl_Position = u_mvp * vec4(position, 1.0);
 }

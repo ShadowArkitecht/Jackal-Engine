@@ -26,13 +26,18 @@
 #define __JACKAL_RESOURCE_HPP__
 
 //====================
+// Jackal includes
+//====================
+#include <jackal/core/object.hpp> // A resource is a type of object within a scene.
+
+//====================
 // C++ includes
 //====================
 #include <string> // Loading a resource from a file directory.
 
 namespace jackal
 {
-	class Resource
+	class Resource : public Object
 	{
 	private:
 		//====================

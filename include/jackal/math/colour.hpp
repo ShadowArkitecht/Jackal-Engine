@@ -109,6 +109,25 @@ namespace jackal
 		friend std::ostream& operator<<(std::ostream& os, const Colour& colour);
 
 		//====================
+		// Getters and setters
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the values of a Colour object.
+		///
+		/// This method is a convenience method for changing each
+		/// individual aspect of the Colour object without having to
+		/// construct a new Colour object. Similar method are provided
+		/// for the Vector classes.
+		///
+		/// @param r The red value of the Colour.
+		/// @param g The green value of the Colour.
+		/// @param b The blue value of the Colour.
+		/// @param a The alpha value of the Colour. (Default is 1).
+		///
+		////////////////////////////////////////////////////////////
+		void set(float r, float g, float b, float a = 1.0f);
+
+		//====================
 		// Methods
 		//====================
 		////////////////////////////////////////////////////////////

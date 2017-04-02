@@ -25,7 +25,7 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/math/transform.hpp> // Transform class declaration.
+#include <jackal/rendering/ilight.hpp> // ILight interface declaration.
 
 namespace jackal
 {
@@ -33,8 +33,8 @@ namespace jackal
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Transform::Transform()
-		: m_position()
+	ILight::ILight(const std::string& name)
+		: IComponent(name), m_colour(), m_intensity(1.0f)
 	{
 	}
 
@@ -42,50 +42,45 @@ namespace jackal
 	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	Vector3f Transform::getPosition() const
+	const Colour& ILight::getColour() const
 	{
-		return m_position;
+		return m_colour;
 	}
 
 	////////////////////////////////////////////////////////////
-	void Transform::setPosition(float x, float y, float z)
+	void ILight::setColour(const Colour& colour)
 	{
-		m_position.x = x;
-		m_position.y = y;
-		m_position.z = z;
+		m_colour = colour;
 	}
 
 	////////////////////////////////////////////////////////////
-	void Transform::setPosition(const Vector3f& position)
+	void ILight::setColour(float r, float g, float b, float a/*= 1.0f*/)
 	{
-		m_position = position;
+		m_colour.set(r, g, b, a);
 	}
 
 	////////////////////////////////////////////////////////////
-	Matrix4 Transform::getTransformation() const
+	float ILight::getIntensity() const
 	{
-		Matrix4 t = Matrix4::translation(m_position);
-		Matrix4 r = Matrix4::identity();
-		Matrix4 s = Matrix4::scale(Vector3f::one());
+		return m_intensity;
+	}
 
-		return s * r * t;
+	////////////////////////////////////////////////////////////
+	void ILight::setIntensity(float intensity)
+	{
+		m_intensity = intensity;
 	}
 
 	//====================
-	// Methods
+	// Protected methods
 	//====================
 	////////////////////////////////////////////////////////////
-	void Transform::translate(float x, float y, float z)
+	bool ILight::init(const Colour& colour, float intensity)
 	{
-		m_position.x += x;
-		m_position.y += y;
-		m_position.z += z;
-	}
+		m_colour = colour;
+		m_intensity = intensity;
 
-	////////////////////////////////////////////////////////////
-	void Transform::translate(const Vector3f& translation)
-	{
-		m_position += translation;
+		return true;
 	}
 
 } // namespace jackal

@@ -29,6 +29,7 @@
 // C++ includes
 //====================
 #include <string>  // Storing the names of extensions and component names.
+#include <bitset>  // Defining alias for ECS bitsets.
 
 namespace jackal 
 {
@@ -56,10 +57,28 @@ namespace jackal
 
 		struct Components
 		{
-			static const std::string MESH_RENDERER;  ///< String literal for the name of the mesh renderer component.
-			static const int MAX_COMPONENTS;         ///< The maximum amount of components.
+			//====================
+			// Member variables
+			//====================
+			static const std::string MESH_RENDERER;   ///< String literal for the name of the mesh renderer component.
+			static constexpr int MAX_COMPONENTS = 32; ///< The maximum amount of components.
+		};
+
+		struct ScriptFunctions
+		{
+			//====================
+			// Member variables
+			//====================
+			static const char* ON_CREATE;            ///< String literal for the on_create function in lua script.
+			static const char* UPDATE;               ///< String literal for the update function in lua script.
+			static const char* ON_DESTROY;           ///< String literal for the on_destroy function in lua script.
 		};
 	};
+
+	//====================
+	// Type definitions
+	//====================
+	typedef std::bitset<Constants::Components::MAX_COMPONENTS> TypeSet;
 
 } // namespace jackal
 

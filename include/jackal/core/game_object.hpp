@@ -37,6 +37,7 @@
 #include <jackal/core/object.hpp>     // GameObject is a type of object within a scene.
 #include <jackal/math/transform.hpp>  // The tansform of the GameObject.
 #include <jackal/utils/ext/sol.hpp>   // Retrieving components as a lua table.
+#include <jackal/utils/constants.hpp> // Getting the bitset alias.
 
 namespace jackal
 {
@@ -44,6 +45,7 @@ namespace jackal
 	// Jackal forward declarations
 	//====================
 	class IComponent;
+	class ComponentType;
 
 	class GameObject final : public Object
 	{
@@ -51,10 +53,42 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		Transform       m_transform;   ///< The position, rotation and scale of the game object.
-		unsigned int    m_ID;          ///< The unique ID of the game object.
-		std::bitset<32> m_typeBits;    ///< The components attached to the game object.
-		std::bitset<32> m_systemBits;  ///< The systems related to the game object.
+		Transform    m_transform;   ///< The position, rotation and scale of the game object.
+		std::string  m_tag;         ///< The unique tag of the GameObject.
+		unsigned int m_ID;          ///< The unique ID of the game object.
+		TypeSet      m_typeBits;    ///< The components attached to the game object.
+		TypeSet      m_systemBits;  ///< The systems related to the game object.
+
+	private:
+		//====================
+		// Private getters and setters
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves a component of a specific type from the game object.
+		///
+		/// This method refers to the controller system and retrieves the
+		/// specified component by its type.
+		///
+		/// @param type  The type of component to retrieve.
+		///
+		/// @returns A pointer to the component that matches the type.
+		///
+		////////////////////////////////////////////////////////////
+		IComponent* getComponent(const ComponentType& type) const;
+
+		//====================
+		// Private methods
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Removes a component of a specific type from the game object.
+		///
+		/// This method refers to the controller system for removal. It will
+		/// remove the specified component type from the entity.
+		///
+		/// @param type The type of parameter to remove from the game object.
+		///
+		////////////////////////////////////////////////////////////
+		void removeComponent(const ComponentType& type);
 
 	public:
 		//====================
@@ -93,6 +127,32 @@ namespace jackal
 		Transform& getTransform();
 
 		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the tag of the game object.
+		///
+		/// A tag can be utilised to identify a collection of game objects
+		/// that are similar or identical in nature. (Such as identifying different
+		/// factions within a game). A tag can be used for comparison and 
+		/// retrieving objects from a scene.
+		///
+		/// @returns The tag of the game object.
+		///
+		////////////////////////////////////////////////////////////
+		std::string getTag() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the tag of the game object.
+		///
+		/// A tag can be utilised to identify a collection of game objects
+		/// that are similar or identical in nature. (Such as identifying different
+		/// factions within a game). A tag can be used for comparison and 
+		/// retrieving objects from a scene.
+		///
+		/// @param The new tag of the GameObject instance.
+		///
+		////////////////////////////////////////////////////////////
+		void setTag(const std::string& tag);
+
+		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the unique ID of the GameObject.
 		///
 		/// The ID is the unique way of identifying this particular GameObject,
@@ -115,7 +175,7 @@ namespace jackal
 		/// @returns The component type bits attached to this GameObject.
 		///
 		////////////////////////////////////////////////////////////
-		const std::bitset<32>& getTypeBits() const;
+		TypeSet getTypeBits() const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Sets the new component bits of the GameObject.
@@ -129,7 +189,7 @@ namespace jackal
 		/// @param bits The new component type bits for the GameObject.
 		///
 		////////////////////////////////////////////////////////////
-		void setTypeBits(const std::bitset<32>& bits);
+		void setTypeBits(const TypeSet& bits);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves the system bits of the GameObject.
@@ -143,7 +203,7 @@ namespace jackal
 		/// @returns The system bits attached to this GameObject.
 		///
 		////////////////////////////////////////////////////////////
-		const std::bitset<32>& getSystemBits() const;
+		TypeSet getSystemBits() const;
 
 		////////////////////////////////////////////////////////////
 		/// @brief Sets the new system bits of the GameObject.
@@ -157,7 +217,7 @@ namespace jackal
 		/// @param bits The new system bits for the GameObject.
 		///
 		////////////////////////////////////////////////////////////
-		void setSystemBits(const std::bitset<32>& bits);
+		void setSystemBits(const TypeSet& bits);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Retrieves a component by it's class type.
@@ -205,7 +265,7 @@ namespace jackal
 		/// @param bit The bit to add.
 		///
 		////////////////////////////////////////////////////////////
-		void addTypeBit(const std::bitset<32>& bit);
+		void addTypeBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Removes a type bit from the entity.
@@ -217,7 +277,7 @@ namespace jackal
 		/// @param bit  The bit to remove.
 		///
 		////////////////////////////////////////////////////////////
-		void removeTypeBit(const std::bitset<32>& bit);
+		void removeTypeBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Adds a system bit to the GameObject.
@@ -228,7 +288,7 @@ namespace jackal
 		/// @param bit  The system bit to add.
 		///
 		////////////////////////////////////////////////////////////
-		void addSystemBit(const std::bitset<32>& bit);
+		void addSystemBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Adds a system bit to the GameObject.
@@ -239,7 +299,7 @@ namespace jackal
 		/// @param bit  The system bit to remove.
 		///
 		////////////////////////////////////////////////////////////
-		void removeSystemBit(const std::bitset<32>& bit);
+		void removeSystemBit(const std::bitset<Constants::Components::MAX_COMPONENTS>& bit);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Adds a component to the GameObject instance.

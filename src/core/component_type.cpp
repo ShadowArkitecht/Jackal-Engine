@@ -33,7 +33,7 @@ namespace jackal
 	// Local variables
 	//====================
 	unsigned int ComponentType::m_nextID = 0;
-	std::bitset<32> ComponentType::m_nextBit(1);
+	std::bitset<Constants::Components::MAX_COMPONENTS> ComponentType::m_nextBit(1);
 
 	//====================
 	// Ctor and dtor
@@ -55,7 +55,7 @@ namespace jackal
 	}
 
 	////////////////////////////////////////////////////////////
-	const std::bitset<32>& ComponentType::getBit() const
+	const std::bitset<Constants::Components::MAX_COMPONENTS>& ComponentType::getBit() const
 	{
 		return m_nextBit;
 	}

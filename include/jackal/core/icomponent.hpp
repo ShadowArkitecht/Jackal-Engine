@@ -37,8 +37,20 @@
 
 namespace jackal
 {
+	//====================
+	// Jackal forward declarations
+	//====================
+	class GameObject;
+	class Transform;
+
 	class IComponent : public Object
 	{
+	private:
+		//====================
+		// Member variables
+		//====================
+		GameObject* m_pParent; ///< The parent GameObject instance of this component.
+
 	private:
 		//====================
 		// Ctor and dtor
@@ -65,6 +77,20 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		explicit IComponent(const IComponent& other) = delete;
 
+	protected:
+		////////////////////////////////////////////////////////////
+		/// @brief Initialises the component when generated from the object pool.
+		///
+		/// This method is invoked when the subsequent create method is 
+		/// called on a child component object. It is used to initialise the
+		/// variables of the class. This method by default, does not define
+		/// any additional behavior.
+		///
+		/// @returns True if the class initialised successfully.
+		///
+		////////////////////////////////////////////////////////////
+		virtual bool init();
+
 	public:
 		//====================
 		// Ctor and dtor
@@ -88,8 +114,65 @@ namespace jackal
 		virtual ~IComponent() = default;
 
 		//====================
+		// Getters and setters
+		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the parent GameObject of this component.
+		///
+		/// When a component is created, it is assigned a parent GameObject
+		/// instance. As each component is retrieved individually from a pool
+		/// and no instances are shared, the parent is unique for each component.
+		/// The component will only have a parent if it has been added to a GameObject.
+		///
+		/// @returns The parent GameObject instance of the component.
+		///
+		////////////////////////////////////////////////////////////
+		GameObject* getParent() const;
+
+		////////////////////////////////////////////////////////////
+		/// @brief Sets the parent GameObject instance of this component.
+		///
+		/// When a component is created, it is assigned a parent GameObject
+		/// instance. As each component is retrieved individually from a pool
+		/// and no instances are shared, the parent is unique for each component.
+		/// The component will only have a parent if it has been added to a GameObject.
+		///
+		/// @param The new GameObject instance parent.
+		///
+		////////////////////////////////////////////////////////////
+		void setParent(GameObject* pParent);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the Transform of the GameObject parent.
+		///
+		/// This method is just a short-hand method for retrieving the 
+		/// parent GameObject instance and getting its current transform.
+		/// This method can be invoked to instantly get the transform of the
+		/// parent GameObject.
+		///
+		/// @returns The transform of the parent GameObject.
+		///
+		////////////////////////////////////////////////////////////
+		Transform& getTransform();
+
+		//====================
 		// Methods
 		//====================
+		////////////////////////////////////////////////////////////
+		/// @brief Compares the tag of the parent GameObject against the argument.
+		///
+		/// Each GameObject can be assigned a tag, which can be used as
+		/// an identifier of sorts for a group of game objects. This method
+		/// can be invoked to compare whether the parent game object contains
+		/// the tag passed in as the argument.
+		///
+		/// @param tag The tag to compare against.
+		///
+		/// @returns True if the argument tag and the parent GameObject tag match.
+		///
+		////////////////////////////////////////////////////////////
+		bool compareTag(const std::string& tag) const;
+
 		////////////////////////////////////////////////////////////
 		/// @brief Binding the component to a lua object for scripting.
 		///

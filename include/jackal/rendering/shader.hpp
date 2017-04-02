@@ -28,15 +28,20 @@
 //====================
 // Jackal includes
 //====================
-#include <jackal/utils/resource.hpp>    // Shader is a type of resource.
-#include <jackal/rendering/program.hpp> // The Program to attach shader files to.
-#include <jackal/rendering/uniform.hpp> // Adding uniforms to the shaders.
+#include <jackal/utils/resource.hpp>        // Shader is a type of resource.
+#include <jackal/rendering/program.hpp>     // The Program to attach shader files to.
+#include <jackal/rendering/uniform.hpp>     // Adding uniforms to the shaders.
+#include <jackal/utils/resource_handle.hpp> // Returning a handle to a Shader instance.
 
 namespace jackal
 {
+	//====================
+	// Jackal forward declarations
+	//====================
+	class Transform;
 	class Material;
 
-	class Shader : public Resource
+	class Shader final : public Resource
 	{
 	private:
 		//====================
@@ -110,6 +115,20 @@ namespace jackal
 		bool load(const std::string& filename) override;
 
 		////////////////////////////////////////////////////////////
+		/// @brief Retrieves a handle to a Shader resource.
+		///
+		/// When this method is invoked, it will return a handle to the
+		/// specified Shader instance. The shader is returned from the
+		/// resource manager to prevent duplicate resources.
+		///
+		/// @param name  The name of the shader to retrieve.
+		///
+		/// @returns The handle to the specified Shader object.
+		///
+		////////////////////////////////////////////////////////////
+		static ResourceHandle<Shader> find(const std::string& name);
+
+		////////////////////////////////////////////////////////////
 		/// @brief Attaches a glsl shader to the Program object.
 		///
 		/// When this method is invoked, it will utilise the Program objects
@@ -164,10 +183,11 @@ namespace jackal
 		/// uniform variables contained within the glsl objects and change their
 		/// values.
 		///
-		/// @param material The material that this shader is bound to.
+		/// @param transform The transform of the GameObject being processed.
+		/// @param material  The material that this shader is bound to.
 		///
 		////////////////////////////////////////////////////////////
-		void process(const Material& material);
+		void process(const Transform& transform, const Material& material);
 
 		////////////////////////////////////////////////////////////
 		/// @brief Binds a shader to the OpenGL stack and utilises its behavior.

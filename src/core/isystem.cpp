@@ -23,18 +23,24 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //====================
+// C++ includes
+//====================
+#include <algorithm>                   // Removing game objects from middle of vector.
+
+//====================
 // Jackal includes
 //====================
-#include <jackal/math/transform.hpp> // Transform class declaration.
+#include "jackal/core/isystem.hpp"	   // Class declaration.
+#include "jackal/core/game_object.hpp" // Updating and removing game objects.
 
-namespace jackal
+namespace jackal 
 {
 	//====================
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Transform::Transform()
-		: m_position()
+	ISystem::ISystem(const EntityComponentSystem& ecs)
+		: m_ecs(ecs), m_systemBits(), m_typeBits(), m_objects() 
 	{
 	}
 
@@ -42,50 +48,73 @@ namespace jackal
 	// Getters and setters
 	//====================
 	////////////////////////////////////////////////////////////
-	Vector3f Transform::getPosition() const
+	const TypeSet& ISystem::getSystemBits() const 
 	{
-		return m_position;
+		return m_systemBits;
 	}
 
 	////////////////////////////////////////////////////////////
-	void Transform::setPosition(float x, float y, float z)
+	void ISystem::setSystemBits(const TypeSet& bits) 
 	{
-		m_position.x = x;
-		m_position.y = y;
-		m_position.z = z;
+		m_systemBits = bits;
 	}
 
+	//====================
+	// Private methods
+	//====================
 	////////////////////////////////////////////////////////////
-	void Transform::setPosition(const Vector3f& position)
+	void ISystem::remove(GameObject* pObject) 
 	{
-		m_position = position;
+		auto itr = std::find(std::begin(m_objects), std::end(m_objects), pObject);
+
+		if (itr != std::end(m_objects)) {
+			m_objects.erase(itr);
+			pObject->removeSystemBit(m_systemBits);
+		}
 	}
 
+	//====================
+	// Protected methods
+	//====================
 	////////////////////////////////////////////////////////////
-	Matrix4 Transform::getTransformation() const
+	void ISystem::addTypeFlag(const TypeList<>& list) 
 	{
-		Matrix4 t = Matrix4::translation(m_position);
-		Matrix4 r = Matrix4::identity();
-		Matrix4 s = Matrix4::scale(Vector3f::one());
-
-		return s * r * t;
+		// EMPTY.
 	}
 
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	void Transform::translate(float x, float y, float z)
+	void ISystem::initialize()
 	{
-		m_position.x += x;
-		m_position.y += y;
-		m_position.z += z;
+		// EMPTY.
 	}
 
 	////////////////////////////////////////////////////////////
-	void Transform::translate(const Vector3f& translation)
+	void ISystem::change(GameObject* pObject) 
 	{
-		m_position += translation;
+		bool contains = (m_systemBits & pObject->getSystemBits()) == m_systemBits;
+		bool interest = (m_typeBits & pObject->getTypeBits()) == m_typeBits;
+
+		if (interest && !contains && m_typeBits.any()) 
+		{
+			m_objects.push_back(pObject);
+			pObject->addSystemBit(m_systemBits);
+		}
+		else if (!interest && contains && m_typeBits.any()) 
+		{
+			this->remove(pObject);
+		}
+	}
+
+	////////////////////////////////////////////////////////////
+	void ISystem::update()
+	{
+		for (const auto& object : m_objects)
+		{
+			this->process(object);
+		}
 	}
 
 } // namespace jackal

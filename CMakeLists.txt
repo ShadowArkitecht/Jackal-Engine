@@ -57,7 +57,6 @@ else()
 	message(FATAL_ERROR "CMake build failed. SDL2_image could not be found.")
 endif()
 
-
 find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
 	message(STATUS "OpenGL found. Linking to Jackal Engine.")

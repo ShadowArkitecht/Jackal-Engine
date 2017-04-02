@@ -26,109 +26,111 @@
 // Jackal includes
 //====================
 #include <jackal/scripting/script.hpp>             // Script class declaration.
-#include <jackal/utils/log.hpp>                    // Logging warnings and errors.
-#include <jackal/scripting/scripting_manager.hpp>  // Retrieving the global lua state.
-#include <jackal/utils/file_system.hpp>            // Checking the file extension.
-#include <jackal/utils/constants.hpp>              // file extension constant.
+#include <jackal/utils/log.hpp>                    // Logging warning and errors.
+#include <jackal/utils/constants.hpp>              // Constants for lua function names.
+#include <jackal/utils/file_system.hpp>            // Checking existence of lua script.
+#include <jackal/scripting/scripting_manager.hpp>  // A reference to the manager for lua scripts.
+#include <jackal/utils/resource_manager.hpp>       // Retrieve a handle to a Script resource from the manager.
 
 //====================
 // Additional includes
 //====================
-#include <lua.hpp>                                 // Storing the lua_State.
+#include <lua.hpp>                                 // Retrieving errors for lua scripts.
 
 namespace jackal
-{
+{	
 	//====================
 	// Local variables
 	//====================
-	static DebugLog log("logs/engine_log.txt"); // Logging warnings and errors.
+	static DebugLog log("logs/engine_log.txt");
 
 	//====================
 	// Ctor and dtor
 	//====================
 	////////////////////////////////////////////////////////////
-	Script::Script(const std::string& filename)
-		: IComponent(""), m_self(), m_table(), m_methods(), m_created(false)
+	Script::Script()
+		: Resource(), m_state(ScriptingManager::getInstance().getState()), m_tableName(), m_functions()
 	{
-		std::string ext = Constants::Extensions::LUA;
-		sol::state& state = ScriptingManager::getInstance().getState();
-
-		FileSystem system;
-		if (!system.hasExtension(filename, ext))
-		{
-			log.warning(log.function(__FUNCTION__, filename), "failed. Incorrect file extension");
-			return;
-		}
-
-		sol::load_result script = state.load_file(filename);
-		if (!script.valid())
-		{
-			log.warning(log.function(__FUNCTION__, filename), "compilation error: ", lua_tostring(script.lua_state(), -1));
-			return;
-		}
-
-		script();
-
-		std::size_t index = filename.find_last_of('/');
-		m_table = index == std::string::npos ? filename.substr(0, filename.length() - ext.length() - 1) :
-			                                   filename.substr(index, filename.length() - ext.length() - 1);
-
-		m_self = state[m_table.c_str()];
-		if (!m_self.valid())
-		{
-			log.warning(log.function(__FUNCTION__, filename), m_table, "is not a valid table.");
-		}
-
-		this->setName(m_table);
-		m_methods.set(eScriptMethods::CREATE, this->isMethod("create"));
-		m_methods.set(eScriptMethods::UPDATE, this->isMethod("update"));
-	}
-
-	//====================
-	// Getters and setters
-	//====================
-	////////////////////////////////////////////////////////////
-	bool Script::isCreated() const
-	{
-		return m_created;
 	}
 
 	//====================
 	// Private methods
 	//====================
 	////////////////////////////////////////////////////////////
-	bool Script::isMethod(const std::string& name) const
+	bool Script::isFunction(const sol::table& table, const std::string& name) const
 	{
-		return m_self[name.c_str()].valid();
+		return table[name.c_str()].valid();
+	}
+
+	//====================
+	// Getters and setters
+	//====================
+	////////////////////////////////////////////////////////////
+	std::string Script::getTableName() const
+	{
+		return m_tableName;
+	}
+
+	////////////////////////////////////////////////////////////
+	std::bitset<eScriptMethods::MAX_FUNCTIONS> Script::getFunctions() const
+	{
+		return m_functions;
 	}
 
 	//====================
 	// Methods
 	//====================
 	////////////////////////////////////////////////////////////
-	void Script::create()
+	bool Script::load(const std::string& filename)
 	{
-		if (m_methods.test(eScriptMethods::CREATE))
+		std::string ext = Constants::Extensions::LUA;
+
+		FileSystem system;
+		if (!system.hasExtension(filename, ext))
 		{
-			m_self["create"]();
+			log.warning(log.function(__FUNCTION__, filename), "failed. Incorrect file extension");
+			return false;
 		}
 
-		m_created = true;
+		sol::load_result script = m_state.load_file(filename);
+		if (!script.valid())
+		{
+			log.warning(log.function(__FUNCTION__, filename), "compilation error: ", lua_tostring(script.lua_state(), -1));
+			return false;
+		}
+
+		script();
+
+		std::size_t index = filename.find_last_of('/');
+		m_tableName = index == std::string::npos ? filename.substr(0, filename.length() - ext.length() - 1) :
+			                                   	   filename.substr(index, filename.length() - ext.length() - 1);
+
+		sol::table t = m_state[m_tableName.c_str()];
+		if (!t.valid())
+		{
+			log.warning(log.function(__FUNCTION__, filename), m_tableName, "is not a valid table.");
+			return false;
+		}
+
+		// Set relevant functions.
+		m_functions.set(eScriptMethods::ON_CREATE, this->isFunction(t, Constants::ScriptFunctions::ON_CREATE));
+		m_functions.set(eScriptMethods::UPDATE, this->isFunction(t, Constants::ScriptFunctions::UPDATE));
+		m_functions.set(eScriptMethods::ON_DESTROY, this->isFunction(t, Constants::ScriptFunctions::ON_DESTROY));
+
+		log.debug(log.function(__FUNCTION__, filename), "parsed successfully.");
+		return true;
 	}
 
 	////////////////////////////////////////////////////////////
-	void Script::update(float dt)
+	ResourceHandle<Script> Script::find(const std::string& name)
 	{
-		if (m_methods.test(eScriptMethods::UPDATE))
-		{
-			m_self["update"](dt);
-		}
+		return ResourceManager::getInstance().get<Script>(name);
 	}
 
 	////////////////////////////////////////////////////////////
-	sol::table Script::lua_asObject() const
+	sol::table Script::createTable() const
 	{
-		return m_self;
+		return m_state[m_tableName.c_str()];
 	}
 
 } // namespace jackal

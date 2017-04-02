@@ -29,8 +29,6 @@
 // Jackal includes
 //====================
 #include <jackal/utils/non_copyable.hpp> // The wrapper should not be copied. 
-#include <jackal/core/object.hpp>        // Binding Object and eHideFlag.
-#include <jackal/core/icomponent.hpp>    // Binding the base component class.
 
 //====================
 // Additional includes
@@ -62,8 +60,6 @@ namespace jackal
 		/// be manipulated within lua scripts, therefore it's properties
 		/// and flag behaviour are exposed to lua.
 		///
-		/// @returns The Object class represented as a lua object.
-		///
 		////////////////////////////////////////////////////////////
 		void bindObject(sol::state& state);
 		
@@ -75,10 +71,19 @@ namespace jackal
 		/// are exposed to the lua scripting interface. It cannot be constructed
 		/// within a lua script, construction is handled by its child classes.
 		///
-		/// @returns The IComponent class represented as a lua object.
-		///
 		////////////////////////////////////////////////////////////
 		void bindComponent(sol::state& state);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Binds the Camera class to the lua scripting interface.
+		///
+		/// The Camera object is the player's viewport into the scene and 
+		/// game world. It can be translated and rotated around a scene within
+		/// scripts for additional user behavior. Therefore all of its necessary
+		/// methods are exposed to the scripting interface.
+		///
+		////////////////////////////////////////////////////////////
+		void bindCamera(sol::state& state);
 
 	public:
 		//====================

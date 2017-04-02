@@ -25,22 +25,37 @@
 #version 330 core 
 
 //====================
+// Structs
+//====================
+struct Material 
+{
+	sampler2D diffuse_texture; ///< The diffuse texture of the material.
+	vec4 diffuse_colour;       ///< The colouring applied to the diffuse texture.
+};
+
+//====================
 // Uniform variables
 //====================
-uniform float u_time;        // Time since the application has been open.
-uniform sampler2D u_texture; // The currently bound texture
-uniform vec4 u_colour;       // The colour passed in from the material.
+uniform Material u_material; ///< The Material object passed from the C++ code.
 
 //====================
 // Layout variables
 //====================
-in vec2 uv_coords;
+in VS_OUT
+{
+	vec2 uv_coords;
+
+} fs_in;
+
+out vec4 frag_colour; ///< The final colour of the fragment.
 
 //====================
 // Functions
 //====================
 void main()
 {
-	vec4 result = texture2D(u_texture, uv_coords);
-	gl_FragColor = result;
+	vec4 diffuse_texture = texture2D(u_material.diffuse_texture, fs_in.uv_coords);
+	vec3 diffuse = diffuse_texture.rgb * u_material.diffuse_colour.rgb;
+
+	frag_colour = vec4(diffuse, 1.0); 
 }

@@ -28,6 +28,7 @@
 #include <jackal/rendering/model.hpp>           // Model class declaration.
 #include <jackal/utils/log.hpp>                 // Logs warnings and errors.
 #include <jackal/core/virtual_file_system.hpp>  // Loading files using the virtual file system.
+#include <jackal/utils/resource_manager.hpp>    // Retrieving a Model resource from the manager.
 
 //====================
 // Additional includes
@@ -88,6 +89,13 @@ namespace jackal
 				vertex.uv.y = pMesh->mTextureCoords[0][i].y;
 			}
 
+			if (pMesh->mNormals)
+			{
+				vertex.normal.x = pMesh->mNormals[i].x;
+				vertex.normal.y = pMesh->mNormals[i].y;
+				vertex.normal.z = pMesh->mNormals[i].z;
+			}
+
 			vertices.push_back(vertex);
 		}
 
@@ -126,7 +134,15 @@ namespace jackal
 		}
 
 		this->loadNode(pScene->mRootNode, pScene);
+		log.debug(log.function(__FUNCTION__, filename), "Imported successfully.");
+
 		return true;
+	}
+
+	////////////////////////////////////////////////////////////
+	ResourceHandle<Model> Model::find(const std::string& name)
+	{
+		return ResourceManager::getInstance().get<Model>(name);
 	}
 
 	////////////////////////////////////////////////////////////

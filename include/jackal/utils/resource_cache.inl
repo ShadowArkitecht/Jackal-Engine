@@ -63,6 +63,8 @@ T* ResourceCache<T>::get(const std::string& name)
 	if (!pResource->load(name))
 	{
 		m_log.warning(m_log.function(__FUNCTION__, name), "Failed to load resource, returning default object.");
+		delete pResource;
+
 		return m_default;
 	}
 
@@ -85,14 +87,5 @@ std::unordered_map<std::string, T*> ResourceCache<T>::getResources() const
 template <typename T>
 void ResourceCache<T>::empty()
 {
-	for (auto& resource : m_resources)
-	{
-		if (resource.second)
-		{
-			delete resource.second;
-			resource.second = nullptr;
-		}
-	}
-
 	m_resources.clear();
 }

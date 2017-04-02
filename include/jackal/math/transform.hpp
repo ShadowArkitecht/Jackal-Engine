@@ -29,6 +29,7 @@
 // Jackal includes
 //====================
 #include <jackal/math/vector3.hpp> // The position of the Transform.
+#include <jackal/math/matrix4.hpp> // Model matrix of the transform.
 
 namespace jackal
 {
@@ -99,6 +100,17 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		void setPosition(const Vector3f& position);
+
+		////////////////////////////////////////////////////////////
+		/// @brief Retrieves the model transformation of the object.
+		///
+		/// The model transformation is a matrix representing the local
+		/// position, rotation and scale of the object within 3D space.
+		/// Combined with the perspective and view matrices, it will display
+		/// an object correctly within a 3D scene.
+		///
+		////////////////////////////////////////////////////////////
+		Matrix4 getTransformation() const;
 
 		//====================
 		// Methods

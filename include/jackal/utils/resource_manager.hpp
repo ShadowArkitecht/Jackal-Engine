@@ -29,9 +29,10 @@
 // C++ includes
 //====================
 #include <array>                            // Storing the time stamps for each Shader object.
-#include <unordered_map>                    // Hash-Table for the shaders and their time-stamps.
+#if _DEBUG
 #include <mutex>                            // Locking when the Shader are being re-loaded.
 #include <thread>                           // File reading and time-stamping is passed to a seperate thread.
+#endif
 
 //====================
 // Jackal includes
@@ -41,6 +42,7 @@
 #include <jackal/utils/resource_handle.hpp> // A RAII is a handle to the resource object.
 #include <jackal/rendering/material.hpp>    // Storing materials, shaders and textures within the manager.
 #include <jackal/rendering/model.hpp>       // Storing models.
+#include <jackal/scripting/script.hpp>      // Storing scripts.
 
 namespace jackal
 {
@@ -52,19 +54,21 @@ namespace jackal
 		//====================
 		// Member variables
 		//====================
-		using TimeArray = std::array<int64_t, static_cast<int>(eShaderType::MAX)>;
-
 		ResourceCache<Material>                    m_materials;      ///< The resource cache for all the materials.
 		ResourceCache<Shader>                      m_shaders;        ///< The resource cache for all the shaders.
 		ResourceCache<Texture>                     m_textures;       ///< The resource cache for all the textures.
-		ResourceCache<Model>                       m_models;
+		ResourceCache<Model>                       m_models;         ///< The resource cache for all the models.
+		ResourceCache<Script>                      m_scripts;        ///< The resource cache for all the scripts.
+
+#if _DEBUG
+		using TimeArray = std::array<int64_t, static_cast<int>(eShaderType::MAX)>;
 
 		std::unordered_map<std::string, TimeArray> m_timeStamps;     ///< The time stamps for all of the different shaders.
 		std::vector<Shader*>                       m_changedShaders; ///< A list of all the changed shaders.
 		bool                                       m_listening;      ///< Whether the seperate thread is listening for changes.
 		std::mutex                                 m_mutex;          ///< Mutex locking for shader reloading.
 		std::thread                                m_listener;       ///< Seperate thread for file change listening.
-
+#endif
 	private:
 		//====================
 		// Private ctor
@@ -79,6 +83,7 @@ namespace jackal
 		////////////////////////////////////////////////////////////
 		explicit ResourceManager();
 
+#if _DEBUG
 		//====================
 		// Private methods
 		//====================
@@ -93,20 +98,16 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		void fileChangeListener();
+#endif
 
 	public:
 		//====================
 		// Dtor
 		//====================
 		////////////////////////////////////////////////////////////
-		/// @brief Destructor for the ResourceManager.
-		///
-		/// The destructor for the ResourceManager destroys all of the
-		/// resources that are still being retained by the manager.
-		/// It also joins the file listener thread back to the main thread.
-		///
+		/// @brief Default destructor for the ResourceManager.
 		////////////////////////////////////////////////////////////
-		~ResourceManager();
+		~ResourceManager() = default;
 
 		//====================
 		// Getters and setters
@@ -126,6 +127,7 @@ namespace jackal
 		template <typename T>
 		ResourceHandle<T> get(const std::string& filename);
 
+#if _DEBUG
 		//====================
 		// Methods
 		//====================
@@ -138,6 +140,18 @@ namespace jackal
 		///
 		////////////////////////////////////////////////////////////
 		void reload();
+#endif
+
+		////////////////////////////////////////////////////////////
+		/// @brief Destroys the ResourceManager and release the retained resources
+		///
+		/// This method is typically only invoked when the application is
+		/// about to close, it clears all of the retained resources and
+		/// joins the shader watching thread if currently within debug
+		/// mode.
+		///
+		////////////////////////////////////////////////////////////
+		void destroy();
 	};
 
 	//====================
@@ -202,6 +216,21 @@ namespace jackal
 	////////////////////////////////////////////////////////////
 	template <>
 	ResourceHandle<Model> ResourceManager::get(const std::string& filename);
+
+	////////////////////////////////////////////////////////////
+	/// @brief Retrieves a Script object from the resource cache.
+	///
+	/// When this method is invoked, it will use one of the resource cache
+	/// of scripts to retrieve a value without constantly having to allocate
+	/// new scripts.
+	///
+	/// @param filename    The filename of the scripts to retrieve.
+	///
+	/// @returns           The script to retrieve from the caches.
+	///
+	////////////////////////////////////////////////////////////
+	template <>
+	ResourceHandle<Script> ResourceManager::get(const std::string& filename);
 
 } // namespace jackal
 
